@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { addTag } from "../actions/blogActions";
+import { addNewEntry } from "../actions/blogActions";
 import { connect } from "react-redux";
 
 class BlogCreator extends Component {
@@ -7,29 +7,45 @@ class BlogCreator extends Component {
     title: "",
     body: "",
     tag: "",
-    entry: ""
+    entryType: "",
+    tags: []
   };
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onRadioChange = e => {
-    this.setState({ entry: e.target.value });
+    this.setState({ entryType: e.target.value });
   };
 
   onFormSubmit = e => {
+    const { title, body, entryType, tags } = this.state;
+    const newEntry = {
+      title,
+      body,
+      entryType,
+      tags
+    };
     e.preventDefault();
+    this.props.addNewEntry(newEntry);
+
+    this.setState({
+      title: "",
+      body: "",
+      entryType: "",
+      tag: "",
+      tags: []
+    });
   };
 
   onTagFormSubmit = e => {
     e.preventDefault();
-    this.props.addTag(this.state.tag);
+    this.setState({ tags: this.state.tags.concat(this.state.tag) });
     this.state.tag = "";
   };
 
   render() {
-    const { title, body, tag } = this.state;
-    const { tags } = this.props;
+    const { title, body, tag, tags } = this.state;
     return (
       <div>
         <h1>Create Entry</h1>
@@ -38,7 +54,7 @@ class BlogCreator extends Component {
             <input
               type="radio"
               id="post"
-              name="entry"
+              name="entryType"
               value="post"
               onChange={this.onRadioChange}
             />
@@ -46,7 +62,7 @@ class BlogCreator extends Component {
             <input
               type="radio"
               id="news"
-              name="entry"
+              name="entryType"
               value="news"
               onChange={this.onRadioChange}
             />
@@ -99,13 +115,7 @@ class BlogCreator extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    tags: state.blog.tags
-  };
-};
-
 export default connect(
-  mapStateToProps,
-  { addTag }
+  null,
+  { addNewEntry }
 )(BlogCreator);

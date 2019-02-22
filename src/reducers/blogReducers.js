@@ -1,13 +1,13 @@
 const initialState = {
-  tags: []
+  blogs: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case "ADD_TAG":
+    case "ADD_NEW_ENTRY":
       return {
         ...state,
-        tags: state.tags.concat(action.payload)
+        blogs: state.blogs.concat(action.payload)
       };
     default:
       return state;

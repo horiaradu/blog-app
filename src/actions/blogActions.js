@@ -1,6 +1,6 @@
-export const addTag = tag => dispatch => {
+export const addNewEntry = newEntry => dispatch => {
   dispatch({
-    type: "ADD_TAG",
-    payload: tag
+    type: "ADD_NEW_ENTRY",
+    payload: newEntry
   });
 };
