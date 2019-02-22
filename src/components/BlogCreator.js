@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { addTag } from "../actions/blogActions";
+import { connect } from "react-redux";
 
 class BlogCreator extends Component {
   state = {
@@ -17,11 +19,17 @@ class BlogCreator extends Component {
 
   onFormSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+  };
+
+  onTagFormSubmit = e => {
+    e.preventDefault();
+    this.props.addTag(this.state.tag);
+    this.state.tag = "";
   };
 
   render() {
     const { title, body, tag } = this.state;
+    const { tags } = this.props;
     return (
       <div>
         <h1>Create Entry</h1>
@@ -35,7 +43,6 @@ class BlogCreator extends Component {
               onChange={this.onRadioChange}
             />
             <label htmlFor="post">Post</label>
-
             <input
               type="radio"
               id="news"
@@ -63,6 +70,13 @@ class BlogCreator extends Component {
                 value={body}
                 onChange={this.onInputChange}
               />
+              <div>
+                <input type="submit" value="Save" />
+              </div>
+            </div>
+          </form>
+          <div>
+            <form onSubmit={this.onTagFormSubmit}>
               <label htmlFor="tags">Tags:</label>
               <input
                 type="text"
@@ -72,15 +86,26 @@ class BlogCreator extends Component {
                 value={tag}
                 onChange={this.onInputChange}
               />
-            </div>
-            <div>
-              <input type="submit" value="Save" />
-            </div>
-          </form>
+            </form>
+            <ul>
+              {tags.map(tag => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default BlogCreator;
+const mapStateToProps = state => {
+  return {
+    tags: state.blog.tags
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { addTag }
+)(BlogCreator);
