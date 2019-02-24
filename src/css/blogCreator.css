@@ -6,7 +6,7 @@ body {
   list-style-position: inside;
   border: 1px solid black;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 5px 5px 5px;
 }
 
 .tags {
@@ -35,4 +35,8 @@ body {
 
 #barLevelTitle {
   margin-top: 20px;
+}
+
+.ul {
+  padding: 0;
 }

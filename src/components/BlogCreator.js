@@ -10,7 +10,8 @@ class BlogCreator extends Component {
     body: "",
     tag: "",
     entryType: "",
-    tags: []
+    tags: [],
+    tagsError: false
   };
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -45,15 +46,29 @@ class BlogCreator extends Component {
 
   onTagFormSubmit = e => {
     e.preventDefault();
-    this.setState({ tags: this.state.tags.concat(this.state.tag), tag: "" });
+
+    if (this.state.tags.length < 5) {
+      this.setState({
+        tags: this.state.tags.concat(this.state.tag),
+        tag: ""
+      });
+    } else {
+      this.setState({ tag: "", tagsError: true });
+      this.setState({ tags: this.state.tags.concat(this.state.tag), tag: "" });
+    }
   };
 
   onDeleteTag = value => {
-    this.setState({ tags: this.state.tags.filter(tag => tag !== value) });
+    this.setState({
+      tags: this.state.tags.filter(tag => tag !== value)
+    });
+    if (this.state.tags.length === 6) {
+      this.setState({ tagsError: false });
+    }
   };
 
   render() {
-    const { title, body, tag, tags, entryType } = this.state;
+    const { title, body, tag, tags, entryType, tagsError } = this.state;
     return (
       <div>
         <h1 className="ui grey ui top attached header center aligned">
@@ -127,7 +142,8 @@ class BlogCreator extends Component {
               type="text"
               id="tag"
               name="tag"
-              placeholder="Insert a tag"
+              disabled={tagsError ? "disabled" : ""}
+              placeholder={tagsError ? "Only 6 tags allowed" : "Insert a tag"}
             />
           </div>
           <div className="field">
@@ -141,7 +157,7 @@ class BlogCreator extends Component {
         <div className="ui relaxed horizontal list">
           {tags.map(tag => (
             <div className="item">
-              <ul className="content">
+              <ul className="content ul">
                 <li className="borderlist header">
                   {tag}{" "}
                   <span onClick={() => this.onDeleteTag(tag)} className="tags">
