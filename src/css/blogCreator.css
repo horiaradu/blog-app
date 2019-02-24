@@ -1,6 +1,12 @@
 body {
   background: #eee;
 }
+.hide {
+  display: none !important;
+}
+input[type="radio"] + label > .far {
+  cursor: pointer;
+}
 
 .borderlist {
   list-style-position: inside;
@@ -39,4 +45,7 @@ body {
 
 .ul {
   padding: 0;
+}
+.radioIcon {
+  font-size: 20px;
 }

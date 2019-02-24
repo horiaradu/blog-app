@@ -58,6 +58,7 @@ class BarLevel extends React.Component {
       });
     }
   };
+  onChange = () => {};
   render() {
     const { checked1, checked2, checked3, checked4, checked5 } = this.state;
     return (
@@ -68,9 +69,9 @@ class BarLevel extends React.Component {
         <div className="ui centered grid">
           <label className="labels" htmlFor="level1">
             {checked1 ? (
-              <i class="fas fa-angle-double-up" />
+              <i className="fas fa-angle-double-up" />
             ) : (
-              <i class="fas fa-angle-up" />
+              <i className="fas fa-angle-up" />
             )}
           </label>
           <input
@@ -81,12 +82,13 @@ class BarLevel extends React.Component {
             value="level1"
             checked={checked1}
             onClick={this.onClick}
+            onChange={this.onChange}
           />
           <label className="labels" htmlFor="level2">
             {checked2 ? (
-              <i class="fas fa-angle-double-up" />
+              <i className="fas fa-angle-double-up" />
             ) : (
-              <i class="fas fa-angle-up" />
+              <i className="fas fa-angle-up" />
             )}
           </label>
           <input
@@ -97,12 +99,13 @@ class BarLevel extends React.Component {
             value="level2"
             checked={checked2}
             onClick={this.onClick}
+            onChange={this.onChange}
           />
           <label className="labels" htmlFor="level3">
             {checked3 ? (
-              <i class="fas fa-angle-double-up" />
+              <i className="fas fa-angle-double-up" />
             ) : (
-              <i class="fas fa-angle-up" />
+              <i className="fas fa-angle-up" />
             )}
           </label>
           <input
@@ -113,12 +116,13 @@ class BarLevel extends React.Component {
             value="level3"
             checked={checked3}
             onClick={this.onClick}
+            onChange={this.onChange}
           />
           <label className="labels" htmlFor="level4">
             {checked4 ? (
-              <i class="fas fa-angle-double-up" />
+              <i className="fas fa-angle-double-up" />
             ) : (
-              <i class="fas fa-angle-up" />
+              <i className="fas fa-angle-up" />
             )}
           </label>
           <input
@@ -129,12 +133,13 @@ class BarLevel extends React.Component {
             value="level4"
             checked={checked4}
             onClick={this.onClick}
+            onChange={this.onChange}
           />
           <label className="labels" htmlFor="level5">
             {checked5 ? (
-              <i class="fas fa-angle-double-up" />
+              <i className="fas fa-angle-double-up" />
             ) : (
-              <i class="fas fa-angle-up" />
+              <i className="fas fa-angle-up" />
             )}
           </label>
           <input
@@ -145,6 +150,7 @@ class BarLevel extends React.Component {
             value="level5"
             checked={checked5}
             onClick={this.onClick}
+            onChange={this.onChange}
           />
         </div>
       </div>

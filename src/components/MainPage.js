@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import BlogCreator from "./BlogCreator";
 import { connect } from "react-redux";
 import Post from "./Post";
+import uuid from "uuid";
 
 class MainPage extends Component {
   render() {
@@ -15,7 +16,7 @@ class MainPage extends Component {
         <div className="ui container">
           {blogs
             ? blogs.map(blog => {
-                return <Post post={blog} />;
+                return <Post key={uuid()} post={blog} />;
               })
             : null}
         </div>

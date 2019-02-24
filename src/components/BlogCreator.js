@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { addNewEntry } from "../actions/blogActions";
 import { connect } from "react-redux";
 import BarLevel from "./BarLevel";
+import uuid from "uuid";
 import "../css/blogCreator.css";
 
 class BlogCreator extends Component {
@@ -11,37 +12,41 @@ class BlogCreator extends Component {
     tag: "",
     entryType: "",
     tags: [],
-    tagsError: false
+    tagsError: false,
+    entryTypeError: false
   };
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onRadioChange = e => {
-    this.setState({ entryType: e.target.value });
+    this.setState({ entryType: e.target.value, entryTypeError: false });
   };
 
   onFormSubmit = e => {
     e.preventDefault();
-    console.log(this.state.value);
-    const { title, body, entryType, tags } = this.state;
+    if (this.state.entryType === "") {
+      this.setState({ entryTypeError: true });
+    } else {
+      const { title, body, entryType, tags } = this.state;
 
-    const newEntry = {
-      title,
-      body,
-      entryType,
-      tags
-    };
+      const newEntry = {
+        title,
+        body,
+        entryType,
+        tags
+      };
 
-    this.props.addNewEntry(newEntry);
+      this.props.addNewEntry(newEntry);
 
-    this.setState({
-      title: "",
-      body: "",
-      entryType: "",
-      tag: "",
-      tags: []
-    });
+      this.setState({
+        title: "",
+        body: "",
+        entryType: "",
+        tag: "",
+        tags: []
+      });
+    }
   };
 
   onTagFormSubmit = e => {
@@ -85,10 +90,16 @@ class BlogCreator extends Component {
                 value="post"
                 checked={this.state.entryType === "post"}
                 onChange={this.onRadioChange}
+                className="hide"
               />
-              <label htmlFor="post">
-                <i class="bpost fas fa-blog"> Post</i>
-              </label>
+              <label className="radioIcon" htmlFor="post">
+                {this.state.entryType === "post" ? (
+                  <i className="radioIcon fas fa-check-circle" />
+                ) : (
+                  <i className="radioIcon far fa-check-circle" />
+                )}
+              </label>{" "}
+              <i className="bpost fas fa-blog">Blog</i>
             </div>
             <div className="field">
               <input
@@ -98,11 +109,24 @@ class BlogCreator extends Component {
                 value="news"
                 checked={this.state.entryType === "news"}
                 onChange={this.onRadioChange}
+                className="hide"
               />
               <label htmlFor="news">
-                <i class="bpost far fa-newspaper"> News</i>
-              </label>
+                {this.state.entryType === "news" ? (
+                  <i className="radioIcon fas fa-check-circle" />
+                ) : (
+                  <i className="radioIcon far fa-check-circle" />
+                )}
+              </label>{" "}
+              <i className="bpost far fa-newspaper"> News</i>
             </div>
+          </div>
+          <div>
+            {this.state.entryTypeError ? (
+              <div className="ui negative message">
+                <p>Please select a post type</p>
+              </div>
+            ) : null}
           </div>
           <div className="field">
             <label htmlFor="title">Title:</label>
@@ -158,7 +182,7 @@ class BlogCreator extends Component {
           {tags.map(tag => (
             <div className="item">
               <ul className="content ul">
-                <li className="borderlist header">
+                <li key={uuid()} className="borderlist header">
                   {tag}{" "}
                   <span onClick={() => this.onDeleteTag(tag)} className="tags">
                     <i className="fas fa-times" />
