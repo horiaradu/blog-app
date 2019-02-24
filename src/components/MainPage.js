@@ -5,25 +5,19 @@ import Post from "./Post";
 
 class MainPage extends Component {
   render() {
-    console.log(this.props.blogs);
-    const { blogs } = this.props;
+    const { blogs } = this.props.blogs;
+
     return (
       <div>
-        <div>
+        <div className="ui container">
           <BlogCreator />
         </div>
-        <div>
-          <ul>
-            {blogs
-              ? blogs.map(entry => {
-                  return (
-                    <li>
-                      <Post post={entry} />
-                    </li>
-                  );
-                })
-              : null}
-          </ul>
+        <div className="ui container">
+          {blogs
+            ? blogs.map(blog => {
+                return <Post post={blog} />;
+              })
+            : null}
         </div>
       </div>
     );
@@ -32,7 +26,7 @@ class MainPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    blogs: state.blog.blogs
+    blogs: state.blog
   };
 };
 

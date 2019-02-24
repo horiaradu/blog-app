@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { addNewEntry } from "../actions/blogActions";
 import { connect } from "react-redux";
+import BarLevel from "./BarLevel";
+import "../css/blogCreator.css";
 
 class BlogCreator extends Component {
   state = {
@@ -19,14 +21,17 @@ class BlogCreator extends Component {
   };
 
   onFormSubmit = e => {
+    e.preventDefault();
+    console.log(this.state.value);
     const { title, body, entryType, tags } = this.state;
+
     const newEntry = {
       title,
       body,
       entryType,
       tags
     };
-    e.preventDefault();
+
     this.props.addNewEntry(newEntry);
 
     this.setState({
@@ -40,75 +45,112 @@ class BlogCreator extends Component {
 
   onTagFormSubmit = e => {
     e.preventDefault();
-    this.setState({ tags: this.state.tags.concat(this.state.tag) });
-    this.state.tag = "";
+    this.setState({ tags: this.state.tags.concat(this.state.tag), tag: "" });
+  };
+
+  onDeleteTag = value => {
+    this.setState({ tags: this.state.tags.filter(tag => tag !== value) });
   };
 
   render() {
-    const { title, body, tag, tags } = this.state;
+    const { title, body, tag, tags, entryType } = this.state;
     return (
       <div>
-        <h1>Create Entry</h1>
-        <div>
-          <form onSubmit={this.onFormSubmit}>
-            <input
-              type="radio"
-              id="post"
-              name="entryType"
-              value="post"
-              onChange={this.onRadioChange}
-            />
-            <label htmlFor="post">Post</label>
-            <input
-              type="radio"
-              id="news"
-              name="entryType"
-              value="news"
-              onChange={this.onRadioChange}
-            />
-            <label htmlFor="news">News</label>
-            <div>
-              <label htmlFor="title">Title:</label>
+        <h1 className="ui grey ui top attached header center aligned">
+          Create Entry
+        </h1>
+        <br />
+        <form className="ui form six wide field" onSubmit={this.onFormSubmit}>
+          <div className="inline fields">
+            <div className="field">
               <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Name"
-                value={title}
-                onChange={this.onInputChange}
+                type="radio"
+                id="post"
+                name={this.state.entryType}
+                value="post"
+                checked={this.state.entryType === "post"}
+                onChange={this.onRadioChange}
               />
-              <label htmlFor="body">Body:</label>
-              <textarea
-                type="text"
-                id="body"
-                name="body"
-                placeholder="Body"
-                value={body}
-                onChange={this.onInputChange}
-              />
-              <div>
-                <input type="submit" value="Save" />
-              </div>
+              <label htmlFor="post">
+                <i class="bpost fas fa-blog"> Post</i>
+              </label>
             </div>
-          </form>
-          <div>
-            <form onSubmit={this.onTagFormSubmit}>
-              <label htmlFor="tags">Tags:</label>
+            <div className="field">
               <input
-                type="text"
-                id="tag"
-                name="tag"
-                placeholder="Insert a tag"
-                value={tag}
-                onChange={this.onInputChange}
+                type="radio"
+                id="news"
+                name={this.state.entryType}
+                value="news"
+                checked={this.state.entryType === "news"}
+                onChange={this.onRadioChange}
               />
-            </form>
-            <ul>
-              {tags.map(tag => (
-                <li>{tag}</li>
-              ))}
-            </ul>
+              <label htmlFor="news">
+                <i class="bpost far fa-newspaper"> News</i>
+              </label>
+            </div>
           </div>
+          <div className="field">
+            <label htmlFor="title">Title:</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Name"
+              value={title}
+              onChange={this.onInputChange}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="body">Body:</label>
+            <textarea
+              type="text"
+              id="body"
+              name="body"
+              placeholder="Body"
+              value={body}
+              onChange={this.onInputChange}
+            />
+          </div>
+          <div className="field">
+            {entryType === "news" ? <BarLevel /> : null}
+          </div>
+          <div className="field">
+            <label htmlFor="tags">Tags:</label>
+            <input
+              value={tag}
+              onChange={this.onInputChange}
+              onKeyDown={e => {
+                if (e.keyCode === 13) {
+                  this.onTagFormSubmit(e);
+                }
+              }}
+              type="text"
+              id="tag"
+              name="tag"
+              placeholder="Insert a tag"
+            />
+          </div>
+          <div className="field">
+            <input
+              className=" ui orange button right floated"
+              type="submit"
+              value="Save"
+            />
+          </div>
+        </form>
+        <div className="ui relaxed horizontal list">
+          {tags.map(tag => (
+            <div className="item">
+              <ul className="content">
+                <li className="borderlist header">
+                  {tag}{" "}
+                  <span onClick={() => this.onDeleteTag(tag)} className="tags">
+                    <i className="fas fa-times" />
+                  </span>
+                </li>
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     );

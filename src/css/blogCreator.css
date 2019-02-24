@@ -1,0 +1,38 @@
+body {
+  background: #eee;
+}
+
+.borderlist {
+  list-style-position: inside;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.tags {
+  vertical-align: middle;
+}
+
+.tags i {
+  cursor: pointer;
+}
+
+.rating {
+  padding: 20px;
+}
+
+.checkbox {
+  display: none;
+}
+.bpost {
+  font-size: 30px;
+}
+
+.labels {
+  padding: 20px 50px 5px 50px;
+  font-size: 2.2rem;
+}
+
+#barLevelTitle {
+  margin-top: 20px;
+}
