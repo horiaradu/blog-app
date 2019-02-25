@@ -44,7 +44,8 @@ class BlogCreator extends Component {
         body: "",
         entryType: "",
         tag: "",
-        tags: []
+        tags: [],
+        tagsError: false
       });
     }
   };
@@ -96,7 +97,7 @@ class BlogCreator extends Component {
                 {this.state.entryType === "post" ? (
                   <i className="radioIcon fas fa-check-circle" />
                 ) : (
-                  <i className="radioIcon far fa-check-circle" />
+                  <i className="radioIcon far fa-circle" />
                 )}
               </label>{" "}
               <i className="bpost fas fa-blog">Blog</i>
@@ -115,7 +116,7 @@ class BlogCreator extends Component {
                 {this.state.entryType === "news" ? (
                   <i className="radioIcon fas fa-check-circle" />
                 ) : (
-                  <i className="radioIcon far fa-check-circle" />
+                  <i className="radioIcon far fa-circle" />
                 )}
               </label>{" "}
               <i className="bpost far fa-newspaper"> News</i>
