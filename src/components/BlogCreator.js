@@ -13,20 +13,36 @@ class BlogCreator extends Component {
     entryType: "",
     tags: [],
     tagsError: false,
-    entryTypeError: false
+    entryTypeError: false,
+    emptyTitleError: false,
+    emptyBodyError: false
   };
   onInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      [e.target.name]: e.target.value,
+      emptyTitleError: false,
+      emptyBodyError: false
+    });
   };
-
   onRadioChange = e => {
-    this.setState({ entryType: e.target.value, entryTypeError: false });
+    this.setState({
+      entryType: e.target.value,
+      entryTypeError: false,
+      emptyTitleError: false,
+      emptyBodyError: false
+    });
   };
 
   onFormSubmit = e => {
     e.preventDefault();
     if (this.state.entryType === "") {
       this.setState({ entryTypeError: true });
+    }
+    if (this.state.title === "") {
+      this.setState({ emptyTitleError: true });
+    }
+    if (this.state.body === "") {
+      this.setState({ emptyBodyError: true });
     } else {
       const { title, body, entryType, tags } = this.state;
 
@@ -140,6 +156,13 @@ class BlogCreator extends Component {
               onChange={this.onInputChange}
             />
           </div>
+          <div>
+            {this.state.emptyTitleError ? (
+              <div className="ui negative message">
+                <p>Please enter a title</p>
+              </div>
+            ) : null}
+          </div>
           <div className="field">
             <label htmlFor="body">Body:</label>
             <textarea
@@ -150,6 +173,13 @@ class BlogCreator extends Component {
               value={body}
               onChange={this.onInputChange}
             />
+          </div>
+          <div>
+            {this.state.emptyBodyError ? (
+              <div className="ui negative message">
+                <p>Please write some text</p>
+              </div>
+            ) : null}
           </div>
           <div className="field">
             {entryType === "news" ? <BarLevel /> : null}
