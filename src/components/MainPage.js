@@ -9,11 +9,11 @@ class MainPage extends Component {
     const { blogs } = this.props.blogs;
 
     return (
-      <div>
-        <div className="ui container">
+      <div className="wrapper">
+        <div>
           <BlogCreator />
         </div>
-        <div className="ui container">
+        <div>
           {blogs
             ? blogs.map(blog => {
                 return <Post key={uuid()} post={blog} />;

@@ -27,9 +27,7 @@ class BlogCreator extends Component {
   onRadioChange = e => {
     this.setState({
       entryType: e.target.value,
-      entryTypeError: false,
-      emptyTitleError: false,
-      emptyBodyError: false
+      entryTypeError: false
     });
   };
 
@@ -37,11 +35,9 @@ class BlogCreator extends Component {
     e.preventDefault();
     if (this.state.entryType === "") {
       this.setState({ entryTypeError: true });
-    }
-    if (this.state.title === "") {
+    } else if (this.state.title === "") {
       this.setState({ emptyTitleError: true });
-    }
-    if (this.state.body === "") {
+    } else if (this.state.body === "") {
       this.setState({ emptyBodyError: true });
     } else {
       const { title, body, entryType, tags } = this.state;
@@ -93,135 +89,140 @@ class BlogCreator extends Component {
     const { title, body, tag, tags, entryType, tagsError } = this.state;
     return (
       <div>
-        <h1 className="ui grey ui top attached header center aligned">
-          Create Entry
-        </h1>
-        <br />
-        <form className="ui form six wide field" onSubmit={this.onFormSubmit}>
-          <div className="inline fields">
-            <div className="field">
-              <input
-                type="radio"
-                id="post"
-                name={this.state.entryType}
-                value="post"
-                checked={this.state.entryType === "post"}
-                onChange={this.onRadioChange}
-                className="hide"
-              />
-              <label className="radioIcon" htmlFor="post">
-                {this.state.entryType === "post" ? (
-                  <i className="radioIcon fas fa-check-circle" />
-                ) : (
-                  <i className="radioIcon far fa-circle" />
-                )}
-              </label>{" "}
-              <i className="bpost fas fa-blog">Blog</i>
+        <div className="panelTitle">
+          <h1>Create Entry</h1>
+          <br />
+        </div>
+        <div className="panelContent">
+          <form onSubmit={this.onFormSubmit}>
+            <div>
+              <div className="radioInLine">
+                <input
+                  type="radio"
+                  id="post"
+                  name={this.state.entryType}
+                  value="post"
+                  checked={this.state.entryType === "post"}
+                  onChange={this.onRadioChange}
+                  className="hide"
+                />
+                <label className="radioIcon" htmlFor="post">
+                  {this.state.entryType === "post" ? (
+                    <i className="radioIcon fas fa-check-circle" />
+                  ) : (
+                    <i className="radioIcon far fa-circle" />
+                  )}
+                </label>{" "}
+                <i className="bpost fas fa-blog">Blog</i>
+              </div>
+
+              <div className="radioInLine">
+                <input
+                  type="radio"
+                  id="news"
+                  name={this.state.entryType}
+                  value="news"
+                  checked={this.state.entryType === "news"}
+                  onChange={this.onRadioChange}
+                  className="hide"
+                />
+                <label htmlFor="news">
+                  {this.state.entryType === "news" ? (
+                    <i className="radioIcon fas fa-check-circle" />
+                  ) : (
+                    <i className="radioIcon far fa-circle" />
+                  )}
+                </label>{" "}
+                <i className="bpost far fa-newspaper"> News</i>
+              </div>
             </div>
-            <div className="field">
-              <input
-                type="radio"
-                id="news"
-                name={this.state.entryType}
-                value="news"
-                checked={this.state.entryType === "news"}
-                onChange={this.onRadioChange}
-                className="hide"
-              />
-              <label htmlFor="news">
-                {this.state.entryType === "news" ? (
-                  <i className="radioIcon fas fa-check-circle" />
-                ) : (
-                  <i className="radioIcon far fa-circle" />
-                )}
-              </label>{" "}
-              <i className="bpost far fa-newspaper"> News</i>
+            <div>
+              {this.state.entryTypeError ? (
+                <input
+                  className="displayError"
+                  type="text"
+                  placeholder="Please select a post type"
+                  disabled
+                />
+              ) : null}
             </div>
-          </div>
-          <div>
-            {this.state.entryTypeError ? (
-              <div className="ui negative message">
-                <p>Please select a post type</p>
-              </div>
-            ) : null}
-          </div>
-          <div className="field">
-            <label htmlFor="title">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Name"
-              value={title}
-              onChange={this.onInputChange}
-            />
-          </div>
-          <div>
-            {this.state.emptyTitleError ? (
-              <div className="ui negative message">
-                <p>Please enter a title</p>
-              </div>
-            ) : null}
-          </div>
-          <div className="field">
-            <label htmlFor="body">Body:</label>
-            <textarea
-              type="text"
-              id="body"
-              name="body"
-              placeholder="Body"
-              value={body}
-              onChange={this.onInputChange}
-            />
-          </div>
-          <div>
-            {this.state.emptyBodyError ? (
-              <div className="ui negative message">
-                <p>Please write some text</p>
-              </div>
-            ) : null}
-          </div>
-          <div className="field">
-            {entryType === "news" ? <BarLevel /> : null}
-          </div>
-          <div className="field">
-            <label htmlFor="tags">Tags:</label>
-            <input
-              value={tag}
-              onChange={this.onInputChange}
-              onKeyDown={e => {
-                if (e.keyCode === 13) {
-                  this.onTagFormSubmit(e);
-                }
-              }}
-              type="text"
-              id="tag"
-              name="tag"
-              disabled={tagsError ? "disabled" : ""}
-              placeholder={tagsError ? "Only 6 tags allowed" : "Insert a tag"}
-            />
-          </div>
-          <div className="field">
-            <input
-              className=" ui orange button right floated"
-              type="submit"
-              value="Save"
-            />
-          </div>
-        </form>
-        <div className="ui relaxed horizontal list">
-          {tags.map(tag => (
-            <div className="item">
-              <ul className="content ul">
-                <li key={uuid()} className="borderlist header">
-                  {tag}{" "}
-                  <span onClick={() => this.onDeleteTag(tag)} className="tags">
-                    <i className="fas fa-times" />
-                  </span>
-                </li>
+            <div>
+              <label htmlFor="title">Title:</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Name"
+                value={title}
+                onChange={this.onInputChange}
+                className="inputField"
+              />
+            </div>
+            <div>
+              {this.state.emptyTitleError ? (
+                <input
+                  className="displayError"
+                  type="text"
+                  placeholder="Please enter a title"
+                  disabled
+                />
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="body">Body:</label>
+              <textarea
+                type="text"
+                id="body"
+                name="body"
+                placeholder="Body"
+                value={body}
+                onChange={this.onInputChange}
+                className="textareaField"
+              />
+            </div>
+            <div>
+              {this.state.emptyBodyError ? (
+                <input
+                  className="displayError"
+                  type="text"
+                  placeholder="Please enter some text"
+                  disabled
+                />
+              ) : null}
+            </div>
+            <div>{entryType === "news" ? <BarLevel /> : null}</div>
+            <div>
+              <label htmlFor="tags">Tags:</label>
+              <input
+                className="inputField"
+                value={tag}
+                onChange={this.onInputChange}
+                onKeyDown={e => {
+                  if (e.keyCode === 13) {
+                    this.onTagFormSubmit(e);
+                  }
+                }}
+                type="text"
+                id="tag"
+                name="tag"
+                disabled={tagsError ? "disabled" : ""}
+                placeholder={tagsError ? "Only 6 tags allowed" : "Insert a tag"}
+              />
+            </div>
+            <div className="buttonWrap">
+              <input className="button" type="submit" value="Save" />
+              <ul className="ulStyle">
+                {tags.map(tag => (
+                  <li key={uuid()} className="tagStyle">
+                    {tag}{" "}
+                    <span onClick={() => this.onDeleteTag(tag)}>
+                      <i className="tags fas fa-times" />
+                    </span>
+                  </li>
+                ))}
               </ul>
             </div>
-          ))}
+          </form>
         </div>
       </div>
     );
