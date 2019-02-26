@@ -1,5 +1,6 @@
 const initialState = {
-  blogs: []
+  blogs: [],
+  comments: {}
 };
 
 export default function(state = initialState, action) {

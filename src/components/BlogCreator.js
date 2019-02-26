@@ -52,7 +52,6 @@ class BlogCreator extends Component {
         level
       };
 
-      console.log(newEntry);
       this.props.addNewEntry(newEntry);
 
       this.setState({
