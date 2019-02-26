@@ -1,4 +1,10 @@
 import uuid from "uuid";
+import api from '../services/api';
+
+export const fetchEntries = () => async dispatch => {
+  const entries = api.getEntries();
+  dispatch({ type: 'SET_ENTRIES', entries: entries })
+}
 
 export const addNewEntry = newEntry => dispatch => {
   dispatch({
