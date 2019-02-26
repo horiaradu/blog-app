@@ -7,7 +7,7 @@ export default function(state = initialState, action) {
     case "ADD_NEW_ENTRY":
       return {
         ...state,
-        blogs: state.blogs.concat(action.payload)
+        blogs: [action.payload, ...state.blogs]
       };
     default:
       return state;

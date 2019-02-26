@@ -12,11 +12,13 @@ class BlogCreator extends Component {
     tag: "",
     entryType: "",
     tags: [],
+    level: 1,
     tagsError: false,
     entryTypeError: false,
     emptyTitleError: false,
     emptyBodyError: false
   };
+
   onInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -40,15 +42,17 @@ class BlogCreator extends Component {
     } else if (this.state.body === "") {
       this.setState({ emptyBodyError: true });
     } else {
-      const { title, body, entryType, tags } = this.state;
+      const { title, body, entryType, tags, level } = this.state;
 
       const newEntry = {
         title,
         body,
         entryType,
-        tags
+        tags,
+        level
       };
 
+      console.log(newEntry);
       this.props.addNewEntry(newEntry);
 
       this.setState({
@@ -57,9 +61,14 @@ class BlogCreator extends Component {
         entryType: "",
         tag: "",
         tags: [],
+        level: 1,
         tagsError: false
       });
     }
+  };
+
+  updateLevel = level => {
+    this.setState({ level: level });
   };
 
   onTagFormSubmit = e => {
@@ -190,7 +199,11 @@ class BlogCreator extends Component {
                 />
               ) : null}
             </div>
-            <div>{entryType === "news" ? <BarLevel /> : null}</div>
+            <div>
+              {entryType === "news" ? (
+                <BarLevel updLevel={this.updateLevel} />
+              ) : null}
+            </div>
             <div>
               <label htmlFor="tags">Tags:</label>
               <input

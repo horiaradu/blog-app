@@ -8,32 +8,58 @@ class BarLevel extends React.Component {
 
   onChange = e => {
     if (e.target.value === "level5") {
-      this.setState({
-        arr: [1, 1, 1, 1, 1],
-        level: 5
-      });
+      this.setState(
+        {
+          arr: [1, 1, 1, 1, 1],
+          level: 5
+        },
+        () => {
+          this.props.updLevel(this.state.level);
+        }
+      );
     } else if (e.target.value === "level4") {
-      this.setState({
-        arr: [1, 1, 1, 1, 0],
-        level: 4
-      });
+      this.setState(
+        {
+          arr: [1, 1, 1, 1, 0],
+          level: 4
+        },
+        () => {
+          this.props.updLevel(this.state.level);
+        }
+      );
     } else if (e.target.value === "level3") {
-      this.setState({
-        arr: [1, 1, 1, 0, 0],
-        level: 3
-      });
+      this.setState(
+        {
+          arr: [1, 1, 1, 0, 0],
+          level: 3
+        },
+        () => {
+          this.props.updLevel(this.state.level);
+        }
+      );
     } else if (e.target.value === "level2") {
-      this.setState({
-        arr: [1, 1, 0, 0, 0],
-        level: 2
-      });
+      this.setState(
+        {
+          arr: [1, 1, 0, 0, 0],
+          level: 2
+        },
+        () => {
+          this.props.updLevel(this.state.level);
+        }
+      );
     } else if (e.target.value === "level1") {
-      this.setState({
-        arr: [1, 0, 0, 0, 0],
-        level: 1
-      });
+      this.setState(
+        {
+          arr: [1, 0, 0, 0, 0],
+          level: 1
+        },
+        () => {
+          this.props.updLevel(this.state.level);
+        }
+      );
     }
   };
+
   render() {
     const { arr } = this.state;
     return (
