@@ -28,26 +28,60 @@ class MainPage extends Component {
         <div>
           <BlogCreator />
         </div>
-        <div className="checkboxSelect">
-          <h2>All:</h2>
-          <input
-            id="posts"
-            name="post"
-            type="checkbox"
-            value="post"
-            checked={this.state.postCheck}
-            onChange={this.renderBasedOnCheckType}
-          />
-          <label htmlFor="posts">Posts</label>
-          <input
-            id="news"
-            name="news"
-            type="checkbox"
-            value="news"
-            checked={this.state.newsCheck}
-            onChange={this.renderBasedOnCheckType}
-          />
-          <label htmlFor="news">News</label>
+        <div className="checkBoxWrap ">
+          <div>
+            <h2>All:</h2>
+          </div>
+          {/* comment */}
+          <div className="checkboxInput">
+            <input
+              className="checkbox"
+              id="postsCheckBox"
+              name="post"
+              type="checkbox"
+              value="post"
+              checked={this.state.postCheck}
+              onChange={this.renderBasedOnCheckType}
+            />
+            <label htmlFor="postsCheckBox">
+              {this.state.postCheck ? (
+                <div className="checkboxText">
+                  <i className="checkSqIcon fas fa-square" />
+                  Posts
+                </div>
+              ) : (
+                <div className="checkboxText">
+                  <i className="checkSqIcon far fa-square" />
+                  Posts
+                </div>
+              )}
+            </label>
+          </div>
+          {/* comment */}
+          <div className="checkboxInput">
+            <input
+              className="checkbox"
+              id="newsCheckBox"
+              name="news"
+              type="checkbox"
+              value="news"
+              checked={this.state.newsCheck}
+              onChange={this.renderBasedOnCheckType}
+            />
+            <label htmlFor="newsCheckBox">
+              {this.state.newsCheck ? (
+                <div className="checkboxText">
+                  <i className="checkSqIcon fas fa-square" />
+                  News
+                </div>
+              ) : (
+                <div className="checkboxText">
+                  <i className="checkSqIcon far fa-square" />
+                  News
+                </div>
+              )}
+            </label>
+          </div>
         </div>
         <div>
           {(blogs && this.state.postCheck === true) ||

@@ -6,9 +6,6 @@ body {
   margin-left: auto; /* 1 */
 
   max-width: 960px; /* 2 */
-
-  padding-right: 10px; /* 3 */
-  padding-left: 10px; /* 3 */
 }
 
 .panelTitle {
@@ -30,7 +27,9 @@ body {
 .panelContent {
   border: 1px solid lightgrey;
   border-top: none;
-  padding: 0.7rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem;
 }
@@ -145,6 +144,7 @@ input:focus {
 
 .ulStyle {
   padding: 0;
+  margin-bottom: 0;
 }
 
 .tagStyle {

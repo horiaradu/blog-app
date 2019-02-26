@@ -1,0 +1,19 @@
+.postContent {
+  border: 1px solid lightgrey;
+  border-top: none;
+  padding: 1rem;
+  border-bottom-left-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
+}
+.postTitle {
+  background: #333;
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 14px;
+  color: white;
+}

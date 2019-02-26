@@ -1,23 +1,25 @@
 import React, { Component } from "react";
+import "../css/news.css";
 
 class News extends Component {
   render() {
     const { title, body, tags, level } = this.props.news;
     return (
-      <div>
-        <div>
-          <h1>
-            {title} <span>{`Importance ${level}/5`}</span>
-          </h1>
+      <div className="blogSeparator">
+        <div className="newsTitle">
+          <h2 className="newsTitle2">{title}</h2>
+          <h2 className="levelBarSpan">{`Hot ${level}/5`}</h2>
         </div>
-        <p>{body}</p>
-        <ul>
-          {tags
-            ? tags.map(tag => {
-                return <li>{tag}</li>;
-              })
-            : null}
-        </ul>
+        <div className="newsContent">
+          <p>{body}</p>
+          <ul className="ulStyle">
+            {tags
+              ? tags.map(tag => {
+                  return <li className="tagStyle">{tag}</li>;
+                })
+              : null}
+          </ul>
+        </div>
       </div>
     );
   }
