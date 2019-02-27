@@ -10,10 +10,6 @@ class Comments extends Component {
     this.setState({ showComments: !this.state.showComments });
   };
 
-  showComments = () => {
-    this.setState({ showComments: true });
-  };
-
   render() {
     const { showComments } = this.state;
     const comments = this.props.comments;
@@ -35,13 +31,14 @@ class Comments extends Component {
               return (
                 <div>
                   <h5>Author: {comment.author}</h5>
-                  <p>Text: {comment.text}</p>
+                  <p>
+                    Text: {comment.text} <span>Date:{comment.commentDate}</span>
+                  </p>
                 </div>
               );
             })
           : null}
-        <br />
-        <AddCommentForm showComments={this.showComments} />
+        {showComments ? <AddCommentForm /> : null}
       </div>
     );
   }

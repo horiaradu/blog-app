@@ -1,6 +1,6 @@
 const initialState = {
   blogs: [],
-  comments: {}
+  comments: []
 };
 
 export default function(state = initialState, action) {
@@ -9,6 +9,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         blogs: [action.payload, ...state.blogs]
+      };
+    case "ADD_NEW_COMMENT":
+      return {
+        ...state,
+        comments: [...state.comments, action.payload]
       };
     default:
       return state;

@@ -5,24 +5,27 @@ import { connect } from "react-redux";
 class AddCommentForm extends Component {
   state = {
     author: "",
-    text: ""
+    text: "",
+    commentDate: new Date().toLocaleString()
   };
+
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onFormSubmit = e => {
     e.preventDefault();
-    const { author, text } = this.state;
+    const { author, text, commentDate } = this.state;
+
     const newComment = {
       author,
-      text
+      text,
+      commentDate
     };
+
     this.props.addNewComment(newComment);
 
-    this.setState({ author: "", text: "" }, () => {
-      this.props.showComments();
-    });
+    this.setState({ author: "", text: "" });
   };
 
   render() {

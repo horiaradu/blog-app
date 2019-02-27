@@ -19,7 +19,7 @@
 
 .newsTitle2 {
   display: flex;
-  width: 50%;
+  width: 80%;
   align-items: center;
   justify-content: flex-start;
   margin: 0;
@@ -27,7 +27,7 @@
 
 .levelBarSpan {
   display: flex;
-  width: 50%;
+  width: 20%;
   align-items: center;
   justify-content: flex-end;
   margin: 0;

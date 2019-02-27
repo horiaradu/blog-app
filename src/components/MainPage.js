@@ -15,7 +15,6 @@ class MainPage extends Component {
     );
   }
 }
-
 const mapStateToProps = state => {
   return {
     blogs: state.blog

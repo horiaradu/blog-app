@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../css/posts.css";
+import Comments from "./Comments";
 
 class Post extends Component {
   render() {
@@ -18,6 +19,7 @@ class Post extends Component {
                 })
               : null}
           </ul>
+          <Comments />
         </div>
       </div>
     );
