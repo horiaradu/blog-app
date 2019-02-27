@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { addNewEntry } from "../actions/blogActions";
 import { connect } from "react-redux";
 import BarLevel from "./BarLevel";
-import uuid from "uuid";
 import "../css/blogCreator.css";
 
 class BlogCreator extends Component {
@@ -19,13 +18,22 @@ class BlogCreator extends Component {
     emptyBodyError: false
   };
 
+  changeErrorState = () => {
+    const { title, body } = this.state;
+    if (title !== "") {
+      this.setState({ emptyTitleError: false });
+    }
+    if (body !== "") {
+      this.setState({ emptyBodyError: false });
+    }
+  };
+
   onInputChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      emptyTitleError: false,
-      emptyBodyError: false
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      this.changeErrorState();
     });
   };
+
   onRadioChange = e => {
     this.setState({
       entryType: e.target.value,
@@ -34,16 +42,22 @@ class BlogCreator extends Component {
   };
 
   onFormSubmit = e => {
+    const { title, body, entryType, tags, level } = this.state;
     e.preventDefault();
-    if (this.state.entryType === "") {
-      this.setState({ entryTypeError: true });
-    } else if (this.state.title === "") {
-      this.setState({ emptyTitleError: true });
-    } else if (this.state.body === "") {
-      this.setState({ emptyBodyError: true });
-    } else {
-      const { title, body, entryType, tags, level } = this.state;
 
+    if (entryType === "") {
+      this.setState({
+        entryTypeError: true
+      });
+    }
+    if (title === "") {
+      this.setState({ emptyTitleError: true });
+    }
+    if (body === "") {
+      this.setState({ emptyBodyError: true });
+    }
+
+    if (body !== "" && title !== "" && entryType !== "") {
       const newEntry = {
         title,
         body,
@@ -225,7 +239,7 @@ class BlogCreator extends Component {
               <input className="button" type="submit" value="Save" />
               <ul className="ulStyle">
                 {tags.map(tag => (
-                  <li key={uuid()} className="tagStyle">
+                  <li key={tag} className="tagStyle">
                     {tag}{" "}
                     <span onClick={() => this.onDeleteTag(tag)}>
                       <i className="tags fas fa-times" />
