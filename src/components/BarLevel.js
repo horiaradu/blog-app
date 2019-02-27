@@ -14,7 +14,7 @@ class BarLevel extends React.Component {
           level: 5
         },
         () => {
-          this.props.updLevel(this.state.level);
+          this.props.updateLevel(this.state.level);
         }
       );
     } else if (e.target.value === "level4") {
@@ -24,7 +24,7 @@ class BarLevel extends React.Component {
           level: 4
         },
         () => {
-          this.props.updLevel(this.state.level);
+          this.props.updateLevel(this.state.level);
         }
       );
     } else if (e.target.value === "level3") {
@@ -34,7 +34,7 @@ class BarLevel extends React.Component {
           level: 3
         },
         () => {
-          this.props.updLevel(this.state.level);
+          this.props.updateLevel(this.state.level);
         }
       );
     } else if (e.target.value === "level2") {
@@ -44,7 +44,7 @@ class BarLevel extends React.Component {
           level: 2
         },
         () => {
-          this.props.updLevel(this.state.level);
+          this.props.updateLevel(this.state.level);
         }
       );
     } else if (e.target.value === "level1") {
@@ -54,7 +54,7 @@ class BarLevel extends React.Component {
           level: 1
         },
         () => {
-          this.props.updLevel(this.state.level);
+          this.props.updateLevel(this.state.level);
         }
       );
     }
@@ -63,12 +63,12 @@ class BarLevel extends React.Component {
   render() {
     const { arr } = this.state;
     return (
-      <div>
-        <h3 className="ui centered grid" id="barLevelTitle">
-          How Important Is This?<span>{`${this.state.level}/5`}</span>
-        </h3>
-        <div className="ui centered grid">
-          <label className="labels" htmlFor="level1">
+      <div className="">
+        <div className="barLevelTitleWrap">
+          <h4 className="barLevelTitle">How Important Is This?</h4>
+        </div>
+        <div className="labels">
+          <label className="label" htmlFor="level1">
             {arr[0] === 1 ? (
               <i className="fas fa-circle" />
             ) : (
@@ -85,7 +85,7 @@ class BarLevel extends React.Component {
             onChange={this.onChange}
           />
 
-          <label className="labels" htmlFor="level2">
+          <label className="label" htmlFor="level2">
             {arr[1] === 1 ? (
               <i className="fas fa-circle" />
             ) : (
@@ -101,7 +101,7 @@ class BarLevel extends React.Component {
             checked={arr[1] === 1 ? "checked" : ""}
             onChange={this.onChange}
           />
-          <label className="labels" htmlFor="level3">
+          <label className="label" htmlFor="level3">
             {arr[2] === 1 ? (
               <i className="fas fa-circle" />
             ) : (
@@ -117,7 +117,7 @@ class BarLevel extends React.Component {
             checked={arr[2] === 1 ? "checked" : ""}
             onChange={this.onChange}
           />
-          <label className="labels" htmlFor="level4">
+          <label className="label" htmlFor="level4">
             {arr[3] === 1 ? (
               <i className="fas fa-circle" />
             ) : (
@@ -133,7 +133,7 @@ class BarLevel extends React.Component {
             checked={arr[3] === 1 ? "checked" : ""}
             onChange={this.onChange}
           />
-          <label className="labels" htmlFor="level5">
+          <label className="label" htmlFor="level5">
             {arr[4] === 1 ? (
               <i className="fas fa-circle" />
             ) : (
@@ -149,6 +149,7 @@ class BarLevel extends React.Component {
             checked={arr[4] === 1 ? "checked" : ""}
             onChange={this.onChange}
           />
+          <span className="barLevelSpan">{`${this.state.level}/5`}</span>
         </div>
       </div>
     );

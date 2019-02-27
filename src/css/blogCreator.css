@@ -33,6 +33,10 @@ body {
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem;
 }
+.radioButtonsWrapper {
+  display: flex;
+  justify-content: center;
+}
 
 .radioIcon {
   font-size: 1rem;
@@ -45,10 +49,6 @@ body {
 .radioInLine {
   display: inline-block;
   padding: 1rem;
-}
-
-.hide {
-  display: none !important;
 }
 
 input[type="radio"] + label > .far {
@@ -116,13 +116,31 @@ input:focus {
   display: none;
 }
 
+.label {
+  padding: 15px;
+  padding-left: 0;
+  font-size: 1rem;
+}
 .labels {
-  padding: 20px 50px 5px 50px;
-  font-size: 1.8rem;
+  margin: 10px 10px 10px 0;
+}
+.barlevelWrapper {
+  border: 1px solid black;
 }
 
-#barLevelTitle {
-  margin-top: 20px;
+.barLevelTitleWrap {
+  margin: 10px;
+  margin-left: 0;
+}
+.barLevelTitle {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.4285em;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.barLevelSpan {
+  font-size: 1rem;
 }
 
 .buttonWrap {
@@ -144,7 +162,8 @@ input:focus {
 
 .ulStyle {
   padding: 0;
-  margin-bottom: 0;
+  margin-bottom: 14px;
+  margin-top: 14px;
 }
 
 .tagStyle {

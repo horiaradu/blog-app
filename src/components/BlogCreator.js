@@ -15,7 +15,8 @@ class BlogCreator extends Component {
     tagsError: false,
     entryTypeError: false,
     emptyTitleError: false,
-    emptyBodyError: false
+    emptyBodyError: false,
+    tagReused: false
   };
 
   changeErrorState = () => {
@@ -32,6 +33,9 @@ class BlogCreator extends Component {
     this.setState({ [e.target.name]: e.target.value }, () => {
       this.changeErrorState();
     });
+    if (this.state.tagReused) {
+      this.setState({ tagReused: false });
+    }
   };
 
   onRadioChange = e => {
@@ -87,15 +91,21 @@ class BlogCreator extends Component {
   onTagFormSubmit = e => {
     e.preventDefault();
 
-    if (this.state.tags.length < 5) {
+    if (
+      this.state.tags.length < 5 &&
+      !this.state.tags.includes(this.state.tag)
+    ) {
       this.setState({
         tags: this.state.tags.concat(this.state.tag),
         tag: ""
       });
-    } else {
+    } else if (!this.state.tags.includes(this.state.tag)) {
       this.setState({ tag: "", tagsError: true });
       this.setState({ tags: this.state.tags.concat(this.state.tag), tag: "" });
-    }
+    } else
+      this.setState({
+        tagReused: true
+      });
   };
 
   onDeleteTag = value => {
@@ -117,7 +127,7 @@ class BlogCreator extends Component {
         </div>
         <div className="panelContent">
           <form onSubmit={this.onFormSubmit}>
-            <div>
+            <div className="radioButtonsWrapper">
               <div className="radioInLine">
                 <input
                   type="radio"
@@ -126,15 +136,8 @@ class BlogCreator extends Component {
                   value="post"
                   checked={this.state.entryType === "post"}
                   onChange={this.onRadioChange}
-                  className="hide"
-                />
-                <label className="radioIcon" htmlFor="post">
-                  {this.state.entryType === "post" ? (
-                    <i className="radioIcon fas fa-check-circle" />
-                  ) : (
-                    <i className="radioIcon far fa-circle" />
-                  )}
-                </label>{" "}
+                />{" "}
+                <label className="radioIcon" htmlFor="post" />
                 <i className="bpost fas fa-blog">Blog</i>
               </div>
 
@@ -146,15 +149,8 @@ class BlogCreator extends Component {
                   value="news"
                   checked={this.state.entryType === "news"}
                   onChange={this.onRadioChange}
-                  className="hide"
-                />
-                <label htmlFor="news">
-                  {this.state.entryType === "news" ? (
-                    <i className="radioIcon fas fa-check-circle" />
-                  ) : (
-                    <i className="radioIcon far fa-circle" />
-                  )}
-                </label>{" "}
+                />{" "}
+                <label htmlFor="news" />
                 <i className="bpost far fa-newspaper"> News</i>
               </div>
             </div>
@@ -214,7 +210,7 @@ class BlogCreator extends Component {
             </div>
             <div>
               {entryType === "news" ? (
-                <BarLevel updLevel={this.updateLevel} />
+                <BarLevel updateLevel={this.updateLevel} />
               ) : null}
             </div>
             <div>
@@ -234,19 +230,25 @@ class BlogCreator extends Component {
                 disabled={tagsError ? "disabled" : ""}
                 placeholder={tagsError ? "Only 6 tags allowed" : "Insert a tag"}
               />
+              {this.state.tagReused ? <p>tag already used</p> : null}
             </div>
-            <div className="buttonWrap">
-              <input className="button" type="submit" value="Save" />
+            <div>
               <ul className="ulStyle">
                 {tags.map(tag => (
                   <li key={tag} className="tagStyle">
                     {tag}{" "}
                     <span onClick={() => this.onDeleteTag(tag)}>
-                      <i className="tags fas fa-times" />
+                      <i
+                        style={{ cursor: "pointer" }}
+                        className="tags fas fa-times"
+                      />
                     </span>
                   </li>
                 ))}
               </ul>
+            </div>
+            <div className="buttonWrap">
+              <input className="button" type="submit" value="Save" />
             </div>
           </form>
         </div>
