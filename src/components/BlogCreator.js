@@ -3,6 +3,7 @@ import { addNewEntry } from "../actions/blogActions";
 import { connect } from "react-redux";
 import BarLevel from "./BarLevel";
 import "../css/blogCreator.css";
+import classNames from "classnames";
 
 class BlogCreator extends Component {
   state = {
@@ -118,7 +119,38 @@ class BlogCreator extends Component {
   };
 
   render() {
-    const { title, body, tag, tags, entryType, tagsError } = this.state;
+    const {
+      title,
+      body,
+      tag,
+      tags,
+      entryType,
+      tagsError,
+      emptyBodyError,
+      emptyTitleError,
+      entryTypeError
+    } = this.state;
+
+    let inputErrorTitle = classNames({
+      inputError: emptyTitleError
+    });
+
+    let labelErrorTitle = classNames({
+      labelError: emptyTitleError
+    });
+
+    let inputErrorBody = classNames({
+      inputError: emptyBodyError
+    });
+
+    let labelErrorBody = classNames({
+      labelError: emptyBodyError
+    });
+
+    let radioError = classNames({
+      radioError: entryTypeError
+    });
+
     return (
       <div>
         <div className="panelTitle">
@@ -155,15 +187,11 @@ class BlogCreator extends Component {
               </div>
             </div>
             <div>
-              {this.state.entryTypeError ? (
-                <input
-                  className="displayError"
-                  type="text"
-                  placeholder="Please select a post type"
-                  disabled
-                />
-              ) : null}
+              {entryTypeError && (
+                <p className={radioError}>Please choose a post type</p>
+              )}
             </div>
+
             <div>
               <label htmlFor="title">Title:</label>
               <input
@@ -173,19 +201,13 @@ class BlogCreator extends Component {
                 placeholder="Name"
                 value={title}
                 onChange={this.onInputChange}
-                className="inputField"
+                className={`inputField ${inputErrorTitle}`}
               />
+              {emptyTitleError && (
+                <p className={labelErrorTitle}>Please enter a title</p>
+              )}
             </div>
-            <div>
-              {this.state.emptyTitleError ? (
-                <input
-                  className="displayError"
-                  type="text"
-                  placeholder="Please enter a title"
-                  disabled
-                />
-              ) : null}
-            </div>
+
             <div>
               <label htmlFor="body">Body:</label>
               <textarea
@@ -195,19 +217,13 @@ class BlogCreator extends Component {
                 placeholder="Body"
                 value={body}
                 onChange={this.onInputChange}
-                className="textareaField"
+                className={`textareaField ${inputErrorBody}`}
               />
+              {emptyBodyError && (
+                <p className={labelErrorBody}>Please enter some text</p>
+              )}
             </div>
-            <div>
-              {this.state.emptyBodyError ? (
-                <input
-                  className="displayError"
-                  type="text"
-                  placeholder="Please enter some text"
-                  disabled
-                />
-              ) : null}
-            </div>
+
             <div>
               {entryType === "news" ? (
                 <BarLevel updateLevel={this.updateLevel} />
@@ -230,7 +246,7 @@ class BlogCreator extends Component {
                 disabled={tagsError ? "disabled" : ""}
                 placeholder={tagsError ? "Only 6 tags allowed" : "Insert a tag"}
               />
-              {this.state.tagReused ? <p>tag already used</p> : null}
+              {this.state.tagReused && <p>tag already used</p>}
             </div>
             <div>
               <ul className="ulStyle">

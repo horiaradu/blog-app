@@ -179,3 +179,28 @@ input:focus {
   vertical-align: middle;
   padding-left: 5px;
 }
+
+.radioError {
+  color: #a54745;
+  font-size: 12px;
+  margin-top: -5px;
+  margin-bottom: 10px !important;
+  text-align: center;
+  border-bottom: 1px solid #dfb4b4;
+  width: 30%;
+  margin: auto;
+}
+
+.labelError {
+  color: #a54745;
+  font-size: 12px;
+  margin-top: -5px;
+  margin-bottom: 10px !important;
+}
+.inputError {
+  border: 1px solid #dfb4b4;
+  background-color: #fff6f6;
+}
+.inputError::placeholder {
+  color: #e7c0bf;
+}
