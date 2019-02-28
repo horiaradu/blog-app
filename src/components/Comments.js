@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import AddCommentForm from "./AddCommentForm";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import CommentForm from './CommentForm';
 
 class Comments extends Component {
   state = {
@@ -18,12 +18,7 @@ class Comments extends Component {
         <br />
         <div>
           <h3>
-            Comments{" "}
-            <i
-              style={{ cursor: "pointer" }}
-              className="fas fa-sort-down"
-              onClick={this.onShowClick}
-            />
+            Comments <i style={{ cursor: 'pointer' }} className="fas fa-sort-down" onClick={this.onShowClick} />
           </h3>
         </div>
         {showComments
@@ -38,7 +33,7 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <AddCommentForm /> : null}
+        {showComments ? <CommentForm /> : null}
       </div>
     );
   }

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { addNewComment } from "../actions/blogActions";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { addNewComment } from '../actions/blogActions';
+import { connect } from 'react-redux';
 
 class AddCommentForm extends Component {
   state = {
-    author: "",
-    text: "",
+    author: '',
+    text: '',
     commentDate: new Date().toLocaleString()
   };
 
@@ -25,7 +25,7 @@ class AddCommentForm extends Component {
 
     this.props.addNewComment(newComment);
 
-    this.setState({ author: "", text: "" });
+    this.setState({ author: '', text: '' });
   };
 
   render() {
@@ -35,20 +35,9 @@ class AddCommentForm extends Component {
         <form onSubmit={this.onFormSubmit}>
           <h4>Add a comment: </h4>
           <label>Author:</label>
-          <input
-            placeholder="Enter Name"
-            type="text"
-            name="author"
-            value={author}
-            onChange={this.onInputChange}
-          />
+          <input placeholder="Enter Name" type="text" name="author" value={author} onChange={this.onInputChange} />
           <label>Comment:</label>
-          <textarea
-            placeholder="Type Something..."
-            value={text}
-            name="text"
-            onChange={this.onInputChange}
-          />
+          <textarea placeholder="Type Something..." value={text} name="text" onChange={this.onInputChange} />
           <input type="submit" value="Submit" />
         </form>
       </div>

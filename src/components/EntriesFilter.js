@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class FilterEntries extends Component {
   renderBasedOnCheckType = e => {
-    if (e.target.value === "post") {
+    if (e.target.value === 'post') {
       this.props.changePostCheck();
     }
-    if (e.target.value === "news") {
+    if (e.target.value === 'news') {
       this.props.changeNewsCheck();
     }
   };
@@ -28,19 +28,7 @@ class FilterEntries extends Component {
               checked={postCheck}
               onChange={this.renderBasedOnCheckType}
             />
-            <label htmlFor="postsCheckBox">
-              {postCheck ? (
-                <div className="checkboxText">
-                  <i className="checkSqIcon fas fa-square" />
-                  Posts
-                </div>
-              ) : (
-                <div className="checkboxText">
-                  <i className="checkSqIcon far fa-square" />
-                  Posts
-                </div>
-              )}
-            </label>
+            <label htmlFor="postsCheckBox">Blogs</label>
           </div>
           <div className="checkboxInput">
             <input
@@ -52,19 +40,7 @@ class FilterEntries extends Component {
               checked={newsCheck}
               onChange={this.renderBasedOnCheckType}
             />
-            <label htmlFor="newsCheckBox">
-              {newsCheck ? (
-                <div className="checkboxText">
-                  <i className="checkSqIcon fas fa-square" />
-                  News
-                </div>
-              ) : (
-                <div className="checkboxText">
-                  <i className="checkSqIcon far fa-square" />
-                  News
-                </div>
-              )}
-            </label>
+            <label htmlFor="newsCheckBox">News</label>
           </div>
         </div>
       </div>

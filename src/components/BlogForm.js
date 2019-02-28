@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { addNewEntry } from "../actions/blogActions";
-import { connect } from "react-redux";
-import BarLevel from "./BarLevel";
-import "../css/blogCreator.css";
-import classNames from "classnames";
+import React, { Component } from 'react';
+import { addNewEntry } from '../actions/blogActions';
+import { connect } from 'react-redux';
+import BarLevel from './BarLevel';
+import '../css/blogCreator.css';
+import classNames from 'classnames';
 
-class BlogCreator extends Component {
+class BlogForm extends Component {
   state = {
-    title: "",
-    body: "",
-    tag: "",
-    entryType: "",
+    title: '',
+    body: '',
+    tag: '',
+    entryType: '',
     tags: [],
     level: 1,
     tagsError: false,
@@ -22,10 +22,10 @@ class BlogCreator extends Component {
 
   changeErrorState = () => {
     const { title, body } = this.state;
-    if (title !== "") {
+    if (title !== '') {
       this.setState({ emptyTitleError: false });
     }
-    if (body !== "") {
+    if (body !== '') {
       this.setState({ emptyBodyError: false });
     }
   };
@@ -50,19 +50,19 @@ class BlogCreator extends Component {
     const { title, body, entryType, tags, level } = this.state;
     e.preventDefault();
 
-    if (entryType === "") {
+    if (entryType === '') {
       this.setState({
         entryTypeError: true
       });
     }
-    if (title === "") {
+    if (title === '') {
       this.setState({ emptyTitleError: true });
     }
-    if (body === "") {
+    if (body === '') {
       this.setState({ emptyBodyError: true });
     }
 
-    if (body !== "" && title !== "" && entryType !== "") {
+    if (body !== '' && title !== '' && entryType !== '') {
       const newEntry = {
         title,
         body,
@@ -74,10 +74,10 @@ class BlogCreator extends Component {
       this.props.addNewEntry(newEntry);
 
       this.setState({
-        title: "",
-        body: "",
-        entryType: "",
-        tag: "",
+        title: '',
+        body: '',
+        entryType: '',
+        tag: '',
         tags: [],
         level: 1,
         tagsError: false
@@ -92,17 +92,14 @@ class BlogCreator extends Component {
   onTagFormSubmit = e => {
     e.preventDefault();
 
-    if (
-      this.state.tags.length < 5 &&
-      !this.state.tags.includes(this.state.tag)
-    ) {
+    if (this.state.tags.length < 5 && !this.state.tags.includes(this.state.tag)) {
       this.setState({
         tags: this.state.tags.concat(this.state.tag),
-        tag: ""
+        tag: ''
       });
     } else if (!this.state.tags.includes(this.state.tag)) {
-      this.setState({ tag: "", tagsError: true });
-      this.setState({ tags: this.state.tags.concat(this.state.tag), tag: "" });
+      this.setState({ tag: '', tagsError: true });
+      this.setState({ tags: this.state.tags.concat(this.state.tag), tag: '' });
     } else
       this.setState({
         tagReused: true
@@ -128,27 +125,12 @@ class BlogCreator extends Component {
       tagsError,
       emptyBodyError,
       emptyTitleError,
-      entryTypeError
+      entryTypeError,
+      tagReused
     } = this.state;
 
     let inputErrorTitle = classNames({
       inputError: emptyTitleError
-    });
-
-    let labelErrorTitle = classNames({
-      labelError: emptyTitleError
-    });
-
-    let inputErrorBody = classNames({
-      inputError: emptyBodyError
-    });
-
-    let labelErrorBody = classNames({
-      labelError: emptyBodyError
-    });
-
-    let radioError = classNames({
-      radioError: entryTypeError
     });
 
     return (
@@ -166,9 +148,9 @@ class BlogCreator extends Component {
                   id="post"
                   name={this.state.entryType}
                   value="post"
-                  checked={this.state.entryType === "post"}
+                  checked={this.state.entryType === 'post'}
                   onChange={this.onRadioChange}
-                />{" "}
+                />{' '}
                 <label className="radioIcon" htmlFor="post" />
                 <i className="bpost fas fa-blog">Blog</i>
               </div>
@@ -179,16 +161,22 @@ class BlogCreator extends Component {
                   id="news"
                   name={this.state.entryType}
                   value="news"
-                  checked={this.state.entryType === "news"}
+                  checked={this.state.entryType === 'news'}
                   onChange={this.onRadioChange}
-                />{" "}
+                />{' '}
                 <label htmlFor="news" />
                 <i className="bpost far fa-newspaper"> News</i>
               </div>
             </div>
             <div>
               {entryTypeError && (
-                <p className={radioError}>Please choose a post type</p>
+                <p
+                  className={classNames({
+                    radioError: entryTypeError
+                  })}
+                >
+                  Please choose a post type
+                </p>
               )}
             </div>
 
@@ -201,10 +189,18 @@ class BlogCreator extends Component {
                 placeholder="Name"
                 value={title}
                 onChange={this.onInputChange}
-                className={`inputField ${inputErrorTitle}`}
+                className={classNames('inputField', {
+                  inputError: emptyTitleError
+                })}
               />
               {emptyTitleError && (
-                <p className={labelErrorTitle}>Please enter a title</p>
+                <p
+                  className={classNames({
+                    labelError: emptyTitleError
+                  })}
+                >
+                  Please enter a title
+                </p>
               )}
             </div>
 
@@ -217,22 +213,25 @@ class BlogCreator extends Component {
                 placeholder="Body"
                 value={body}
                 onChange={this.onInputChange}
-                className={`textareaField ${inputErrorBody}`}
+                className={classNames('textareaField', { inputError: emptyBodyError })}
               />
               {emptyBodyError && (
-                <p className={labelErrorBody}>Please enter some text</p>
+                <p
+                  className={classNames({
+                    labelError: emptyBodyError
+                  })}
+                >
+                  Please enter some text
+                </p>
               )}
             </div>
 
-            <div>
-              {entryType === "news" ? (
-                <BarLevel updateLevel={this.updateLevel} />
-              ) : null}
-            </div>
+            <div>{entryType === 'news' ? <BarLevel updateLevel={this.updateLevel} /> : null}</div>
+
             <div>
               <label htmlFor="tags">Tags:</label>
               <input
-                className="inputField"
+                className={classNames('inputField', { inputErrorTag: tagReused })}
                 value={tag}
                 onChange={this.onInputChange}
                 onKeyDown={e => {
@@ -243,22 +242,29 @@ class BlogCreator extends Component {
                 type="text"
                 id="tag"
                 name="tag"
-                disabled={tagsError ? "disabled" : ""}
-                placeholder={tagsError ? "Only 6 tags allowed" : "Insert a tag"}
+                disabled={tagsError ? 'disabled' : ''}
+                placeholder={tagsError ? 'Only 6 tags allowed' : 'Insert a tag'}
               />
-              {this.state.tagReused && <p>tag already used</p>}
+              {this.state.tagReused && (
+                <p
+                  className={classNames({
+                    tagReusedError: tagReused
+                  })}
+                >
+                  Tag already used
+                </p>
+              )}
             </div>
             <div>
               <ul className="ulStyle">
                 {tags.map(tag => (
                   <li key={tag} className="tagStyle">
-                    {tag}{" "}
-                    <span onClick={() => this.onDeleteTag(tag)}>
-                      <i
-                        style={{ cursor: "pointer" }}
-                        className="tags fas fa-times"
-                      />
-                    </span>
+                    {tag}
+                    <i
+                      onClick={() => this.onDeleteTag(tag)}
+                      style={{ cursor: 'pointer' }}
+                      className="tagsDeleteIcon fas fa-times"
+                    />
                   </li>
                 ))}
               </ul>
@@ -276,4 +282,4 @@ class BlogCreator extends Component {
 export default connect(
   null,
   { addNewEntry }
-)(BlogCreator);
+)(BlogForm);

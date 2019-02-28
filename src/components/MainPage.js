@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import BlogCreator from "./BlogCreator";
-import { connect } from "react-redux";
-import RenderEntries from "./RenderEntries";
-import "../css/mainPage.css";
+import React, { Component } from 'react';
+import BlogForm from './BlogForm';
+import { connect } from 'react-redux';
+import BlogEntry from './BlogEntry';
+import '../css/mainPage.css';
 
 class MainPage extends Component {
   render() {
     const { blogs } = this.props.blogs;
     return (
       <div className="wrapper">
-        <BlogCreator />
-        <RenderEntries blogs={blogs} />
+        <BlogForm />
+        <BlogEntry blogs={blogs} />
       </div>
     );
   }

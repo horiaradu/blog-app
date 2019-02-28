@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class BarLevel extends React.Component {
   state = {
@@ -7,57 +7,18 @@ class BarLevel extends React.Component {
   };
 
   onChange = e => {
-    if (e.target.value === "level5") {
-      this.setState(
-        {
-          arr: [1, 1, 1, 1, 1],
-          level: 5
-        },
-        () => {
-          this.props.updateLevel(this.state.level);
-        }
-      );
-    } else if (e.target.value === "level4") {
-      this.setState(
-        {
-          arr: [1, 1, 1, 1, 0],
-          level: 4
-        },
-        () => {
-          this.props.updateLevel(this.state.level);
-        }
-      );
-    } else if (e.target.value === "level3") {
-      this.setState(
-        {
-          arr: [1, 1, 1, 0, 0],
-          level: 3
-        },
-        () => {
-          this.props.updateLevel(this.state.level);
-        }
-      );
-    } else if (e.target.value === "level2") {
-      this.setState(
-        {
-          arr: [1, 1, 0, 0, 0],
-          level: 2
-        },
-        () => {
-          this.props.updateLevel(this.state.level);
-        }
-      );
-    } else if (e.target.value === "level1") {
-      this.setState(
-        {
-          arr: [1, 0, 0, 0, 0],
-          level: 1
-        },
-        () => {
-          this.props.updateLevel(this.state.level);
-        }
-      );
-    }
+    const value = e.target.value;
+    const index = parseInt(value[value.length - 1]);
+
+    this.setState(
+      {
+        level: index,
+        arr: new Array(index).fill(1).concat(new Array(5 - index).fill(0))
+      },
+      () => {
+        this.props.updateLevel(this.state.level);
+      }
+    );
   };
 
   render() {
@@ -72,14 +33,8 @@ class BarLevel extends React.Component {
             return (
               <React.Fragment>
                 <label className="label" htmlFor={`level${index + 1}`}>
-                  {" "}
-                  <i
-                    className={`iconBarLevel ${
-                      input === 1
-                        ? "fas fa-circle"
-                        : "far fa-circle iconBarLevel"
-                    }`}
-                  />
+                  {' '}
+                  <i className={`iconBarLevel ${input === 1 ? 'fas fa-circle' : 'far fa-circle iconBarLevel'}`} />
                 </label>
                 <input
                   className="checkbox hideBarLevelCheckBox"
@@ -87,7 +42,7 @@ class BarLevel extends React.Component {
                   type="checkbox"
                   name="barLevel"
                   value={`level${index + 1}`}
-                  checked={input === 1 ? "checked" : ""}
+                  checked={input === 1 ? 'checked' : ''}
                   onChange={this.onChange}
                 />
               </React.Fragment>

@@ -104,14 +104,6 @@ input:focus {
   padding: 5px 5px 5px 5px;
 }
 
-.tags i {
-  cursor: pointer;
-}
-
-.rating {
-  padding: 20px;
-}
-
 .checkbox {
   width: 20px;
   height: 20px;
@@ -211,4 +203,17 @@ input:focus {
 }
 .inputError::placeholder {
   color: #e7c0bf;
+}
+
+.inputErrorTag {
+  border: 1px solid #dfb4b4;
+  background-color: #fff6f6;
+  color: #e7c0bf;
+}
+
+.tagReusedError {
+  color: #a54745;
+  font-size: 12px;
+  margin-top: -5px;
+  margin-bottom: 10px !important;
 }
