@@ -68,87 +68,31 @@ class BarLevel extends React.Component {
           <h4 className="barLevelTitle">How Important Is This?</h4>
         </div>
         <div className="labels">
-          <label className="label" htmlFor="level1">
-            {arr[0] === 1 ? (
-              <i className="fas fa-circle" />
-            ) : (
-              <i className="far fa-circle" />
-            )}
-          </label>
-          <input
-            className="checkbox"
-            id="level1"
-            type="checkbox"
-            name="barLevel"
-            value="level1"
-            checked={arr[0] === 1 ? "checked" : ""}
-            onChange={this.onChange}
-          />
-
-          <label className="label" htmlFor="level2">
-            {arr[1] === 1 ? (
-              <i className="fas fa-circle" />
-            ) : (
-              <i className="far fa-circle" />
-            )}
-          </label>
-          <input
-            className="checkbox"
-            id="level2"
-            type="checkbox"
-            name="barLevel"
-            value="level2"
-            checked={arr[1] === 1 ? "checked" : ""}
-            onChange={this.onChange}
-          />
-          <label className="label" htmlFor="level3">
-            {arr[2] === 1 ? (
-              <i className="fas fa-circle" />
-            ) : (
-              <i className="far fa-circle" />
-            )}
-          </label>
-          <input
-            className="checkbox"
-            id="level3"
-            type="checkbox"
-            name="barLevel"
-            value="level3"
-            checked={arr[2] === 1 ? "checked" : ""}
-            onChange={this.onChange}
-          />
-          <label className="label" htmlFor="level4">
-            {arr[3] === 1 ? (
-              <i className="fas fa-circle" />
-            ) : (
-              <i className="far fa-circle" />
-            )}
-          </label>
-          <input
-            className="checkbox"
-            id="level4"
-            type="checkbox"
-            name="barLevel"
-            value="level4"
-            checked={arr[3] === 1 ? "checked" : ""}
-            onChange={this.onChange}
-          />
-          <label className="label" htmlFor="level5">
-            {arr[4] === 1 ? (
-              <i className="fas fa-circle" />
-            ) : (
-              <i className="far fa-circle" />
-            )}
-          </label>
-          <input
-            className="checkbox"
-            id="level5"
-            type="checkbox"
-            name="barLevel"
-            value="level5"
-            checked={arr[4] === 1 ? "checked" : ""}
-            onChange={this.onChange}
-          />
+          {arr.map((input, index) => {
+            return (
+              <React.Fragment>
+                <label className="label" htmlFor={`level${index + 1}`}>
+                  {" "}
+                  <i
+                    className={`iconBarLevel ${
+                      input === 1
+                        ? "fas fa-circle"
+                        : "far fa-circle iconBarLevel"
+                    }`}
+                  />
+                </label>
+                <input
+                  className="checkbox hideBarLevelCheckBox"
+                  id={`level${index + 1}`}
+                  type="checkbox"
+                  name="barLevel"
+                  value={`level${index + 1}`}
+                  checked={input === 1 ? "checked" : ""}
+                  onChange={this.onChange}
+                />
+              </React.Fragment>
+            );
+          })}
           <span className="barLevelSpan">{`${this.state.level}/5`}</span>
         </div>
       </div>
