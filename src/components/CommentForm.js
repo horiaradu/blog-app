@@ -33,12 +33,24 @@ class AddCommentForm extends Component {
     return (
       <div>
         <form onSubmit={this.onFormSubmit}>
-          <h4>Add a comment: </h4>
           <label>Author:</label>
-          <input placeholder="Enter Name" type="text" name="author" value={author} onChange={this.onInputChange} />
+          <input
+            className="inputField"
+            placeholder="Enter Name"
+            type="text"
+            name="author"
+            value={author}
+            onChange={this.onInputChange}
+          />
           <label>Comment:</label>
-          <textarea placeholder="Type Something..." value={text} name="text" onChange={this.onInputChange} />
-          <input type="submit" value="Submit" />
+          <textarea
+            className="textareaField"
+            placeholder="Type Something..."
+            value={text}
+            name="text"
+            onChange={this.onInputChange}
+          />
+          <input type="submit" className="commentButton" value="Add Comment" />
         </form>
       </div>
     );

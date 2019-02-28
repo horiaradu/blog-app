@@ -129,10 +129,6 @@ class BlogForm extends Component {
       tagReused
     } = this.state;
 
-    let inputErrorTitle = classNames({
-      inputError: emptyTitleError
-    });
-
     return (
       <div>
         <div className="panelTitle">
