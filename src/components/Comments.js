@@ -31,7 +31,7 @@ class Comments extends Component {
                         <span className="date"> {comment.commentDate}</span>
                       </div>
                     </h5>
-                    <div>{comment.text}</div>
+                    <div className="commentBody">{comment.text}</div>
                   </div>
                 </div>
               );
