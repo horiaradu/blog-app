@@ -33,8 +33,14 @@ class AddCommentForm extends Component {
     const { author, text, commentDate } = this.state;
 
     const newComment = {
-      author,
-      text,
+      author: author
+        .slice(0, 1)
+        .toUpperCase()
+        .concat(author.slice(1)),
+      text: text
+        .slice(0, 1)
+        .toUpperCase()
+        .concat(text.slice(1)),
       commentDate
     };
     if (author === '') {

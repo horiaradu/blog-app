@@ -64,8 +64,14 @@ class BlogForm extends Component {
 
     if (body !== '' && title !== '' && entryType !== '') {
       const newEntry = {
-        title,
-        body,
+        title: title
+          .slice(0, 1)
+          .toUpperCase()
+          .concat(title.slice(1)),
+        body: body
+          .slice(0, 1)
+          .toUpperCase()
+          .concat(body.slice(1)),
         entryType,
         tags,
         level
