@@ -22,9 +22,10 @@ export const addNewEntry = newEntry => dispatch => {
   });
 };
 
-export const addNewComment = newComment => dispatch => {
+export const addNewComment = (newComment, postUuid) => dispatch => {
   dispatch({
     type: 'ADD_NEW_COMMENT',
-    payload: { ...newComment, uuid: uuid() }
+    payload: { ...newComment, uuid: uuid() },
+    postUuid: postUuid
   });
 };

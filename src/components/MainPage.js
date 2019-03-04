@@ -11,7 +11,8 @@ class MainPage extends Component {
   }
 
   render() {
-    const { blogs } = this.props.blogs;
+    const blogs = this.props.blogs;
+    console.log(blogs);
     return (
       <div className="wrapper">
         <BlogForm />
@@ -22,7 +23,7 @@ class MainPage extends Component {
 }
 const mapStateToProps = state => {
   return {
-    blogs: state.blog
+    blogs: state.blog.entries
   };
 };
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import CommentForm from './CommentForm';
 import '../css/comments.css';
 
@@ -38,17 +37,10 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <CommentForm /> : null}
+        {showComments ? <CommentForm postUuid={this.props.postUuid} /> : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    comments: state.blog.comments,
-    blogs: state.blog.blogs
-  };
-};
-
-export default connect(mapStateToProps)(Comments);
+export default Comments;

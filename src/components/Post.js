@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "../css/posts.css";
-import Comments from "./Comments";
+import React, { Component } from 'react';
+import '../css/posts.css';
+import Comments from './Comments';
 
 class Post extends Component {
   render() {
-    const { title, body, tags } = this.props.post;
+    const { title, body, tags } = this.props.post.entry;
     return (
       <div className="blogSeparator">
         <div className="postTitle">
@@ -19,7 +19,7 @@ class Post extends Component {
                 })
               : null}
           </ul>
-          <Comments />
+          <Comments comments={this.props.post.comments} postUuid={this.props.post.entry.uuid} />
         </div>
       </div>
     );

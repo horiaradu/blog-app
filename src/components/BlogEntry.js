@@ -29,10 +29,10 @@ class BlogEntry extends Component {
         <div>
           {(blogs && this.state.postCheck === true) || this.state.newsCheck === true ? (
             blogs.map(blog => {
-              if (blog.entryType === 'post' && this.state.postCheck === true) {
-                return <Post key={blog.uuid} post={blog} />;
-              } else if (blog.entryType === 'news' && this.state.newsCheck === true) {
-                return <News key={blog.uuid} news={blog} />;
+              if (blog.entry.entryType === 'post' && this.state.postCheck === true) {
+                return <Post key={blog.entry.uuid} post={blog} />;
+              } else if (blog.entry.entryType === 'news' && this.state.newsCheck === true) {
+                return <News key={blog.entry.uuid} news={blog} />;
               } else return null;
             })
           ) : blogs && this.state.postCheck === false && this.state.newsCheck === false ? (

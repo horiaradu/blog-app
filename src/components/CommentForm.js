@@ -50,7 +50,7 @@ class AddCommentForm extends Component {
       this.setState({ emptyTextError: true });
     }
     if (author !== '' && text !== '') {
-      this.props.addNewComment(newComment);
+      this.props.addNewComment(newComment, this.props.postUuid);
       this.props.addCommentsToLocalStorage();
       this.setState({ author: '', text: '' });
     }

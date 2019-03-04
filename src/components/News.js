@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import "../css/news.css";
+import React, { Component } from 'react';
+import '../css/news.css';
 
 class News extends Component {
   render() {
-    const { title, body, tags, level } = this.props.news;
+    const { title, body, tags, level } = this.props.news.entry;
     return (
       <div className="blogSeparator">
         <div className="newsTitle">
