@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addNewEntry, fetchEntries, addEntriesToLocalStorage } from '../actions/blogActions';
+import { addNewEntry, addEntriesToLocalStorage } from '../actions/blogActions';
 import { connect } from 'react-redux';
 import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
@@ -19,10 +19,6 @@ class BlogForm extends Component {
     emptyBodyError: false,
     tagReused: false
   };
-
-  componentDidMount() {
-    this.props.fetchEntries();
-  }
 
   changeErrorState = () => {
     const { title, body } = this.state;
@@ -288,5 +284,5 @@ class BlogForm extends Component {
 
 export default connect(
   null,
-  { addNewEntry, fetchEntries, addEntriesToLocalStorage }
+  { addNewEntry, addEntriesToLocalStorage }
 )(BlogForm);

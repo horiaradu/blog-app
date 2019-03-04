@@ -11,6 +11,10 @@ export const addEntriesToLocalStorage = () => dispatch => {
   dispatch({ type: 'ADD_ENTRIES_TO_LOCAL_STORAGE' });
 };
 
+export const addCommentsToLocalStorage = () => dispatch => {
+  dispatch({ type: 'ADD_COMMENTS_TO_LOCAL_STORAGE' });
+};
+
 export const addNewEntry = newEntry => dispatch => {
   dispatch({
     type: 'ADD_NEW_ENTRY',

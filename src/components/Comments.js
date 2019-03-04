@@ -14,6 +14,7 @@ class Comments extends Component {
   render() {
     const { showComments } = this.state;
     const comments = this.props.comments;
+
     return (
       <div className="comments">
         <h3 className="commentHeader">
@@ -45,7 +46,8 @@ class Comments extends Component {
 
 const mapStateToProps = state => {
   return {
-    comments: state.blog.comments
+    comments: state.blog.comments,
+    blogs: state.blog.blogs
   };
 };
 
