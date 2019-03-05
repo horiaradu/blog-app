@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addNewComment, addCommentsToLocalStorage } from '../actions/blogActions';
+import { addNewComment } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
@@ -51,7 +51,7 @@ class AddCommentForm extends Component {
     }
     if (author !== '' && text !== '') {
       this.props.addNewComment(newComment, this.props.postUuid);
-      this.props.addCommentsToLocalStorage();
+      // this.props.addCommentsToLocalStorage();
       this.setState({ author: '', text: '' });
     }
   };
@@ -105,5 +105,5 @@ class AddCommentForm extends Component {
 
 export default connect(
   null,
-  { addNewComment, addCommentsToLocalStorage }
+  { addNewComment }
 )(AddCommentForm);

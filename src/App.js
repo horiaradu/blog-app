@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import MainPage from './components/MainPage';
+import Posts from './container/Posts';
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -11,7 +11,7 @@ class App extends Component {
         <Router>
           <div>
             <Switch>
-              <Route exact path="/" component={MainPage} />
+              <Route exact path="/" component={Posts} />
             </Switch>
           </div>
         </Router>

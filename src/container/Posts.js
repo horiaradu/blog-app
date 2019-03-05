@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import BlogForm from './BlogForm';
+import BlogForm from '../components/BlogForm';
 import { connect } from 'react-redux';
-import BlogEntry from './BlogEntry';
+import BlogEntry from '../components/BlogEntries';
 import '../css/mainPage.css';
-import { fetchEntries } from '../actions/blogActions';
+// import { fetchEntries } from '../actions/blogActions';
 
 class MainPage extends Component {
-  componentDidMount() {
-    this.props.fetchEntries();
-  }
+  // componentDidMount() {
+  //   this.props.fetchEntries();
+  // }
 
   render() {
     const blogs = this.props.blogs;
-    console.log(blogs);
+
     return (
       <div className="wrapper">
         <BlogForm />
@@ -27,7 +27,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchEntries }
-)(MainPage);
+export default connect(mapStateToProps)(MainPage);

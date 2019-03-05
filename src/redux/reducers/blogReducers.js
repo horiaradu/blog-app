@@ -1,10 +1,12 @@
+import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, ADD_ENTRIES_TO_LS } from '../actions/actionTypes';
+
 const initialState = {
   entries: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_NEW_ENTRY':
+    case ADD_NEW_ENTRY:
       if (action.payload.entryType === 'post') {
         return {
           ...state,
@@ -17,7 +19,7 @@ export default function(state = initialState, action) {
         };
       }
 
-    case 'ADD_NEW_COMMENT':
+    case ADD_NEW_COMMENT:
       const postUuid = action.postUuid;
       const newEntries = state.entries.map(x => {
         if (x.entry.uuid === postUuid) {
@@ -34,19 +36,24 @@ export default function(state = initialState, action) {
         entries: newEntries
       };
 
-    case 'ADD_ENTRIES_TO_LOCAL_STORAGE':
-      localStorage.setItem('entries', JSON.stringify(state.blogs));
+    case ADD_ENTRIES_TO_LS:
       return {
-        ...state,
-        blogs: state.blogs
+        ...state
       };
 
-    case 'ADD_COMMENTS_TO_LOCAL_STORAGE':
-      localStorage.setItem('comments', JSON.stringify(state.comments));
-      return {
-        ...state,
-        comments: state.comments
-      };
+    // case 'ADD_ENTRIES_TO_LOCAL_STORAGE':
+    //   localStorage.setItem('entries', JSON.stringify(state.blogs));
+    //   return {
+    //     ...state,
+    //     blogs: state.blogs
+    //   };
+
+    // case 'ADD_COMMENTS_TO_LOCAL_STORAGE':
+    //   localStorage.setItem('comments', JSON.stringify(state.comments));
+    //   return {
+    //     ...state,
+    //     comments: state.comments
+    //   };
 
     // } else if (state.blogs.length === 1) {
     //   const localStoreageOldPosts = JSON.parse(localStorage.getItem('entries'));
@@ -66,20 +73,6 @@ export default function(state = initialState, action) {
     //     blogs: newLocalStorage
     //   };
     // }
-
-    case 'FETCH_ENTRIES':
-      if (localStorage.getItem('entries')) {
-        const localStoragePosts = JSON.parse(localStorage.getItem('entries'));
-        const localStorageComments = JSON.parse(localStorage.getItem('comments'));
-        return {
-          ...state,
-          blogs: localStoragePosts,
-          comments: localStorageComments
-        };
-      }
-      return {
-        ...state
-      };
 
     default:
       return state;
