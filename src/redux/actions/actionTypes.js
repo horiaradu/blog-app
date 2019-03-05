@@ -1,3 +1,3 @@
 export const ADD_NEW_ENTRY = 'ADD_NEW_ENTRY';
 export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT';
-export const ADD_ENTRIES_TO_LS = 'ADD_ENTRIES_TO_LS';
+export const SET_ENTRIES = 'SET_ENTRIES';
