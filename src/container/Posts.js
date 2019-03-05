@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BlogForm from '../components/BlogForm';
 import { connect } from 'react-redux';
-import BlogEntry from '../components/BlogEntries';
+import BlogEntries from '../components/BlogEntries';
 import '../css/mainPage.css';
 import { fetchEntries } from '../redux/actions/blogActions';
 
@@ -16,7 +16,7 @@ class MainPage extends Component {
     return (
       <div className="wrapper">
         <BlogForm />
-        <BlogEntry blogs={blogs} />
+        <BlogEntries blogs={blogs} />
       </div>
     );
   }

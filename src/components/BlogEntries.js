@@ -3,7 +3,7 @@ import Post from './Post';
 import News from './News';
 import EntriesFilter from './EntriesFilter';
 
-class BlogEntry extends Component {
+class BlogEntries extends Component {
   state = {
     postCheck: true,
     newsCheck: true
@@ -44,4 +44,4 @@ class BlogEntry extends Component {
   }
 }
 
-export default BlogEntry;
+export default BlogEntries;

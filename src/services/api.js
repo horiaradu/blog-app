@@ -15,6 +15,10 @@ const api = {
     const newEntries = existingEntries.concat(entry);
     localStorage.setItem('entries', JSON.stringify(newEntries));
   }
+
+  // TODO: createComment(...) {
+  //   ...
+  // }
 };
 
 export default api;
