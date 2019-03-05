@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addNewEntry, addToLocalStorage } from '../redux/actions/blogActions';
+import { addNewEntry } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
@@ -78,7 +78,6 @@ class BlogForm extends Component {
       };
 
       this.props.addNewEntry(newEntry);
-      this.props.addToLocalStorage();
 
       this.setState({
         title: '',
@@ -284,5 +283,5 @@ class BlogForm extends Component {
 
 export default connect(
   null,
-  { addNewEntry, addToLocalStorage }
+  { addNewEntry }
 )(BlogForm);

@@ -3,12 +3,12 @@ import BlogForm from '../components/BlogForm';
 import { connect } from 'react-redux';
 import BlogEntry from '../components/BlogEntries';
 import '../css/mainPage.css';
-// import { fetchEntries } from '../actions/blogActions';
+import { fetchEntries } from '../redux/actions/blogActions';
 
 class MainPage extends Component {
-  // componentDidMount() {
-  //   this.props.fetchEntries();
-  // }
+  componentDidMount() {
+    this.props.fetchEntries();
+  }
 
   render() {
     const blogs = this.props.blogs;
@@ -27,4 +27,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(MainPage);
+export default connect(
+  mapStateToProps,
+  { fetchEntries }
+)(MainPage);
