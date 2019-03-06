@@ -31,9 +31,26 @@ const api = {
 
       localStorage.setItem('entries', JSON.stringify(newEntries));
     }
-  }
+  },
 
   // TODO: createComment(...) {
+  createComment(comment, postUuid) {
+    const dataFromLocalStorage = this.fetchEntries();
+    const newComments = dataFromLocalStorage.map(entry => {
+      if (entry.entry.uuid === postUuid) {
+        return {
+          entry: entry.entry,
+          comments: entry.comments.concat(comment)
+        };
+      } else {
+        return {
+          entry: entry.entry,
+          comments: entry.comments
+        };
+      }
+    });
+    localStorage.setItem('entries', JSON.stringify(newComments));
+  }
 };
 
 export default api;

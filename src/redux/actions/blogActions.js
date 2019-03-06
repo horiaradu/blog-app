@@ -25,9 +25,13 @@ export const addNewEntry = newEntry => dispatch => {
 
 export const addNewComment = (newComment, postUuid) => dispatch => {
   // TODO: api.createComment(....)
+  const toCreate = { ...newComment, uuid: uuid() };
+
+  // side effect: http call
+  api.createComment(toCreate, postUuid);
   dispatch({
     type: ADD_NEW_COMMENT,
-    payload: { ...newComment, uuid: uuid() },
+    payload: toCreate,
     postUuid: postUuid
   });
 };
