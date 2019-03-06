@@ -10,7 +10,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         entries: action.payload.map(x => {
-          return { entry: x };
+          return x;
         })
       };
 

@@ -12,13 +12,28 @@ const api = {
 
   createEntry(entry) {
     const existingEntries = this.fetchEntries();
-    const newEntries = existingEntries.concat(entry);
-    localStorage.setItem('entries', JSON.stringify(newEntries));
+    if (existingEntries.length === 0) {
+      console.log('first if');
+      const newEntries = [
+        {
+          entry: entry,
+          comments: []
+        }
+      ];
+      localStorage.setItem('entries', JSON.stringify(newEntries));
+    } else {
+      console.log('second if');
+      const newEntry = {
+        entry: entry,
+        comments: []
+      };
+      const newEntries = existingEntries.concat(newEntry);
+
+      localStorage.setItem('entries', JSON.stringify(newEntries));
+    }
   }
 
   // TODO: createComment(...) {
-  //   ...
-  // }
 };
 
 export default api;
