@@ -10,17 +10,25 @@ export const fetchEntries = () => dispatch => {
   dispatch({ type: SET_ENTRIES, payload: entries });
 };
 
-export const addNewEntry = newEntry => dispatch => {
-  const toCreate = { ...newEntry, uuid: uuid() };
-
+export const addNewEntry = newEntry => (dispatch, getState, { getFirebase, getFirestore }) => {
+  // const toCreate = { ...newEntry, uuid: uuid() };
   // side effect: http call
-  api.createEntry(toCreate);
+  // api.createEntry(toCreate);
+
+  const firestoreEntries = getFirestore();
+  firestoreEntries
+    .collection('entries')
+    .add({
+      ...newEntry
+    })
+    .then(() => {
+      dispatch({
+        type: ADD_NEW_ENTRY,
+        payload: newEntry
+      });
+    });
 
   // dispatch action => write in store
-  dispatch({
-    type: ADD_NEW_ENTRY,
-    payload: toCreate
-  });
 };
 
 export const addNewComment = (newComment, postUuid) => dispatch => {
