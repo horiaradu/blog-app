@@ -1,13 +1,18 @@
 // here, we don't talk about state, actions, reducers, UI
 // here, we only have local storage
+import firebase from 'firebase';
 
 const api = {
-  fetchEntries() {
-    const dataFromLocalStorage = localStorage.getItem('entries');
-    if (dataFromLocalStorage === null) {
-      return [];
-    }
-    return JSON.parse(dataFromLocalStorage);
+  async fetchEntries() {
+    const entries = [];
+    await firebase
+      .firestore()
+      .collection('entries')
+      .get()
+      .then(snapshot => {
+        snapshot.docs.map(entry => entries.push({ entry: entry.data() }));
+      });
+    return entries;
   },
 
   createEntry(entry) {

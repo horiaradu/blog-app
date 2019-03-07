@@ -5,23 +5,12 @@ import firebase from 'firebase';
 
 export const fetchEntries = () => async dispatch => {
   // side effect: http call
-  // const entries = api.fetchEntries();
-
-  const entries = [];
-  await firebase
-    .firestore()
-    .collection('entries')
-    .get()
-    .then(snapshot => {
-      snapshot.docs.map(entry => entries.push({ entry: entry.data() }));
-    })
-    .then(() => {
-      // dispatch action => write in store
-      dispatch({ type: SET_ENTRIES, payload: entries });
-    });
+  const entries = await api.fetchEntries();
+  // dispatch action => write in store
+  dispatch({ type: SET_ENTRIES, payload: entries });
 };
 
-export const addNewEntry = newEntry => (dispatch, getState, { getFirebase, getFirestore }) => {
+export const addNewEntry = newEntry => (dispatch, getState, { getFirestore }) => {
   // const toCreate = { ...newEntry, uuid: uuid() };
   // side effect: http call
   // api.createEntry(toCreate);
@@ -33,13 +22,12 @@ export const addNewEntry = newEntry => (dispatch, getState, { getFirebase, getFi
       ...newEntry
     })
     .then(() => {
+      // dispatch action => write in store
       dispatch({
         type: ADD_NEW_ENTRY,
         payload: newEntry
       });
     });
-
-  // dispatch action => write in store
 };
 
 export const addNewComment = (newComment, postUuid) => dispatch => {
