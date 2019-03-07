@@ -1,13 +1,24 @@
 import uuid from 'uuid';
 import api from '../../services/api';
 import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES } from '../actions/actionTypes';
+import firebase from 'firebase';
 
-export const fetchEntries = () => dispatch => {
+export const fetchEntries = () => async dispatch => {
   // side effect: http call
-  const entries = api.fetchEntries();
+  // const entries = api.fetchEntries();
 
-  // dispatch action => write in store
-  dispatch({ type: SET_ENTRIES, payload: entries });
+  const entries = [];
+  await firebase
+    .firestore()
+    .collection('entries')
+    .get()
+    .then(snapshot => {
+      snapshot.docs.map(entry => entries.push({ entry: entry.data() }));
+    })
+    .then(() => {
+      // dispatch action => write in store
+      dispatch({ type: SET_ENTRIES, payload: entries });
+    });
 };
 
 export const addNewEntry = newEntry => (dispatch, getState, { getFirebase, getFirestore }) => {
