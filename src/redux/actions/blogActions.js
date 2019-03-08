@@ -5,7 +5,7 @@ import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES } from '../actions/actionTy
 export const fetchEntries = () => async dispatch => {
   const entries = await api.fetchEntries();
 
-  dispatch({ type: SET_ENTRIES, payload: entries });
+  dispatch({ type: SET_ENTRIES, payload: entries.reverse() });
 };
 
 export const addNewEntry = newEntry => dispatch => {

@@ -18,12 +18,12 @@ export default function(state = initialState, action) {
       if (action.payload.entryType === 'post') {
         return {
           ...state,
-          entries: [...state.entries, { entry: action.payload, comments: [] }]
+          entries: [{ entry: action.payload, comments: [] }, ...state.entries]
         };
       } else {
         return {
           ...state,
-          entries: [...state.entries, { entry: action.payload }]
+          entries: [{ entry: action.payload }, ...state.entries]
         };
       }
 

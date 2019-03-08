@@ -1,5 +1,3 @@
-// here, we don't talk about state, actions, reducers, UI
-// here, we only have local storage
 import firebase from 'firebase';
 
 const api = {
@@ -7,6 +5,7 @@ const api = {
     const snapshot = await firebase
       .firestore()
       .collection('entries')
+      .orderBy('entryDate')
       .get();
     return snapshot.docs.map(entry => entry.data());
   },
@@ -14,7 +13,8 @@ const api = {
   createEntry(entry) {
     const newEntry = {
       entry: entry,
-      comments: []
+      comments: [],
+      entryDate: new Date().toLocaleString()
     };
 
     firebase
@@ -31,6 +31,7 @@ const api = {
 
     snapshot.docs.map(entry => {
       if (entry.data().entry.uuid === postUuid) {
+        console.log(entry);
         firebase
           .firestore()
           .collection('entries')
