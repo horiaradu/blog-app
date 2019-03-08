@@ -12,7 +12,6 @@ class MainPage extends Component {
 
   render() {
     const blogs = this.props.blogs;
-
     return (
       <div className="wrapper">
         <BlogForm />

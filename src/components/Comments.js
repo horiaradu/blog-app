@@ -13,7 +13,6 @@ class Comments extends Component {
   render() {
     const { showComments } = this.state;
     const comments = this.props.comments;
-
     return (
       <div className="comments">
         <h3 className="commentHeader">

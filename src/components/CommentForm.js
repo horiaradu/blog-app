@@ -50,6 +50,7 @@ class AddCommentForm extends Component {
       this.setState({ emptyTextError: true });
     }
     if (author !== '' && text !== '') {
+      //change the postId
       this.props.addNewComment(newComment, this.props.postUuid);
       this.setState({ author: '', text: '' });
     }
