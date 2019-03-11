@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../redux/actions/authAuctions';
+import { Redirect } from 'react-router-dom';
 
 class SignIn extends Component {
   state = {
@@ -17,6 +18,8 @@ class SignIn extends Component {
   };
 
   render() {
+    const { authError, auth } = this.props;
+    if (auth.uid) return <Redirect to="/" />;
     return (
       <div>
         <form onSubmit={this.onFormSubmit}>
@@ -25,13 +28,21 @@ class SignIn extends Component {
           <label htmlFor="password">Password</label>
           <input id="password" type="password" onChange={this.onInputChange} />
           <button>Login</button>
+          {authError && <p>{authError}</p>}
         </form>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    authError: state.auth.authError,
+    auth: state.firebase.auth
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { signIn }
 )(SignIn);
