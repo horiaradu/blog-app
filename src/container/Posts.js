@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import BlogEntries from '../components/BlogEntries';
 import '../css/mainPage.css';
 import { fetchEntries } from '../redux/actions/blogActions';
-import { Redirect } from 'react-router-dom';
 
 class MainPage extends Component {
   componentDidMount() {
@@ -12,8 +11,8 @@ class MainPage extends Component {
   }
 
   render() {
-    const { blogs, auth } = this.props;
-    if (!auth.uid) return <Redirect to="/login" />;
+    const { blogs } = this.props;
+
     return (
       <div className="wrapper">
         <BlogForm />
@@ -24,8 +23,7 @@ class MainPage extends Component {
 }
 const mapStateToProps = state => {
   return {
-    blogs: state.blog.entries,
-    auth: state.firebase.auth
+    blogs: state.blog.entries
   };
 };
 

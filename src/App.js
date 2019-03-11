@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import SignIn from './components/auth/SignIn';
 import { Provider } from 'react-redux';
 import store from './store';
+import hoc from './components/auth/RouteProtection';
 
 class App extends Component {
   render() {
@@ -14,7 +15,7 @@ class App extends Component {
           <div>
             <Navbar />
             <Switch>
-              <Route exact path="/" component={Posts} />
+              <Route exact path="/" component={hoc(Posts)} />
               <Route path="/login" component={SignIn} />
             </Switch>
           </div>
