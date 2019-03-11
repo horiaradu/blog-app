@@ -1,22 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../../redux/actions/authAuctions';
+import '../../css/auth.css';
 
 const Navbar = props => {
   const auth = props.auth;
   return (
     <nav>
-      <div>
-        <Link to="/">Blog App</Link>
-        {auth.uid ? (
-          <div>
-            <a href="/login" onClick={props.signOut}>
-              Logout
-            </a>
-          </div>
-        ) : null}
-      </div>
+      {auth.uid ? (
+        <div>
+          <a className="logoutBtn" href="/login" onClick={props.signOut}>
+            Logout
+          </a>
+        </div>
+      ) : null}
     </nav>
   );
 };

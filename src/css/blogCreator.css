@@ -51,7 +51,7 @@ body {
   padding: 1rem;
 }
 
-input[type="radio"] + label > .far {
+input[type='radio'] + label > .far {
   cursor: pointer;
 }
 

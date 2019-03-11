@@ -1,0 +1,59 @@
+.logoutBtn {
+  display: inline-block;
+  float: right;
+  padding: 14px;
+  color: black;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  color: black;
+}
+
+.loginContainer {
+  margin-top: 15vh;
+}
+
+.loginFormWrap {
+  background-color: white;
+  max-width: 400px;
+  height: 230px;
+  margin: auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 6px;
+}
+
+.loginLabel {
+  padding-left: 24px;
+  font-size: 1rem;
+}
+
+.loginInput {
+  padding: 4px 4px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  margin: 6px 24px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.loginButton {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background-color: #f2711c;
+  color: white;
+  font-size: 14px;
+  border: none;
+  margin: 6px 24px;
+  cursor: pointer;
+}
+
+.loginButton:focus {
+  outline: none;
+  cursor: pointer;
+}
