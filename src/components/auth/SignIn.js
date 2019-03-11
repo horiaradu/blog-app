@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from '../../redux/actions/authAuctions';
 
 class SignIn extends Component {
   state = {
@@ -11,7 +13,7 @@ class SignIn extends Component {
 
   onFormSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.signIn(this.state);
   };
 
   render() {
@@ -29,4 +31,7 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+export default connect(
+  null,
+  { signIn }
+)(SignIn);
