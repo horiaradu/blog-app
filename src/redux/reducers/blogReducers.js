@@ -15,6 +15,7 @@ export default function(state = initialState, action) {
       };
 
     case ADD_NEW_ENTRY:
+      console.log(action.payload);
       if (action.payload.entryType === 'post') {
         return {
           ...state,
