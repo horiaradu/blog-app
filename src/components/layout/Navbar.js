@@ -1,18 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signOut } from '../../redux/actions/authAuctions';
+import '../../css/auth.css';
 
-const Navbar = () => {
+const Navbar = props => {
+  const auth = props.auth;
   return (
     <nav>
-      <div>
-        <Link to="/">Blog App</Link>
-        <ul>
-          <li>Login</li>
-          <li>Logout</li>
-        </ul>
-      </div>
+      {auth.uid ? (
+        <div>
+          <a className="logoutBtn" href="/login" onClick={props.signOut}>
+            Logout
+          </a>
+        </div>
+      ) : null}
     </nav>
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { signOut }
+)(Navbar);
