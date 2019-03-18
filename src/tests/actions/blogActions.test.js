@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fetchEntries } from '../../redux/actions/blogActions';
+import { fetchEntries, addNewEntry, addNewComment } from '../../redux/actions/blogActions';
 import api from '../../services/api';
 import { SET_ENTRIES } from '../../redux/actions/actionTypes';
 
@@ -35,6 +35,81 @@ describe('blogActions', () => {
 
       expect(dispatchedActions.length).toEqual(1);
       expect(dispatchedActions[0]).toEqual({ type: SET_ENTRIES, payload: [{ uuid: '456' }, { uuid: '123' }] });
+    });
+  });
+
+  describe('addNewEntry()', () => {
+    test('dispaches ADD_NEW_ENTRY', () => {
+      const store = mockStoreCreator({
+        entries: [
+          {
+            comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+            entry: { body: 'some text', entryType: 'post' }
+          },
+          {
+            comments: [{ author: 'tony', text: 'super' }, { author: 'michael', text: 'awesome' }],
+            entry: { body: 'some other text', entryType: 'news' }
+          }
+        ]
+      });
+
+      const newEntry = {
+        comments: [{ author: 'another dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+        entry: { body: 'some text', entryType: 'post' },
+        uuid: '123abc'
+      };
+      store.dispatch(addNewEntry(newEntry));
+      const dispatchedActions = store.getActions();
+      expect(dispatchedActions.length).toBe(1);
+      expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
+    });
+    test('checks if action type is ADD_NEW_ENTRY', () => {
+      const store = mockStoreCreator({
+        entries: [
+          {
+            comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+            entry: { body: 'some text', entryType: 'post' }
+          },
+          {
+            comments: [{ author: 'tony', text: 'super' }, { author: 'michael', text: 'awesome' }],
+            entry: { body: 'some other text', entryType: 'news' }
+          }
+        ]
+      });
+
+      const newEntry = {
+        comments: [{ author: 'another dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+        entry: { body: 'some text', entryType: 'post' },
+        uuid: '123abc'
+      };
+      store.dispatch(addNewEntry(newEntry));
+      const dispatchedActions = store.getActions();
+      expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
+    });
+  });
+  describe('addNewComment()', () => {
+    test('dispaches ADD_NEW_ENTRY and its type is ADD_NEW_ENTRY', () => {
+      const store = mockStoreCreator({
+        entries: [
+          {
+            comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+            entry: { body: 'some text', entryType: 'post' },
+            uuid: '1'
+          },
+          {
+            comments: [{ author: 'tony', text: 'super' }, { author: 'michael', text: 'awesome' }],
+            entry: { body: 'some other text', entryType: 'news' },
+            uuid: '2'
+          }
+        ]
+      });
+
+      const newComment = { author: 'new author', text: 'new comment', uuid: '1' };
+      const postUuid = '1';
+      store.dispatch(addNewComment(newComment, postUuid));
+      const dispatchedActions = store.getActions();
+      expect(dispatchedActions.length).toBe(1);
+      expect(dispatchedActions[0].type).toBe('ADD_NEW_COMMENT');
     });
   });
 });
