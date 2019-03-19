@@ -54,16 +54,17 @@ describe('blogActions', () => {
       });
 
       const newEntry = {
-        comments: [{ author: 'another dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-        entry: { body: 'some text', entryType: 'post' },
-        uuid: '123abc'
+        title: 'some title',
+        body: 'some text',
+        entryType: 'post'
       };
       store.dispatch(addNewEntry(newEntry));
       const dispatchedActions = store.getActions();
       expect(dispatchedActions.length).toBe(1);
       expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
     });
-    test('checks if action type is ADD_NEW_ENTRY', () => {
+
+    test('checks if action payload is correct', () => {
       const store = mockStoreCreator({
         entries: [
           {
@@ -76,85 +77,79 @@ describe('blogActions', () => {
           }
         ]
       });
-      const newEntry = {
-        comments: [{ author: 'another dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-        entry: { body: 'some text', entryType: 'post' },
-        uuid: '123abc'
-      };
-      store.dispatch(addNewEntry(newEntry));
-      const dispatchedActions = store.getActions();
-      expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
-    });
 
-    test('checks if action payload is correct and there is uuid', () => {
-      const store = mockStoreCreator({
-        entries: []
-      });
       const newEntry = {
-        comments: [{ author: 'another dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-        entry: { body: 'some text', entryType: 'post' }
+        title: 'some title',
+        body: 'some text',
+        entryType: 'post'
       };
+
+      const uuidTest = 'id_test1234';
+
+      const fetchEntriesMock = () =>
+        Promise.resolve({ title: 'some title', body: 'some text', entryType: 'post', uuid: uuidTest });
+      api.createEntry.mockImplementation(fetchEntriesMock);
       store.dispatch(addNewEntry(newEntry));
       const dispatchedActions = store.getActions();
       expect(dispatchedActions[0].payload).toMatchObject({
-        comments: [{ author: 'another dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-        entry: { body: 'some text', entryType: 'post' },
+        title: 'some title',
+        body: 'some text',
+        entryType: 'post',
         uuid: expect.any(String)
       });
     });
-  });
-  describe('addNewComment()', () => {
-    test('dispaches ADD_NEW_ENTRY and its type is ADD_NEW_ENTRY', () => {
-      const store = mockStoreCreator({
-        entries: [
-          {
-            comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-            entry: { body: 'some text', entryType: 'post' },
-            uuid: '1'
-          },
-          {
-            comments: [{ author: 'tony', text: 'super' }, { author: 'michael', text: 'awesome' }],
-            entry: { body: 'some other text', entryType: 'news' },
-            uuid: '1234'
-          }
-        ]
-      });
+    describe('addNewComment()', () => {
+      test('dispaches ADD_NEW_ENTRY and its type is ADD_NEW_ENTRY', () => {
+        const store = mockStoreCreator({
+          entries: [
+            {
+              comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+              entry: { body: 'some text', entryType: 'post' },
+              uuid: '1'
+            },
+            {
+              comments: [{ author: 'tony', text: 'super' }, { author: 'michael', text: 'awesome' }],
+              entry: { body: 'some other text', entryType: 'news' },
+              uuid: '1234'
+            }
+          ]
+        });
 
-      const newComment = { author: 'new author', text: 'new comment', uuid: '1' };
-      const postUuid = '1';
-      store.dispatch(addNewComment(newComment, postUuid));
-      const dispatchedActions = store.getActions();
-      expect(dispatchedActions.length).toBe(1);
-      expect(dispatchedActions[0].type).toBe('ADD_NEW_COMMENT');
-    });
-    test('checks if action.payload is correct and it has uuid', () => {
-      const store = mockStoreCreator({ entries: [] });
-      const newComment = { author: 'new author', text: 'new comment' };
-      const postUuid = '1';
-      store.dispatch(addNewComment(newComment, postUuid));
-      const dispatchedActions = store.getActions();
-      expect(dispatchedActions[0].payload).toMatchObject({
-        author: 'new author',
-        text: 'new comment',
-        uuid: expect.any(String)
+        const newComment = { author: 'new author', text: 'new comment', uuid: '1' };
+        const postUuid = '1';
+        store.dispatch(addNewComment(newComment, postUuid));
+        const dispatchedActions = store.getActions();
+        expect(dispatchedActions.length).toBe(1);
+        expect(dispatchedActions[0].type).toBe('ADD_NEW_COMMENT');
       });
-    });
-    test('checks if postUuid was successfully found', () => {
-      const store = mockStoreCreator({
-        entries: [
-          {
-            comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-            entry: { body: 'some text', entryType: 'post' },
-            uuid: '123abc'
-          }
-        ]
+      test('checks if action.payload is correct and it has uuid', () => {
+        const store = mockStoreCreator({ entries: [] });
+        const newComment = { author: 'new author', text: 'new comment' };
+        const postUuid = '1';
+        store.dispatch(addNewComment(newComment, postUuid));
+        const dispatchedActions = store.getActions();
+        expect(dispatchedActions[0].payload).toMatchObject({
+          author: 'new author',
+          text: 'new comment',
+          uuid: expect.any(String)
+        });
       });
-      const newComment = { author: 'new author', text: 'new comment' };
-      const postUuid = '123abc';
-      store.dispatch(addNewComment(newComment, postUuid));
-      const dispatchedActions = store.getActions();
-      console.log(dispatchedActions);
-      expect(dispatchedActions[0].postUuid).toBe('123abc');
+      test('checks if postUuid was successfully found', () => {
+        const store = mockStoreCreator({
+          entries: [
+            {
+              comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
+              entry: { body: 'some text', entryType: 'post' },
+              uuid: '123abc'
+            }
+          ]
+        });
+        const newComment = { author: 'new author', text: 'new comment' };
+        const postUuid = '123abc';
+        store.dispatch(addNewComment(newComment, postUuid));
+        const dispatchedActions = store.getActions();
+        expect(dispatchedActions[0].postUuid).toBe('123abc');
+      });
     });
   });
 });
