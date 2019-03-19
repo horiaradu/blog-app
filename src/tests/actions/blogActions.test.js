@@ -39,32 +39,7 @@ describe('blogActions', () => {
   });
 
   describe('addNewEntry()', () => {
-    test('dispaches ADD_NEW_ENTRY', () => {
-      const store = mockStoreCreator({
-        entries: [
-          {
-            comments: [{ author: 'dave', text: 'nice' }, { author: 'john', text: 'cool' }],
-            entry: { body: 'some text', entryType: 'post' }
-          },
-          {
-            comments: [{ author: 'tony', text: 'super' }, { author: 'michael', text: 'awesome' }],
-            entry: { body: 'some other text', entryType: 'news' }
-          }
-        ]
-      });
-
-      const newEntry = {
-        title: 'some title',
-        body: 'some text',
-        entryType: 'post'
-      };
-      store.dispatch(addNewEntry(newEntry));
-      const dispatchedActions = store.getActions();
-      expect(dispatchedActions.length).toBe(1);
-      expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
-    });
-
-    test('checks if action payload is correct', () => {
+    test('checks if  action payload is correct', () => {
       const store = mockStoreCreator({
         entries: [
           {
@@ -91,6 +66,14 @@ describe('blogActions', () => {
       api.createEntry.mockImplementation(fetchEntriesMock);
       store.dispatch(addNewEntry(newEntry));
       const dispatchedActions = store.getActions();
+      expect(dispatchedActions.length).toBe(1);
+      expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
+      expect(api.createEntry).lastCalledWith({
+        title: 'some title',
+        body: 'some text',
+        entryType: 'post',
+        uuid: expect.any(String)
+      });
       expect(dispatchedActions[0].payload).toMatchObject({
         title: 'some title',
         body: 'some text',
