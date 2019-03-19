@@ -173,8 +173,6 @@ describe('blogActions', () => {
         );
       api.createComment.mockImplementation(createCommentMock);
       store.dispatch(addNewComment(newComment, postUuid));
-      const dispatchedActions = store.getActions();
-      console.log(dispatchedActions);
       expect(api.createComment).lastCalledWith(
         {
           author: 'john',
