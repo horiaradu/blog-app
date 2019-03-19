@@ -11,6 +11,7 @@ jest.mock('../../services/api');
 
 describe('blogActions', () => {
   describe('fetchEntries()', () => {
+    afterEach(() => jest.resetAllMocks());
     test('dispatches SET_ENTRIES with the entries from the api', async () => {
       const store = mockStoreCreator({});
 
@@ -39,6 +40,7 @@ describe('blogActions', () => {
   });
 
   describe('addNewEntry()', () => {
+    afterEach(() => jest.resetAllMocks());
     test('checks if dispatches ADD_NEW_ENTRY with correct payload', () => {
       const store = mockStoreCreator({
         entries: [
@@ -111,6 +113,7 @@ describe('blogActions', () => {
     });
   });
   describe('addNewComment()', () => {
+    afterEach(() => jest.resetAllMocks());
     test('dispaches ADD_NEW_COMMENT with correct payload', () => {
       const store = mockStoreCreator({
         entries: [
