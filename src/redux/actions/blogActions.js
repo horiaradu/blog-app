@@ -21,7 +21,6 @@ export const addNewEntry = newEntry => dispatch => {
 
 export const addNewComment = (newComment, postUuid) => async dispatch => {
   const toCreate = { ...newComment, uuid: uuid() };
-
   api.createComment(toCreate, postUuid);
 
   dispatch({

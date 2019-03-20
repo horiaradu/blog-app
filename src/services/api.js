@@ -31,7 +31,6 @@ const api = {
 
     snapshot.docs.map(entry => {
       if (entry.data().entry.uuid === postUuid) {
-        console.log(entry);
         firebase
           .firestore()
           .collection('entries')
