@@ -7,15 +7,30 @@ exports[`Post Component should render Post component correctly 1`] = `
   <div
     className="postTitle"
   >
-    <h2 />
+    <h2>
+      title
+    </h2>
   </div>
   <div
     className="postContent"
   >
-    <p />
+    <p>
+      body text
+    </p>
     <ul
       className="ulStyle"
-    />
+    >
+      <li
+        className="tagStyle"
+      >
+        tag1
+      </li>
+      <li
+        className="tagStyle"
+      >
+        tag2
+      </li>
+    </ul>
     <Comments
       comments={Array []}
     />
