@@ -18,7 +18,7 @@ describe('Post Component', () => {
     };
     const wrapper = shallow(<Post post={post} />);
     expect(toJSON(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('li').length).toBeGreaterThan(0);
+    expect(post.entry.tags[0]).toBe('tag1');
   });
   test('should not render tags if no tags provided', () => {
     const post = {

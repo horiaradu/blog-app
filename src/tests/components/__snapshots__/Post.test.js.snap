@@ -22,11 +22,13 @@ exports[`Post Component should render Post component correctly 1`] = `
     >
       <li
         className="tagStyle"
+        key="tag1"
       >
         tag1
       </li>
       <li
         className="tagStyle"
+        key="tag2"
       >
         tag2
       </li>
