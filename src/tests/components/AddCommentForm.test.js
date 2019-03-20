@@ -88,8 +88,8 @@ describe('AddComment component', () => {
       wrapper.find('#addNewCommentForm').simulate('submit', event);
       expect(mockAddNewCommentfn).not.toHaveBeenCalled();
     });
-    //let me know if it's wrong to test both errors in one it
-    it('should set emptyAuthorError and emptyTextError to true if author or text is empty', () => {
+
+    it('should set emptyAuthorError to true if author is empty', () => {
       const state = {
         author: '',
         commentDate: new Date(),
@@ -103,6 +103,21 @@ describe('AddComment component', () => {
       };
       wrapper.find('#addNewCommentForm').simulate('submit', event);
       expect(wrapper.state().emptyAuthorError).toBe(true);
+    });
+    it('should set emptyTextError to true if text is empty', () => {
+      const state = {
+        author: '',
+        commentDate: new Date(),
+        text: '',
+        emptyAuthorError: false,
+        emptyTextError: false
+      };
+      wrapper.setState(state);
+      const event = {
+        preventDefault() {}
+      };
+      wrapper.find('#addNewCommentForm').simulate('submit', event);
+
       expect(wrapper.state().emptyTextError).toBe(true);
     });
   });
