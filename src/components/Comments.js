@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CommentForm from './CommentForm';
+import AddCommentForm from './AddCommentForm';
 import '../css/comments.css';
 
 class Comments extends Component {
@@ -36,7 +36,7 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <CommentForm postUuid={this.props.postUuid} /> : null}
+        {showComments ? <AddCommentForm postUuid={this.props.postUuid} /> : null}
       </div>
     );
   }

@@ -3,7 +3,7 @@ import { addNewComment } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-class AddCommentForm extends Component {
+export class AddCommentForm extends Component {
   state = {
     author: '',
     text: '',
@@ -43,6 +43,7 @@ class AddCommentForm extends Component {
         .concat(text.slice(1)),
       commentDate
     };
+
     if (author === '') {
       this.setState({ emptyAuthorError: true });
     }
@@ -50,7 +51,6 @@ class AddCommentForm extends Component {
       this.setState({ emptyTextError: true });
     }
     if (author !== '' && text !== '') {
-      //change the postId
       this.props.addNewComment(newComment, this.props.postUuid);
       this.setState({ author: '', text: '' });
     }
@@ -60,7 +60,7 @@ class AddCommentForm extends Component {
     const { author, text, emptyAuthorError, emptyTextError } = this.state;
     return (
       <div>
-        <form onSubmit={this.onFormSubmit}>
+        <form id="addNewCommentForm" onSubmit={this.onFormSubmit}>
           <label>Author:</label>
           <input
             className={classNames('inputField', { inputError: emptyAuthorError })}
