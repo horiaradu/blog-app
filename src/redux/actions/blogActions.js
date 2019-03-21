@@ -11,7 +11,7 @@ export const fetchEntries = () => async dispatch => {
 export const addNewEntry = newEntry => dispatch => {
   const toCreate = { ...newEntry, uuid: uuid() };
 
-  // api.createEntry(toCreate);
+  api.createEntry(toCreate);
 
   dispatch({
     type: ADD_NEW_ENTRY,
