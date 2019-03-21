@@ -1,4 +1,4 @@
-import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES } from '../actions/actionTypes';
+import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES, DELETE_ENTRY } from '../actions/actionTypes';
 
 const initialState = {
   entries: []
@@ -42,6 +42,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         entries: newEntries
+      };
+    case DELETE_ENTRY:
+      const entryUuid = action.payload;
+      const lessEntries = state.entries.filter(entry => entryUuid !== entry.entry.uuid);
+      return {
+        ...state,
+        entries: lessEntries
       };
 
     default:

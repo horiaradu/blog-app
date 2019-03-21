@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteFeature } from '../redux/actions/blogActions';
-import firebase from '../config/fbConfig';
+import { deleteEntry } from '../redux/actions/blogActions';
 
 const DeleteFeature = props => {
-  const entryId = firebase.firestore().collection('entries');
-  console.log(entryId);
   return (
     <div>
       <h4>
-        <Link to="/" onClick={() => props.deleteFeature(entryId)}>
+        <Link to="/" onClick={() => props.deleteEntry(props.postUuid)}>
           Delete
         </Link>
       </h4>
@@ -20,5 +17,5 @@ const DeleteFeature = props => {
 
 export default connect(
   null,
-  { deleteFeature }
+  { deleteEntry }
 )(DeleteFeature);

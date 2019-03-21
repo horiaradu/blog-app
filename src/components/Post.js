@@ -12,11 +12,12 @@ class Post extends Component {
   };
   render() {
     const { title, body, tags } = this.props.post.entry;
+    const postUuid = this.props.post.entry.uuid;
     return (
       <div className="blogSeparator">
         <div className="postTitle">
           <h2>{title}</h2>
-          {this.state.showEditDeleteOptions && <EditDeleteFeature />}
+          {this.state.showEditDeleteOptions && <EditDeleteFeature postUuid={postUuid} />}
           <i onClick={this.onArrowClick} className="fas fa-arrow-circle-left" />
         </div>
         <div className="postContent">

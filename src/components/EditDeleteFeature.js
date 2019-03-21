@@ -1,12 +1,12 @@
 import React from 'react';
 import DeleteFeature from './DeleteFeature';
-const EditDeleteFeature = () => {
+const EditDeleteFeature = props => {
   return (
     <div>
       <ul>
         <li>Edit</li>
         <li>
-          <DeleteFeature />
+          <DeleteFeature postUuid={props.postUuid} />
         </li>
       </ul>
     </div>

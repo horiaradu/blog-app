@@ -59,12 +59,21 @@ const api = {
       }
     });
   },
-  async deleteEntry(id) {
-    const snapshott = await firebase
+  async deleteEntry(entryUuid) {
+    const snapshot = await firebase
       .firestore()
       .collection('entries')
-      .doc(id);
-    snapshott.delete();
+      .get();
+
+    const firebaseEntryToDelete = snapshot.docs.find(firebaseEntry => firebaseEntry.data().entry.uuid === entryUuid);
+
+    if (firebaseEntryToDelete) {
+      const snapshott = await firebase
+        .firestore()
+        .collection('entries')
+        .doc(firebaseEntryToDelete.id);
+      snapshott.delete();
+    }
   }
 };
 

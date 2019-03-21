@@ -1,7 +1,6 @@
 import uuid from 'uuid';
 import api from '../../services/api';
-import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES } from '../actions/actionTypes';
-import firebase from 'firebase';
+import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES, DELETE_ENTRY } from '../actions/actionTypes';
 
 export const fetchEntries = () => async dispatch => {
   const entries = await api.fetchEntries();
@@ -30,19 +29,8 @@ export const addNewComment = (newComment, postUuid) => dispatch => {
     postUuid: postUuid
   });
 };
-//dont delete
 
-export const deleteFeature = entryId => async (dispatch, getState) => {
-  const snapshot = await firebase
-    .firestore()
-    .collection('entries')
-    .get();
-  let id;
-  snapshot.docs.map(entry => {
-    if (entry.id === entryId) {
-      id = entry.id;
-    }
-  });
-  api.deleteEntry(id);
-  dispatch({ type: 'DELETE_FEATURE' });
+export const deleteEntry = entryUuid => async dispatch => {
+  api.deleteEntry(entryUuid);
+  dispatch({ type: DELETE_ENTRY, payload: entryUuid });
 };
