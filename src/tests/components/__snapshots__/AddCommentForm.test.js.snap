@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddComment component should render AddNewComment correctly 1`] = `
+exports[`Comment component should render AddNewComment correctly 1`] = `
 <div>
   <form
     id="addNewCommentForm"

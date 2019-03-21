@@ -3,7 +3,7 @@ import { addNewComment } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-export class AddCommentForm extends Component {
+export class CommentForm extends Component {
   state = {
     author: '',
     text: '',
@@ -106,4 +106,4 @@ export class AddCommentForm extends Component {
 export default connect(
   null,
   { addNewComment }
-)(AddCommentForm);
+)(CommentForm);

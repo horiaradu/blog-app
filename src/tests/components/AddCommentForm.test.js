@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { AddCommentForm } from '../../components/AddCommentForm';
+import { CommentForm } from '../../components/CommentForm';
 import toJSON from 'enzyme-to-json';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -14,9 +14,9 @@ beforeEach(() => {
   mockAddNewCommentfn = jest.fn();
 });
 
-describe('AddComment component', () => {
+describe('Comment component', () => {
   beforeEach(() => {
-    wrapper = shallow(<AddCommentForm addNewComment={mockAddNewCommentfn} postUuid="123" />);
+    wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} postUuid="123" />);
   });
   afterEach(() => {
     jest.restoreAllMocks();
