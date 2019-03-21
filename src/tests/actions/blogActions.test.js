@@ -65,7 +65,7 @@ describe('blogActions', () => {
       const fetchEntriesMock = () =>
         Promise.resolve({ title: 'some title', body: 'some text', entryType: 'post', uuid: uuidTest });
       api.createEntry.mockImplementation(fetchEntriesMock);
-      store.dispatch(addNewEntry(newEntry));
+      store.dispatch(addNewEntry(newEntry, uuidTest));
       const dispatchedActions = store.getActions();
       expect(dispatchedActions.length).toBe(1);
       expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
