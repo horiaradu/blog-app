@@ -11,6 +11,7 @@
     "classnames": "^2.2.6",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
+    "enzyme-to-json": "^3.3.5",
     "fetch-mock": "^7.3.1",
     "firebase": "^5.8.5",
     "local-storage": "^1.4.2",
@@ -26,7 +27,6 @@
     "react-star-rating-component": "^1.4.1",
     "redux": "^4.0.1",
     "redux-firestore": "^0.7.0",
-    "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"
   },
