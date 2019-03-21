@@ -58,6 +58,13 @@ const api = {
         };
       }
     });
+  },
+  async deleteEntry(id) {
+    const snapshott = await firebase
+      .firestore()
+      .collection('entries')
+      .doc(id);
+    snapshott.delete();
   }
 };
 
