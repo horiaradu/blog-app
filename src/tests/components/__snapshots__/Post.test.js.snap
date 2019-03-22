@@ -4,39 +4,48 @@ exports[`Post Component should render Post component correctly 1`] = `
 <div
   className="blogSeparator"
 >
-  <div
-    className="postTitle"
-  >
-    <h2>
-      title
-    </h2>
-    <EditDeleteFeature />
-  </div>
-  <div
-    className="postContent"
-  >
-    <p>
-      body text
-    </p>
-    <ul
-      className="ulStyle"
+  <div>
+    <div
+      className="postTitle"
     >
-      <li
-        className="tagStyle"
-        key="tag1"
+      <h2>
+        title
+      </h2>
+      <div>
+        <EditEntry
+          onEditClick={[Function]}
+        />
+        <Connect(DeleteEntry)
+          onEditClick={[Function]}
+        />
+      </div>
+    </div>
+    <div
+      className="postContent"
+    >
+      <p>
+        body text
+      </p>
+      <ul
+        className="ulStyle"
       >
-        tag1
-      </li>
-      <li
-        className="tagStyle"
-        key="tag2"
-      >
-        tag2
-      </li>
-    </ul>
-    <Comments
-      comments={Array []}
-    />
+        <li
+          className="tagStyle"
+          key="tag1"
+        >
+          tag1
+        </li>
+        <li
+          className="tagStyle"
+          key="tag2"
+        >
+          tag2
+        </li>
+      </ul>
+      <Comments
+        comments={Array []}
+      />
+    </div>
   </div>
 </div>
 `;
