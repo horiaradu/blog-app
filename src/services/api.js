@@ -83,13 +83,13 @@ const api = {
           .update({
             entry: { ...data, uuid: id }
           });
-        //   return {
-        //     entry: entry.data().entry
-        //   };
-        // } else {
-        //   return {
-        //     entry: entry.data().entry
-        //   };
+        return {
+          entry: entry.data().entry
+        };
+      } else {
+        return {
+          entry: entry.data().entry
+        };
       }
     });
   }

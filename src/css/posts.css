@@ -12,8 +12,19 @@
   height: 40px;
   width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
   padding-left: 14px;
   color: white;
+  clear: both;
+}
+.editButton {
+  display: inline-block;
+  padding-right: 14px;
+  font-size: 1.4rem;
+}
+.deleteButton {
+  display: inline-block;
+  padding-right: 14px;
+  font-size: 1.4rem;
 }

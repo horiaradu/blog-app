@@ -24,12 +24,14 @@ class News extends Component {
         ) : (
           <div className="blogSeparator">
             <div className="newsTitle">
-              <h2 className="newsTitle2">{title}</h2>
-              <div>
+              <span>
+                <h2>{title}</h2>
+              </span>
+              <span>
+                <div className="levelBarDiv">{`Hot ${level}/5`}</div>
                 <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
                 <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
-              </div>
-              <h2 className="levelBarSpan">{`Hot ${level}/5`}</h2>
+              </span>
             </div>
             <div className="newsContent">
               <p>{body}</p>

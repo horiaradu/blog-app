@@ -23,11 +23,13 @@ class Post extends Component {
         ) : (
           <div>
             <div className="postTitle">
-              <h2>{title}</h2>
-              <div>
+              <span>
+                <h2>{title}</h2>
+              </span>
+              <span>
                 <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
                 <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
-              </div>
+              </span>
             </div>
             <div className="postContent">
               <p>{body}</p>
