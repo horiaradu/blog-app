@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import api from '../../services/api';
-import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES, DELETE_ENTRY } from '../actions/actionTypes';
+import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES, DELETE_ENTRY, UPDATE_ENTRY } from '../actions/actionTypes';
 
 export const fetchEntries = () => async dispatch => {
   const entries = await api.fetchEntries();
@@ -33,4 +33,9 @@ export const addNewComment = (newComment, postUuid) => dispatch => {
 export const deleteEntry = entryUuid => async dispatch => {
   api.deleteEntry(entryUuid);
   dispatch({ type: DELETE_ENTRY, payload: entryUuid });
+};
+
+export const updateEntry = (entryUuidToUpdate, updatedEntry) => dispatch => {
+  api.updateEntry(entryUuidToUpdate, updatedEntry);
+  dispatch({ type: UPDATE_ENTRY, entryUuidToUpdate, updatedEntry });
 };

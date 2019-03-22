@@ -1,40 +1,51 @@
 import React, { Component } from 'react';
 import '../css/posts.css';
 import Comments from './Comments';
-import EditDeleteFeature from './EditDeleteFeature';
+
+import BlogForm from './BlogForm';
+import EditEntry from './EditEntry';
+import DeleteEntry from './DeleteEntry';
 
 class Post extends Component {
   state = {
-    showEditDeleteOptions: false
+    isEditModeOn: false
   };
-  onArrowClick = () => {
-    this.setState({ showEditDeleteOptions: !this.state.showEditDeleteOptions });
+  changeState = () => {
+    this.setState({ isEditModeOn: !this.state.isEditModeOn });
   };
   render() {
     const { title, body, tags } = this.props.post.entry;
     const postUuid = this.props.post.entry.uuid;
     return (
       <div className="blogSeparator">
-        <div className="postTitle">
-          <h2>{title}</h2>
-          {this.state.showEditDeleteOptions && <EditDeleteFeature postUuid={postUuid} />}
-          <i onClick={this.onArrowClick} className="fas fa-arrow-circle-left" />
-        </div>
-        <div className="postContent">
-          <p>{body}</p>
-          <ul className="ulStyle">
-            {tags
-              ? tags.map(tag => {
-                  return (
-                    <li key={tag} className="tagStyle">
-                      {tag}
-                    </li>
-                  );
-                })
-              : null}
-          </ul>
-          <Comments comments={this.props.post.comments} postUuid={this.props.post.entry.uuid} />
-        </div>
+        {this.state.isEditModeOn ? (
+          <BlogForm onUpdateClick={this.changeState} entry={this.props.post.entry} entryUuid={postUuid} />
+        ) : (
+          <div>
+            <div className="postTitle">
+              <h2>{title}</h2>
+              <div>
+                <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
+                <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+              </div>
+            </div>
+            <div className="postContent">
+              <p>{body}</p>
+              <ul className="ulStyle">
+                {tags
+                  ? tags.map(tag => {
+                      return (
+                        <li key={tag} className="tagStyle">
+                          {tag}
+                        </li>
+                      );
+                    })
+                  : null}
+              </ul>
+              <Comments comments={this.props.post.comments} postUuid={this.props.post.entry.uuid} />
+            </div>
+          </div>
+        )}
       </div>
     );
   }

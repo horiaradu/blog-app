@@ -73,7 +73,7 @@ const api = {
       .firestore()
       .collection('entries')
       .get();
-    console.log(snapshot);
+
     snapshot.docs.map(entry => {
       if (entry.data().entry.uuid === id) {
         firebase
@@ -83,13 +83,13 @@ const api = {
           .update({
             entry: { ...data, uuid: id }
           });
-        return {
-          entry: entry.data().entry
-        };
-      } else {
-        return {
-          entry: entry.data().entry
-        };
+        //   return {
+        //     entry: entry.data().entry
+        //   };
+        // } else {
+        //   return {
+        //     entry: entry.data().entry
+        //   };
       }
     });
   }

@@ -1,4 +1,4 @@
-import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES, DELETE_ENTRY } from '../actions/actionTypes';
+import { ADD_NEW_ENTRY, ADD_NEW_COMMENT, SET_ENTRIES, DELETE_ENTRY, UPDATE_ENTRY } from '../actions/actionTypes';
 
 const initialState = {
   entries: []
@@ -50,7 +50,27 @@ export default function(state = initialState, action) {
         ...state,
         entries: lessEntries
       };
+    case UPDATE_ENTRY:
+      const { entryUuidToUpdate, updatedEntry } = action;
+      const newState = state.entries.map(x => {
+        if (x.entry.uuid === entryUuidToUpdate) {
+          if (updatedEntry.entryType === 'post') {
+            return {
+              entry: { ...updatedEntry, uuid: entryUuidToUpdate },
+              comments: [...(x.comments = [])]
+            };
+          } else {
+            return {
+              entry: { ...updatedEntry, uuid: entryUuidToUpdate }
+            };
+          }
+        } else return x;
+      });
 
+      return {
+        ...state,
+        entries: newState
+      };
     default:
       return state;
   }

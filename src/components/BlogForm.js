@@ -1,25 +1,63 @@
 import React, { Component } from 'react';
-import { addNewEntry } from '../redux/actions/blogActions';
+import { addNewEntry, updateEntry } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
 import classNames from 'classnames';
 
 class BlogForm extends Component {
-  state = {
-    title: '',
-    body: '',
-    tag: '',
-    entryType: '',
-    tags: [],
-    level: 1,
-    tagsError: false,
-    entryTypeError: false,
-    emptyTitleError: false,
-    emptyBodyError: false,
-    tagReused: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: props.entry ? props.entry.title : '',
+      body: props.entry ? props.entry.body : '',
+      tag: props.entry ? props.entry.tag : '',
+      entryType: props.entry ? props.entry.entryType : '',
+      tags: props.entry ? props.entry.tags : [],
+      level: props.entry ? props.entry.level : 1,
+      tagsError: false,
+      entryTypeError: false,
+      emptyTitleError: false,
+      emptyBodyError: false,
+      tagReused: false
+    };
+  }
+  onChangeStateClick = () => {
+    this.props.onUpdateClick();
   };
+  onButtonUpdateEntry = () => {
+    const { title, body, entryType, tags, level } = this.state;
+    const entryUuid = this.props.entryUuid;
+    if (entryType === '') {
+      this.setState({
+        entryTypeError: true
+      });
+    }
+    if (title === '') {
+      this.setState({ emptyTitleError: true });
+    }
+    if (body === '') {
+      this.setState({ emptyBodyError: true });
+    }
 
+    if (body !== '' && title !== '' && entryType !== '') {
+      const updatedPost = {
+        title: title
+          .slice(0, 1)
+          .toUpperCase()
+          .concat(title.slice(1)),
+        body: body
+          .slice(0, 1)
+          .toUpperCase()
+          .concat(body.slice(1)),
+        entryType,
+        tags,
+        level
+      };
+      this.props.updateEntry(entryUuid, updatedPost);
+      this.props.onUpdateClick();
+    }
+  };
   changeErrorState = () => {
     const { title, body } = this.state;
     if (title !== '') {
@@ -138,7 +176,7 @@ class BlogForm extends Component {
     return (
       <div>
         <div className="panelTitle">
-          <h1>Create Entry</h1>
+          <h1>{this.props.entry ? 'Edit Entry' : 'Create Entry'}</h1>
           <br />
         </div>
         <div className="panelContent">
@@ -271,10 +309,18 @@ class BlogForm extends Component {
                 ))}
               </ul>
             </div>
-            <div className="buttonWrap">
-              <input className="button" type="submit" value="Save" />
-            </div>
+            {this.props.entry ? null : (
+              <div className="buttonWrap">
+                <input className="button" type="submit" value="Save" />
+              </div>
+            )}
           </form>
+          {this.props.entry && (
+            <div>
+              <button onClick={this.onChangeStateClick}>Cancel</button>
+              <button onClick={this.onButtonUpdateEntry}>Update</button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -283,5 +329,5 @@ class BlogForm extends Component {
 
 export default connect(
   null,
-  { addNewEntry }
+  { addNewEntry, updateEntry }
 )(BlogForm);
