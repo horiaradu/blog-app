@@ -40,7 +40,7 @@ describe('blogActions', () => {
   });
 
   describe('addNewEntry()', () => {
-    test('checks if dispatches ADD_NEW_ENTRY with correct payload', () => {
+    it('checks if dispatches ADD_NEW_ENTRY with correct payload', async () => {
       const store = mockStoreCreator({
         entries: [
           {
@@ -65,7 +65,7 @@ describe('blogActions', () => {
       const fetchEntriesMock = () =>
         Promise.resolve({ title: 'some title', body: 'some text', entryType: 'post', uuid: uuidTest });
       api.createEntry.mockImplementation(fetchEntriesMock);
-      store.dispatch(addNewEntry(newEntry, uuidTest));
+      await store.dispatch(addNewEntry(newEntry));
       const dispatchedActions = store.getActions();
       expect(dispatchedActions.length).toBe(1);
       expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');

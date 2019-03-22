@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteEntry } from '../redux/actions/blogActions';
 
-const DeleteFeature = props => {
+const DeleteEntry = props => {
   return (
     <div>
       <h4>
-        <Link to="/" onClick={() => props.deleteEntry(props.postUuid)}>
-          Delete
-        </Link>
+        <i class="fas fa-trash-alt" onClick={() => props.deleteEntry(props.postUuid)} />
       </h4>
     </div>
   );
@@ -18,4 +16,4 @@ const DeleteFeature = props => {
 export default connect(
   null,
   { deleteEntry }
-)(DeleteFeature);
+)(DeleteEntry);

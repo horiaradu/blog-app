@@ -10,14 +10,14 @@ const api = {
     return snapshot.docs.map(entry => entry.data());
   },
 
-  createEntry(entry) {
+  async createEntry(entry) {
     const newEntry = {
       entry: entry,
       comments: [],
       entryDate: new Date().toLocaleString()
     };
 
-    firebase
+    await firebase
       .firestore()
       .collection('entries')
       .add(newEntry);
@@ -44,14 +44,6 @@ const api = {
           comments: entry.data().comments.concat(comment)
         };
       } else {
-        firebase
-          .firestore()
-          .collection('entries')
-          .doc(entry.id)
-          .update({
-            entry: entry.data().entry,
-            comments: entry.data().comments
-          });
         return {
           entry: entry.data().entry,
           comments: entry.data().comments
@@ -59,6 +51,7 @@ const api = {
       }
     });
   },
+
   async deleteEntry(entryUuid) {
     const snapshot = await firebase
       .firestore()
@@ -74,6 +67,31 @@ const api = {
         .doc(firebaseEntryToDelete.id);
       snapshott.delete();
     }
+  },
+  async updateEntry(id, data) {
+    const snapshot = await firebase
+      .firestore()
+      .collection('entries')
+      .get();
+    console.log(snapshot);
+    snapshot.docs.map(entry => {
+      if (entry.data().entry.uuid === id) {
+        firebase
+          .firestore()
+          .collection('entries')
+          .doc(entry.id)
+          .update({
+            entry: { ...data, uuid: id }
+          });
+        return {
+          entry: entry.data().entry
+        };
+      } else {
+        return {
+          entry: entry.data().entry
+        };
+      }
+    });
   }
 };
 
