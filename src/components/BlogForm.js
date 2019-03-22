@@ -316,9 +316,15 @@ class BlogForm extends Component {
             )}
           </form>
           {this.props.entry && (
-            <div>
-              <button onClick={this.onChangeStateClick}>Cancel</button>
-              <button onClick={this.onButtonUpdateEntry}>Update</button>
+            <div className="edit-delete_wrapper">
+              <span>
+                <button className="cancelButton" onClick={this.onChangeStateClick}>
+                  Cancel
+                </button>
+                <button className="updateButton" onClick={this.onButtonUpdateEntry}>
+                  Update
+                </button>
+              </span>
             </div>
           )}
         </div>
