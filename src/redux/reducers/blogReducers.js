@@ -45,10 +45,10 @@ export default function(state = initialState, action) {
       };
     case DELETE_ENTRY:
       const entryUuid = action.payload;
-      const lessEntries = state.entries.filter(entry => entryUuid !== entry.entry.uuid);
+      const filteredEntries = state.entries.filter(entry => entryUuid !== entry.entry.uuid);
       return {
         ...state,
-        entries: lessEntries
+        entries: filteredEntries
       };
     case UPDATE_ENTRY:
       const { entryUuidToUpdate, updatedEntry } = action;
@@ -56,12 +56,12 @@ export default function(state = initialState, action) {
         if (x.entry.uuid === entryUuidToUpdate) {
           if (updatedEntry.entryType === 'post') {
             return {
-              entry: { ...updatedEntry, uuid: entryUuidToUpdate },
+              entry: { ...updatedEntry },
               comments: [...(x.comments = [])]
             };
           } else {
             return {
-              entry: { ...updatedEntry, uuid: entryUuidToUpdate }
+              entry: { ...updatedEntry }
             };
           }
         } else return x;
