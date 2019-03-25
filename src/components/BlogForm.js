@@ -52,7 +52,8 @@ class BlogForm extends Component {
           .concat(body.slice(1)),
         entryType,
         tags,
-        level
+        level,
+        entryUuid
       };
       this.props.updateEntry(entryUuid, updatedPost);
       this.props.onUpdateClick();

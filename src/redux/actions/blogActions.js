@@ -30,7 +30,7 @@ export const addNewComment = (newComment, postUuid) => dispatch => {
   });
 };
 
-export const deleteEntry = entryUuid => async dispatch => {
+export const deleteEntry = entryUuid => dispatch => {
   api.deleteEntry(entryUuid);
   dispatch({ type: DELETE_ENTRY, payload: entryUuid });
 };
