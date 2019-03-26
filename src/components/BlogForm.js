@@ -3,6 +3,7 @@ import { addNewEntry, updateEntry } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
+import '../css/mainPage.css';
 import classNames from 'classnames';
 
 class BlogForm extends Component {
@@ -113,10 +114,12 @@ class BlogForm extends Component {
           .concat(body.slice(1)),
         entryType,
         tags,
-        level
+        level,
+        userId: this.props.auth.uid
       };
 
       this.props.addNewEntry(newEntry);
+      this.props.history.push('/');
 
       this.setState({
         title: '',
@@ -175,7 +178,7 @@ class BlogForm extends Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="wrapper">
         <div className="panelTitle">
           <h1>{this.props.entry ? 'Edit Entry' : 'Create Entry'}</h1>
           <br />
@@ -334,7 +337,13 @@ class BlogForm extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { addNewEntry, updateEntry }
 )(BlogForm);

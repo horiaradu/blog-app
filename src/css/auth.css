@@ -1,15 +1,3 @@
-.logoutBtn {
-  display: inline-block;
-  float: right;
-  padding: 14px;
-  color: black;
-  cursor: pointer;
-}
-
-.logoutBtn:hover {
-  color: black;
-}
-
 .loginContainer {
   margin-top: 15vh;
 }

@@ -29,8 +29,12 @@ class News extends Component {
               </span>
               <span>
                 <div className="levelBarDiv">{`Hot ${level}/5`}</div>
-                <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
-                <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+                {this.props.auth.uid && (
+                  <span>
+                    <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
+                    <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+                  </span>
+                )}
               </span>
             </div>
             <div className="newsContent">

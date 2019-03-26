@@ -12,18 +12,22 @@ class MainPage extends Component {
 
   render() {
     const { blogs } = this.props;
+    const { auth } = this.props;
 
     return (
       <div className="wrapper">
-        <BlogForm />
-        <BlogEntries blogs={blogs} />
+        {/* hide when user is not logged in */}
+        {/* {auth.uid && <BlogForm />} */}
+        <BlogEntries blogs={blogs} auth={auth} />
       </div>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
-    blogs: state.blog.entries
+    blogs: state.blog.entries,
+    auth: state.firebase.auth
   };
 };
 

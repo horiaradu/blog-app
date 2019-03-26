@@ -14,12 +14,14 @@ exports[`Post Component should render Post component correctly 1`] = `
         </h2>
       </span>
       <span>
-        <EditEntry
-          onEditClick={[Function]}
-        />
-        <Connect(DeleteEntry)
-          onEditClick={[Function]}
-        />
+        <span>
+          <EditEntry
+            onEditClick={[Function]}
+          />
+          <Connect(DeleteEntry)
+            onEditClick={[Function]}
+          />
+        </span>
       </span>
     </div>
     <div

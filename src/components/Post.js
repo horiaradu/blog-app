@@ -27,8 +27,12 @@ class Post extends Component {
                 <h2>{title}</h2>
               </span>
               <span>
-                <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
-                <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+                {this.props.auth.uid && (
+                  <span>
+                    <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
+                    <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+                  </span>
+                )}
               </span>
             </div>
             <div className="postContent">

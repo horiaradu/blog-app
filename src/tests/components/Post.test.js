@@ -7,7 +7,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 describe('Post Component', () => {
-  test('should render Post component correctly', () => {
+  it('should render Post component correctly', () => {
     const post = {
       comments: [],
       entry: {
@@ -16,11 +16,12 @@ describe('Post Component', () => {
         tags: ['tag1', 'tag2']
       }
     };
-    const wrapper = shallow(<Post post={post} />);
+    const auth = { uid: '123' };
+    const wrapper = shallow(<Post post={post} auth={auth} />);
     expect(toJSON(wrapper)).toMatchSnapshot();
     expect(post.entry.tags[0]).toBe('tag1');
   });
-  test('should not render tags if no tags provided', () => {
+  it('should not render tags if no tags provided', () => {
     const post = {
       comments: [],
       entry: {
@@ -29,7 +30,8 @@ describe('Post Component', () => {
         tags: []
       }
     };
-    const wrapper = shallow(<Post post={post} />);
+    const auth = { uid: '123' };
+    const wrapper = shallow(<Post post={post} auth={auth} />);
     expect(wrapper.find('li').length).toBe(0);
   });
 });
