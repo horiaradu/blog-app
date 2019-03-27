@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signIn } from '../../redux/actions/authAuctions';
+import { signUp } from '../../redux/actions/authAuctions';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import '../../css/auth.css';
@@ -18,7 +18,7 @@ class SignUp extends Component {
 
   onFormSubmit = e => {
     e.preventDefault();
-    this.props.signIn(this.state);
+    this.props.signUp(this.state);
   };
 
   render() {
@@ -87,5 +87,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { signIn }
+  { signUp }
 )(SignUp);

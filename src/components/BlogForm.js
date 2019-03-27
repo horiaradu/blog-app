@@ -28,6 +28,7 @@ class BlogForm extends Component {
   };
   onButtonUpdateEntry = () => {
     const { title, body, entryType, tags, level } = this.state;
+    const userId = this.props.userId;
     const entryUuid = this.props.entryUuid;
     if (entryType === '') {
       this.setState({
@@ -54,9 +55,10 @@ class BlogForm extends Component {
         entryType,
         tags,
         level,
-        entryUuid
+        uuid: entryUuid,
+        userId
       };
-      this.props.updateEntry(entryUuid, updatedPost);
+      this.props.updateEntry(entryUuid, updatedPost, userId);
       this.props.onUpdateClick();
     }
   };

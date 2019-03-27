@@ -4,11 +4,46 @@ export const signIn = userCredentials => (dispatch, getState, { getFirebase }) =
     .auth()
     .signInWithEmailAndPassword(userCredentials.email, userCredentials.password)
     .then(() => {
-      dispatch({ type: 'LOGIN_SUCCESS' });
+      dispatch({ type: 'LOGIN_SUCCESS', userCredentials });
     })
     .catch(err => {
       dispatch({ type: 'LOGIN_ERROR', err });
     });
+};
+
+export const signUp = newUser => {
+  console.log(newUser);
+  return async (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
+    await firebase
+      .firestore()
+      .collection('users')
+      .add(newUser);
+    // .then(response => {
+    //   return firestore
+    //     .collection('users')
+    //     .doc(response.user.uid)
+    //     .set({
+    //       firstName: newUser.firstName,
+    //       lastName: newUser.lastName,
+    //       initials: newUser.firstName[0] + newUser.lastName[0]
+    //     });
+    // })
+    // .then(() => {
+    //   dispatch({
+    //     type: 'SIGNUP_SUCCESS'
+    //   });
+    // })
+    // .catch(err => {
+    //   dispatch({
+    //     type: 'SIGNUP_ERROR',
+    //     err
+    //   });
+    // });
+  };
 };
 
 export const signOut = () => (dispatch, getState, { getFirebase }) => {

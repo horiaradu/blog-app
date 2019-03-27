@@ -68,7 +68,7 @@ const api = {
       snapshott.delete();
     }
   },
-  async updateEntry(id, data) {
+  async updateEntry(id, data, userId) {
     const snapshot = await firebase
       .firestore()
       .collection('entries')
@@ -81,7 +81,7 @@ const api = {
           .collection('entries')
           .doc(entry.id)
           .update({
-            entry: { ...data, uuid: id }
+            entry: { ...data, uuid: id, userId }
           });
         return {
           entry: entry.data().entry

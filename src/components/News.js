@@ -14,13 +14,18 @@ class News extends Component {
   };
 
   render() {
-    const { title, body, tags, level } = this.props.news.entry;
+    const { title, body, tags, level, userId } = this.props.news.entry;
     const postUuid = this.props.news.entry.uuid;
 
     return (
       <div>
         {this.state.isEditModeOn ? (
-          <BlogForm onUpdateClick={this.changeState} entry={this.props.news.entry} entryUuid={postUuid} />
+          <BlogForm
+            onUpdateClick={this.changeState}
+            entry={this.props.news.entry}
+            entryUuid={postUuid}
+            userId={userId}
+          />
         ) : (
           <div className="blogSeparator">
             <div className="newsTitle">
@@ -29,7 +34,8 @@ class News extends Component {
               </span>
               <span>
                 <div className="levelBarDiv">{`Hot ${level}/5`}</div>
-                {this.props.auth.uid && (
+
+                {this.props.auth.uid === userId && (
                   <span>
                     <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
                     <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />

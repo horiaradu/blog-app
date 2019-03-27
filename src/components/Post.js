@@ -14,12 +14,18 @@ class Post extends Component {
     this.setState({ isEditModeOn: !this.state.isEditModeOn });
   };
   render() {
-    const { title, body, tags } = this.props.post.entry;
+    const { title, body, tags, userId } = this.props.post.entry;
+
     const postUuid = this.props.post.entry.uuid;
     return (
       <div className="blogSeparator">
         {this.state.isEditModeOn ? (
-          <BlogForm onUpdateClick={this.changeState} entry={this.props.post.entry} entryUuid={postUuid} />
+          <BlogForm
+            onUpdateClick={this.changeState}
+            entry={this.props.post.entry}
+            entryUuid={postUuid}
+            userId={userId}
+          />
         ) : (
           <div>
             <div className="postTitle">
@@ -27,7 +33,7 @@ class Post extends Component {
                 <h2>{title}</h2>
               </span>
               <span>
-                {this.props.auth.uid && (
+                {this.props.auth.uid === userId && (
                   <span>
                     <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
                     <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
