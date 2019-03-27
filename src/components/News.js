@@ -44,7 +44,11 @@ class News extends Component {
               </span>
             </div>
             <div className="newsContent">
-              <h4>Created by - {`${this.props.profile.firstName} ${this.props.profile.lastName}`}</h4>
+              {this.props.users.map(user => {
+                {
+                  return user.userId === userId && <h4>Created by - {`${user.firstName} ${user.lastName}`}</h4>;
+                }
+              })}
               <p>{body}</p>
               <ul className="ulStyle">
                 {tags

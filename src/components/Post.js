@@ -17,7 +17,6 @@ class Post extends Component {
     const { title, body, tags, userId } = this.props.post.entry;
 
     const postUuid = this.props.post.entry.uuid;
-    console.log(this.props.users);
     return (
       <div className="blogSeparator">
         {this.state.isEditModeOn ? (
