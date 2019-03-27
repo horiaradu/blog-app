@@ -17,6 +17,7 @@ class Post extends Component {
     const { title, body, tags, userId } = this.props.post.entry;
 
     const postUuid = this.props.post.entry.uuid;
+
     return (
       <div className="blogSeparator">
         {this.state.isEditModeOn ? (
@@ -59,7 +60,11 @@ class Post extends Component {
                     })
                   : null}
               </ul>
-              <Comments comments={this.props.post.comments} postUuid={this.props.post.entry.uuid} />
+              <Comments
+                comments={this.props.post.comments}
+                postUuid={this.props.post.entry.uuid}
+                user={this.props.profile}
+              />
             </div>
           </div>
         )}

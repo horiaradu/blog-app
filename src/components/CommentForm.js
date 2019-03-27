@@ -4,13 +4,17 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 export class CommentForm extends Component {
-  state = {
-    author: '',
-    text: '',
-    commentDate: new Date().toLocaleString(),
-    emptyAuthorError: false,
-    emptyTextError: false
-  };
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      author: props.user.firstName ? `${props.user.firstName} ${props.user.lastName}` : '',
+      text: '',
+      commentDate: new Date().toLocaleString(),
+      emptyAuthorError: false,
+      emptyTextError: false
+    };
+  }
 
   changeErrorState = () => {
     const { author, text } = this.state;
@@ -61,24 +65,29 @@ export class CommentForm extends Component {
     return (
       <div>
         <form id="addNewCommentForm" onSubmit={this.onFormSubmit}>
-          <label>Author:</label>
-          <input
-            className={classNames('inputField', { inputError: emptyAuthorError })}
-            placeholder="Enter Name"
-            type="text"
-            name="author"
-            value={author}
-            onChange={this.onInputChange}
-          />
-          {emptyAuthorError && (
-            <p
-              className={classNames({
-                labelError: emptyAuthorError
-              })}
-            >
-              Please enter name
-            </p>
+          {this.props.user.firstName ? null : (
+            <div>
+              <label>Author:</label>
+              <input
+                className={classNames('inputField', { inputError: emptyAuthorError })}
+                placeholder="Enter Name"
+                type="text"
+                name="author"
+                value={author}
+                onChange={this.onInputChange}
+              />
+              {emptyAuthorError && (
+                <p
+                  className={classNames({
+                    labelError: emptyAuthorError
+                  })}
+                >
+                  Please enter name
+                </p>
+              )}
+            </div>
           )}
+
           <label>Comment:</label>
           <textarea
             className={classNames('textareaField', { inputError: emptyTextError })}

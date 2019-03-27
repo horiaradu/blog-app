@@ -13,6 +13,7 @@ class Comments extends Component {
   render() {
     const { showComments } = this.state;
     const comments = this.props.comments;
+
     return (
       <div className="comments">
         <h3 className="commentHeader">
@@ -36,7 +37,7 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <CommentForm postUuid={this.props.postUuid} /> : null}
+        {showComments ? <CommentForm postUuid={this.props.postUuid} user={this.props.user} /> : null}
       </div>
     );
   }
