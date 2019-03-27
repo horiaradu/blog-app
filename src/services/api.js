@@ -9,6 +9,13 @@ const api = {
       .get();
     return snapshot.docs.map(entry => entry.data());
   },
+  async fetchUsers() {
+    const snapshot = await firebase
+      .firestore()
+      .collection('users')
+      .get();
+    return snapshot.docs.map(user => user.data());
+  },
 
   async createEntry(entry) {
     const newEntry = {

@@ -1,5 +1,6 @@
 const initialState = {
-  authError: null
+  authError: null,
+  users: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -16,17 +17,25 @@ const authReducer = (state = initialState, action) => {
       };
     case 'SIGNOUT_SUCCESS':
       return {
-        state
+        ...state
       };
     case 'SIGNUP_SUCCESS':
+      const users = action.users;
       return {
         ...state,
-        authError: null
+        authError: null,
+        users: users
       };
     case 'SINGUP_ERROR':
       return {
         ...state,
         authError: action.err
+      };
+    case 'FETCH_USERS':
+      const fetchedUsers = action.users;
+      return {
+        ...state,
+        users: fetchedUsers
       };
     default:
       return state;

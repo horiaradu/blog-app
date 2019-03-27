@@ -17,6 +17,7 @@ class Post extends Component {
     const { title, body, tags, userId } = this.props.post.entry;
 
     const postUuid = this.props.post.entry.uuid;
+    console.log(this.props.users);
     return (
       <div className="blogSeparator">
         {this.state.isEditModeOn ? (
@@ -42,6 +43,11 @@ class Post extends Component {
               </span>
             </div>
             <div className="postContent">
+              {this.props.users.map(user => {
+                {
+                  return user.userId === userId && <h4>Created by - {`${user.firstName} ${user.lastName}`}</h4>;
+                }
+              })}
               <p>{body}</p>
               <ul className="ulStyle">
                 {tags

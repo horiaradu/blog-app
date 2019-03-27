@@ -1,3 +1,5 @@
+import api from '../../services/api';
+
 export const signIn = userCredentials => (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   firebase
@@ -26,12 +28,21 @@ export const signUp = newUser => {
           .set({
             firstName: newUser.firstName,
             lastName: newUser.lastName,
-            initials: newUser.firstName[0] + newUser.lastName[0]
+            initials: newUser.firstName[0] + newUser.lastName[0],
+            userId: response.user.uid
           });
       })
-      .then(() => {
+      .then(async () => {
+        const snapshot = await firebase
+          .firestore()
+          .collection('users')
+          .get();
+        return snapshot.docs.map(entry => entry.data());
+      })
+      .then(users => {
         dispatch({
-          type: 'SIGNUP_SUCCESS'
+          type: 'SIGNUP_SUCCESS',
+          users
         });
       })
       .catch(err => {
@@ -52,4 +63,12 @@ export const signOut = () => (dispatch, getState, { getFirebase }) => {
     .then(() => {
       dispatch({ type: 'SIGNOUT_SUCCESS' });
     });
+};
+
+export const fetchUsers = () => async dispatch => {
+  const users = await api.fetchUsers();
+  dispatch({
+    type: 'FETCH_USERS',
+    users
+  });
 };
