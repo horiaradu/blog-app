@@ -57,7 +57,7 @@ export default function(state = initialState, action) {
           if (updatedEntry.entryType === 'post') {
             return {
               entry: { ...updatedEntry },
-              comments: [...(x.comments = [])]
+              comments: x.comments && x.comments.length ? x.comments : []
             };
           } else {
             return {

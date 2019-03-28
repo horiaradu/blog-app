@@ -22,9 +22,11 @@
   display: inline-block;
   padding-right: 14px;
   font-size: 1.4rem;
+  cursor: pointer;
 }
 .deleteButton {
   display: inline-block;
   padding-right: 14px;
   font-size: 1.4rem;
+  cursor: pointer;
 }
