@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fetchEntries, addNewEntry, addNewComment } from '../../redux/actions/blogActions';
+import { fetchEntries, addNewEntry, addNewComment, deleteEntry, updateEntry } from '../../redux/actions/blogActions';
 import api from '../../services/api';
 import { SET_ENTRIES } from '../../redux/actions/actionTypes';
 
@@ -40,7 +40,7 @@ describe('blogActions', () => {
   });
 
   describe('addNewEntry()', () => {
-    test('checks if dispatches ADD_NEW_ENTRY with correct payload', () => {
+    it('checks if dispatches ADD_NEW_ENTRY with correct payload', async () => {
       const store = mockStoreCreator({
         entries: [
           {
@@ -65,7 +65,7 @@ describe('blogActions', () => {
       const fetchEntriesMock = () =>
         Promise.resolve({ title: 'some title', body: 'some text', entryType: 'post', uuid: uuidTest });
       api.createEntry.mockImplementation(fetchEntriesMock);
-      store.dispatch(addNewEntry(newEntry));
+      await store.dispatch(addNewEntry(newEntry));
       const dispatchedActions = store.getActions();
       expect(dispatchedActions.length).toBe(1);
       expect(dispatchedActions[0].type).toBe('ADD_NEW_ENTRY');
@@ -77,7 +77,7 @@ describe('blogActions', () => {
         uuid: expect.any(String)
       });
     });
-    test('checks if api.createEntry() was called', () => {
+    it('checks if api.createEntry() was called', () => {
       const store = mockStoreCreator({
         entries: [
           {
@@ -140,7 +140,7 @@ describe('blogActions', () => {
         uuid: expect.any(String)
       });
     });
-    test('checks if api.createComment() was successfully called', () => {
+    it('checks if api.createComment() was successfully called', () => {
       const store = mockStoreCreator({
         entries: [
           {
@@ -179,6 +179,60 @@ describe('blogActions', () => {
         },
         expect.any(String)
       );
+    });
+  });
+  describe('deleteEntry()', () => {
+    it('should dispatch DELETE_ENTRY with correct payload', () => {
+      const store = mockStoreCreator({
+        entries: [{ entry: { title: 'new blog', uuid: '123', entryType: 'post' }, comments: [] }]
+      });
+      const entryUuid = '123';
+      store.dispatch(deleteEntry(entryUuid));
+      const dispatchedActions = store.getActions();
+      expect(dispatchedActions.length).toBe(1);
+      expect(dispatchedActions[0].payload).toBe('123');
+      expect(dispatchedActions[0].type).toBe('DELETE_ENTRY');
+    });
+    it('checks if api.deleteEntry() was successfully called', () => {
+      const store = mockStoreCreator({
+        entries: [{ entry: { title: 'new blog', uuid: '123', entryType: 'post' }, comments: [] }]
+      });
+      const entryUuid = '123';
+      //do I still need to do this if api.deleteEntry() does not return anything? and if yes what should deleteEntryMock should look like?
+      const deleteEntryMock = () => Promise;
+
+      api.deleteEntry.mockImplementation(deleteEntryMock);
+      store.dispatch(deleteEntry(entryUuid));
+      expect(api.deleteEntry).lastCalledWith('123');
+    });
+  });
+  describe('updateEntry()', () => {
+    it('should dispatch UPDATE_ENTRY with correct payload', () => {
+      const store = mockStoreCreator({
+        entries: [{ entry: { title: 'new blog', uuid: '123', entryType: 'post' }, comments: [] }]
+      });
+      const updatedEntry = { title: 'new blog updated', uuid: '123', entryType: 'post', comments: [] };
+      const entryUuid = '123';
+      store.dispatch(updateEntry(entryUuid, updatedEntry));
+      const dispatchedActions = store.getActions();
+      expect(dispatchedActions.length).toBe(1);
+      expect(dispatchedActions[0].type).toBe('UPDATE_ENTRY');
+      expect(dispatchedActions[0].entryUuidToUpdate).toBe('123');
+      expect(dispatchedActions[0].updatedEntry).toEqual({
+        title: 'new blog updated',
+        uuid: '123',
+        entryType: 'post',
+        comments: []
+      });
+    });
+    it('checks if api.updateEntry() was successfully called', () => {
+      const store = mockStoreCreator({ entries: [] });
+      const updatedEntry = { title: 'new blog updated', uuid: '123', entryType: 'post', comments: [] };
+      const entryUuid = '123';
+      const updateEntryMock = () => Promise;
+      api.updateEntry.mockImplementation(updateEntryMock);
+      store.dispatch(updateEntry(entryUuid, updatedEntry));
+      expect(api.updateEntry).lastCalledWith(entryUuid, updatedEntry);
     });
   });
 });

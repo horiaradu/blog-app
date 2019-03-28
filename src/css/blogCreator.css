@@ -32,6 +32,7 @@ body {
   padding-bottom: 1rem;
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem;
+  margin-bottom: 30px;
 }
 .radioButtonsWrapper {
   display: flex;
@@ -216,4 +217,41 @@ input:focus {
   font-size: 12px;
   margin-top: -5px;
   margin-bottom: 10px !important;
+}
+
+.edit-delete_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cancelButton {
+  box-sizing: border-box;
+  height: 30px;
+  overflow: hidden;
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  font-size: 14px;
+  border: none;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.updateButton {
+  box-sizing: border-box;
+  height: 30px;
+  overflow: hidden;
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background-color: #f2711c;
+  color: white;
+  font-size: 14px;
+  border: none;
+  margin-left: 6px;
+  cursor: pointer;
 }

@@ -10,14 +10,14 @@ const api = {
     return snapshot.docs.map(entry => entry.data());
   },
 
-  createEntry(entry) {
+  async createEntry(entry) {
     const newEntry = {
       entry: entry,
       comments: [],
       entryDate: new Date().toLocaleString()
     };
 
-    firebase
+    await firebase
       .firestore()
       .collection('entries')
       .add(newEntry);
@@ -44,17 +44,51 @@ const api = {
           comments: entry.data().comments.concat(comment)
         };
       } else {
+        return {
+          entry: entry.data().entry,
+          comments: entry.data().comments
+        };
+      }
+    });
+  },
+
+  async deleteEntry(entryUuid) {
+    const snapshot = await firebase
+      .firestore()
+      .collection('entries')
+      .get();
+
+    const firebaseEntryToDelete = snapshot.docs.find(firebaseEntry => firebaseEntry.data().entry.uuid === entryUuid);
+
+    if (firebaseEntryToDelete) {
+      const snapshott = await firebase
+        .firestore()
+        .collection('entries')
+        .doc(firebaseEntryToDelete.id);
+      snapshott.delete();
+    }
+  },
+  async updateEntry(id, data) {
+    const snapshot = await firebase
+      .firestore()
+      .collection('entries')
+      .get();
+
+    snapshot.docs.map(entry => {
+      if (entry.data().entry.uuid === id) {
         firebase
           .firestore()
           .collection('entries')
           .doc(entry.id)
           .update({
-            entry: entry.data().entry,
-            comments: entry.data().comments
+            entry: { ...data, uuid: id }
           });
         return {
-          entry: entry.data().entry,
-          comments: entry.data().comments
+          entry: entry.data().entry
+        };
+      } else {
+        return {
+          entry: entry.data().entry
         };
       }
     });
