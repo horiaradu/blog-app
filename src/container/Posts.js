@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BlogForm from '../components/BlogForm';
 import { connect } from 'react-redux';
 import BlogEntries from '../components/BlogEntries';
 import '../css/mainPage.css';
@@ -17,8 +16,6 @@ class MainPage extends Component {
 
     return (
       <div className="wrapper">
-        {/* hide when user is not logged in */}
-        {/* {auth.uid && <BlogForm />} */}
         <BlogEntries blogs={blogs} auth={auth} profile={profile} users={users} />
       </div>
     );

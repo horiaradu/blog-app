@@ -13,20 +13,17 @@ exports[`Post Component should render Post component correctly 1`] = `
           title
         </h2>
       </span>
-      <span>
-        <span>
-          <EditEntry
-            onEditClick={[Function]}
-          />
-          <Connect(DeleteEntry)
-            onEditClick={[Function]}
-          />
-        </span>
-      </span>
+      <span />
     </div>
     <div
       className="postContent"
     >
+      <h4
+        key="title"
+      >
+        Created by - 
+        Tony undefined
+      </h4>
       <p>
         body text
       </p>
@@ -46,8 +43,13 @@ exports[`Post Component should render Post component correctly 1`] = `
           tag2
         </li>
       </ul>
-      <Comments
+      <Connect(Comments)
         comments={Array []}
+        user={
+          Object {
+            "firstName": "Tony",
+          }
+        }
       />
     </div>
   </div>

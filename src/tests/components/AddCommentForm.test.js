@@ -16,7 +16,7 @@ beforeEach(() => {
 
 describe('Comment component', () => {
   beforeEach(() => {
-    wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} postUuid="123" />);
+    wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} postUuid="123" user={{ isEmpty: true }} />);
   });
   afterEach(() => {
     jest.restoreAllMocks();
@@ -36,7 +36,8 @@ describe('Comment component', () => {
         {
           author: 'Foo',
           commentDate: state.commentDate,
-          text: 'Bar'
+          text: 'Bar',
+          userId: ''
         },
         '123'
       );

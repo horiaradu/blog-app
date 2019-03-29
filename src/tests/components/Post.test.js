@@ -17,7 +17,9 @@ describe('Post Component', () => {
       }
     };
     const auth = { uid: '123' };
-    const wrapper = shallow(<Post post={post} auth={auth} />);
+    const wrapper = shallow(
+      <Post post={post} auth={auth} profile={{ firstName: 'Tony' }} users={[{ firstName: 'Tony' }]} />
+    );
     expect(toJSON(wrapper)).toMatchSnapshot();
     expect(post.entry.tags[0]).toBe('tag1');
   });
@@ -31,7 +33,7 @@ describe('Post Component', () => {
       }
     };
     const auth = { uid: '123' };
-    const wrapper = shallow(<Post post={post} auth={auth} />);
+    const wrapper = shallow(<Post post={post} auth={auth} users={[{ firstName: 'Tony' }]} />);
     expect(wrapper.find('li').length).toBe(0);
   });
 });

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import CommentForm from './CommentForm';
+import { deleteComment } from '../redux/actions/blogActions';
+import { connect } from 'react-redux';
 import '../css/comments.css';
 
 class Comments extends Component {
@@ -8,6 +10,10 @@ class Comments extends Component {
   };
   onShowClick = () => {
     this.setState({ showComments: !this.state.showComments });
+  };
+
+  onDeleteClick = (commentUuid, postUuid) => {
+    this.props.deleteComment(commentUuid, postUuid);
   };
 
   render() {
@@ -22,14 +28,23 @@ class Comments extends Component {
         {showComments
           ? comments.map(comment => {
               return (
-                <div className="commentWrap">
-                  <i class="fas fa-user avatar" />
+                <div key={comment.uuid} className="commentWrap">
+                  <i className="fas fa-user avatar" />
                   <div className="content">
                     <h5 className="author">
                       {comment.author}
                       <div className="dateWrap">
                         <span className="date"> {comment.commentDate}</span>
                       </div>
+
+                      {comment.userId === this.props.user.userId && (
+                        <button
+                          className="deleteCommentButton"
+                          onClick={() => this.onDeleteClick(comment.uuid, this.props.postUuid)}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </h5>
                     <div className="commentBody">{comment.text}</div>
                   </div>
@@ -43,4 +58,7 @@ class Comments extends Component {
   }
 }
 
-export default Comments;
+export default connect(
+  null,
+  { deleteComment }
+)(Comments);

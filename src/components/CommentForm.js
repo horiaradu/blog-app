@@ -6,7 +6,6 @@ import classNames from 'classnames';
 export class CommentForm extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       author: props.user.firstName ? `${props.user.firstName} ${props.user.lastName}` : '',
       text: '',
@@ -45,7 +44,8 @@ export class CommentForm extends Component {
         .slice(0, 1)
         .toUpperCase()
         .concat(text.slice(1)),
-      commentDate
+      commentDate,
+      userId: this.props.user.userId ? this.props.user.userId : ''
     };
 
     if (author === '') {
@@ -56,7 +56,10 @@ export class CommentForm extends Component {
     }
     if (author !== '' && text !== '') {
       this.props.addNewComment(newComment, this.props.postUuid);
-      this.setState({ author: '', text: '' });
+      this.setState({
+        author: this.props.user.firstName ? `${this.props.user.firstName} ${this.props.user.lastName}` : '',
+        text: ''
+      });
     }
   };
 

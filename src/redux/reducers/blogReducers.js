@@ -39,6 +39,7 @@ export default function(state = initialState, action) {
           return x;
         }
       });
+
       return {
         ...state,
         entries: newEntries
@@ -70,6 +71,22 @@ export default function(state = initialState, action) {
       return {
         ...state,
         entries: newState
+      };
+    case 'DELETE_COMMENT':
+      const { entryUuid2, listOfFilteredComments } = action;
+
+      const newState2 = state.entries.map(x => {
+        if (x.entry.uuid === entryUuid2) {
+          return {
+            entry: x.entry,
+            comments: listOfFilteredComments
+          };
+        } else return x;
+      });
+
+      return {
+        ...state,
+        entries: newState2
       };
     default:
       return state;

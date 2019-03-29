@@ -14,7 +14,7 @@ class Post extends Component {
     this.setState({ isEditModeOn: !this.state.isEditModeOn });
   };
   render() {
-    const { title, body, tags, userId } = this.props.post.entry;
+    const { title, body, tags, userId, uuid } = this.props.post.entry;
 
     const postUuid = this.props.post.entry.uuid;
 
@@ -44,9 +44,9 @@ class Post extends Component {
             </div>
             <div className="postContent">
               {this.props.users.map(user => {
-                {
-                  return user.userId === userId && <h4>Created by - {`${user.firstName} ${user.lastName}`}</h4>;
-                }
+                return (
+                  user.userId === userId && <h4 key={title}>Created by - {`${user.firstName} ${user.lastName}`}</h4>
+                );
               })}
               <p>{body}</p>
               <ul className="ulStyle">
