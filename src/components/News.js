@@ -20,7 +20,7 @@ class News extends Component {
   };
 
   render() {
-    const { title, body, tags, level, userId } = this.props.news.entry;
+    const { title, body, tags, level, userId, uuid } = this.props.news.entry;
     const entryUuid = this.props.news.entry.uuid;
 
     return (
@@ -52,7 +52,7 @@ class News extends Component {
             <div className="newsContent">
               {this.props.users.map(user => {
                 return (
-                  user.userId === userId && <h4 key={entryUuid}>Created by - {`${user.firstName} ${user.lastName}`}</h4>
+                  user.userId === userId && <h4 key={uuid}>Created by - {`${user.firstName} ${user.lastName}`}</h4>
                 );
               })}
               <p>{body}</p>

@@ -40,7 +40,8 @@ describe('Comment component', () => {
         {
           author: 'Foo',
           commentDate: state.commentDate,
-          text: 'Bar'
+          text: 'Bar',
+          userId: ''
         },
         '123'
       );

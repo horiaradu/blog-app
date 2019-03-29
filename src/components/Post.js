@@ -27,7 +27,7 @@ class Post extends Component {
   };
 
   render() {
-    const { title, body, tags, userId } = this.props.post.entry;
+    const { title, body, tags, userId, uuid } = this.props.post.entry;
 
     const entryUuid = this.props.post.entry.uuid;
     const currentUser = this.props.currentUser;
