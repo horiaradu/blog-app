@@ -6,7 +6,7 @@ import { deleteEntry } from '../redux/actions/blogActions';
 const DeleteEntry = props => {
   return (
     <div className="deleteButton">
-      <i className="fas fa-trash-alt" onClick={() => props.deleteEntry(props.postUuid)} />
+      <i className="fas fa-trash-alt" onClick={() => props.deleteEntry(props.entryUuid)} />
     </div>
   );
 };

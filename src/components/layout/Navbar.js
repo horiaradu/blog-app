@@ -6,11 +6,11 @@ import '../../css/auth.css';
 import '../../css/navbar.css';
 
 const Navbar = props => {
-  const { auth, profile } = props;
+  const { currentUser } = props;
 
   return (
     <nav>
-      {auth.uid ? (
+      {currentUser.userId ? (
         <div className="navbarContainer">
           <div className="navbarWrap">
             <span>
@@ -25,7 +25,7 @@ const Navbar = props => {
               <Link className="navbarElement" to="/" onClick={props.signOut}>
                 Logout
               </Link>
-              <span className="initials">{profile.initials}</span>
+              <span className="initials">{currentUser.initials}</span>
             </span>
           </div>
         </div>
@@ -38,9 +38,6 @@ const Navbar = props => {
               </Link>
             </span>
             <span className="rightSideSpan">
-              {/* <Link className="navbarElement" to="/login">
-                Create Entry
-              </Link> */}
               <Link className="navbarElement" to="signup">
                 SignUp
               </Link>
@@ -57,8 +54,7 @@ const Navbar = props => {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile
+    currentUser: state.firebase.profile
   };
 };
 

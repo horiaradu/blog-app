@@ -18,7 +18,7 @@ class BlogEntries extends Component {
   };
 
   render() {
-    const { blogs, auth, profile, users } = this.props;
+    const { blogs, currentUser, users } = this.props;
 
     return (
       <div>
@@ -31,9 +31,9 @@ class BlogEntries extends Component {
           {(blogs && this.state.postCheck === true) || this.state.newsCheck === true ? (
             blogs.map(blog => {
               if (blog.entry.entryType === 'post' && this.state.postCheck === true) {
-                return <Post key={blog.entry.uuid} post={blog} auth={auth} profile={profile} users={users} />;
+                return <Post key={blog.entry.uuid} post={blog} currentUser={currentUser} users={users} />;
               } else if (blog.entry.entryType === 'news' && this.state.newsCheck === true) {
-                return <News key={blog.entry.uuid} news={blog} auth={auth} profile={profile} users={users} />;
+                return <News key={blog.entry.uuid} news={blog} currentUser={currentUser} users={users} />;
               } else return null;
             })
           ) : blogs && this.state.postCheck === false && this.state.newsCheck === false ? (

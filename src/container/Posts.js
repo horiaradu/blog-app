@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BlogForm from '../components/BlogForm';
 import { connect } from 'react-redux';
 import BlogEntries from '../components/BlogEntries';
 import '../css/mainPage.css';
@@ -13,13 +12,11 @@ class MainPage extends Component {
   }
 
   render() {
-    const { blogs, auth, profile, users } = this.props;
+    const { blogs, currentUser, users } = this.props;
 
     return (
       <div className="wrapper">
-        {/* hide when user is not logged in */}
-        {/* {auth.uid && <BlogForm />} */}
-        <BlogEntries blogs={blogs} auth={auth} profile={profile} users={users} />
+        <BlogEntries blogs={blogs} currentUser={currentUser} users={users} />
       </div>
     );
   }
@@ -28,8 +25,7 @@ class MainPage extends Component {
 const mapStateToProps = state => {
   return {
     blogs: state.blog.entries,
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
+    currentUser: state.firebase.profile,
     users: state.auth.users
   };
 };

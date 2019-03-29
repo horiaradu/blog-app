@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import '../css/news.css';
-import BlogForm from './BlogForm';
 import DeleteEntry from './DeleteEntry';
+import BlogForm from './BlogForm';
 import EditEntry from './EditEntry';
-
 class News extends Component {
   state = {
     isEditModeOn: false
@@ -13,9 +12,16 @@ class News extends Component {
     this.setState({ isEditModeOn: !this.state.isEditModeOn });
   };
 
+  isAuthor = () => {
+    if (this.props.currentUser.userId === this.props.news.entry.userId) {
+      return true;
+    }
+    return false;
+  };
+
   render() {
     const { title, body, tags, level, userId } = this.props.news.entry;
-    const postUuid = this.props.news.entry.uuid;
+    const entryUuid = this.props.news.entry.uuid;
 
     return (
       <div>
@@ -23,7 +29,7 @@ class News extends Component {
           <BlogForm
             onUpdateClick={this.changeState}
             entry={this.props.news.entry}
-            entryUuid={postUuid}
+            entryUuid={entryUuid}
             userId={userId}
           />
         ) : (
@@ -35,19 +41,19 @@ class News extends Component {
               <span>
                 <div className="levelBarDiv">{`Hot ${level}/5`}</div>
 
-                {this.props.auth.uid === userId && (
+                {this.isAuthor() && (
                   <span>
-                    <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
-                    <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+                    <EditEntry onEditClick={this.changeState} entryUuid={entryUuid} />
+                    <DeleteEntry onEditClick={this.changeState} entryUuid={entryUuid} />
                   </span>
                 )}
               </span>
             </div>
             <div className="newsContent">
               {this.props.users.map(user => {
-                {
-                  return user.userId === userId && <h4>Created by - {`${user.firstName} ${user.lastName}`}</h4>;
-                }
+                return (
+                  user.userId === userId && <h4 key={entryUuid}>Created by - {`${user.firstName} ${user.lastName}`}</h4>
+                );
               })}
               <p>{body}</p>
               <ul className="ulStyle">

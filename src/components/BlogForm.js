@@ -5,10 +5,12 @@ import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
 import '../css/mainPage.css';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
 
 class BlogForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       title: props.entry ? props.entry.title : '',
       body: props.entry ? props.entry.body : '',
@@ -178,7 +180,6 @@ class BlogForm extends Component {
       entryTypeError,
       tagReused
     } = this.state;
-
     return (
       <div className="wrapper">
         <div className="panelTitle">
@@ -348,4 +349,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { addNewEntry, updateEntry }
-)(BlogForm);
+)(withRouter(BlogForm));

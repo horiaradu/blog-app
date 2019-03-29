@@ -6,9 +6,8 @@ import classNames from 'classnames';
 export class CommentForm extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
-      author: props.user.firstName ? `${props.user.firstName} ${props.user.lastName}` : '',
+      author: props.currentUser.firstName ? `${props.currentUser.firstName} ${props.currentUser.lastName}` : '',
       text: '',
       commentDate: new Date().toLocaleString(),
       emptyAuthorError: false,
@@ -55,7 +54,7 @@ export class CommentForm extends Component {
       this.setState({ emptyTextError: true });
     }
     if (author !== '' && text !== '') {
-      this.props.addNewComment(newComment, this.props.postUuid);
+      this.props.addNewComment(newComment, this.props.entryUuid);
       this.setState({ author: '', text: '' });
     }
   };
@@ -65,7 +64,7 @@ export class CommentForm extends Component {
     return (
       <div>
         <form id="addNewCommentForm" onSubmit={this.onFormSubmit}>
-          {this.props.user.firstName ? null : (
+          {this.props.currentUser.firstName ? null : (
             <div>
               <label>Author:</label>
               <input

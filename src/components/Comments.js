@@ -37,7 +37,7 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <CommentForm postUuid={this.props.postUuid} user={this.props.user} /> : null}
+        {showComments ? <CommentForm entryUuid={this.props.entryUuid} currentUser={this.props.currentUser} /> : null}
       </div>
     );
   }

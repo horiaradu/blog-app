@@ -1,30 +1,44 @@
 import React, { Component } from 'react';
 import '../css/posts.css';
 import Comments from './Comments';
-
 import BlogForm from './BlogForm';
 import EditEntry from './EditEntry';
 import DeleteEntry from './DeleteEntry';
 
 class Post extends Component {
   state = {
-    isEditModeOn: false
+    isEditModeOn: false,
+    isUser: false
   };
   changeState = () => {
     this.setState({ isEditModeOn: !this.state.isEditModeOn });
   };
+  isAuthor = () => {
+    if (this.props.currentUser.userId === this.props.post.entry.userId) {
+      return true;
+    }
+    return false;
+  };
+  getUserName = () => {
+    const userName = this.props.users.find(user => {
+      return user.userId === this.props.post.entry.userId;
+    });
+    return userName;
+  };
+
   render() {
     const { title, body, tags, userId } = this.props.post.entry;
 
-    const postUuid = this.props.post.entry.uuid;
-
+    const entryUuid = this.props.post.entry.uuid;
+    const currentUser = this.props.currentUser;
+    const userName = this.getUserName();
     return (
       <div className="blogSeparator">
         {this.state.isEditModeOn ? (
           <BlogForm
             onUpdateClick={this.changeState}
             entry={this.props.post.entry}
-            entryUuid={postUuid}
+            entryUuid={entryUuid}
             userId={userId}
           />
         ) : (
@@ -34,20 +48,19 @@ class Post extends Component {
                 <h2>{title}</h2>
               </span>
               <span>
-                {this.props.auth.uid === userId && (
+                {this.isAuthor() && (
                   <span>
-                    <EditEntry onEditClick={this.changeState} postUuid={postUuid} />
-                    <DeleteEntry onEditClick={this.changeState} postUuid={postUuid} />
+                    <EditEntry onEditClick={this.changeState} entryUuid={entryUuid} />
+                    <DeleteEntry onEditClick={this.changeState} entryUuid={entryUuid} />
                   </span>
                 )}
               </span>
             </div>
             <div className="postContent">
-              {this.props.users.map(user => {
-                {
-                  return user.userId === userId && <h4>Created by - {`${user.firstName} ${user.lastName}`}</h4>;
-                }
-              })}
+              {this.getUserName() && (
+                <h4 key={entryUuid}>Created by - {`${userName.firstName} ${userName.lastName}`}</h4>
+              )}
+
               <p>{body}</p>
               <ul className="ulStyle">
                 {tags
@@ -62,8 +75,8 @@ class Post extends Component {
               </ul>
               <Comments
                 comments={this.props.post.comments}
-                postUuid={this.props.post.entry.uuid}
-                user={this.props.profile}
+                entryUuid={this.props.post.entry.uuid}
+                currentUser={currentUser}
               />
             </div>
           </div>
