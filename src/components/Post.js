@@ -8,8 +8,7 @@ import DeleteEntry from './DeleteEntry';
 class Post extends Component {
   state = {
     isEditModeOn: false,
-    isUser: false,
-    test: {}
+    isUser: false
   };
   changeState = () => {
     this.setState({ isEditModeOn: !this.state.isEditModeOn });

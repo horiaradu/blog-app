@@ -45,7 +45,7 @@ export class CommentForm extends Component {
         .toUpperCase()
         .concat(text.slice(1)),
       commentDate,
-      userId: this.props.user.userId ? this.props.user.userId : ''
+      userId: this.props.currentUser.userId ? this.props.currentUser.userId : ''
     };
 
     if (author === '') {
@@ -55,9 +55,11 @@ export class CommentForm extends Component {
       this.setState({ emptyTextError: true });
     }
     if (author !== '' && text !== '') {
-      this.props.addNewComment(newComment, this.props.postUuid);
+      this.props.addNewComment(newComment, this.props.entryUuid);
       this.setState({
-        author: this.props.user.firstName ? `${this.props.user.firstName} ${this.props.user.lastName}` : '',
+        author: this.props.currentUser.firstName
+          ? `${this.props.currentUser.firstName} ${this.props.currentUser.lastName}`
+          : '',
         text: ''
       });
     }

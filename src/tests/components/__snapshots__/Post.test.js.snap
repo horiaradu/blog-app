@@ -18,12 +18,6 @@ exports[`Post Component should render Post component correctly 1`] = `
     <div
       className="postContent"
     >
-      <h4
-        key="title"
-      >
-        Created by - 
-        Tony undefined
-      </h4>
       <p>
         body text
       </p>

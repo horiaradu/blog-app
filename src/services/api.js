@@ -124,8 +124,8 @@ const api = {
             comments: filteredComments
           });
       }
-      return filteredComments;
     });
+    return filteredComments;
   }
 };
 

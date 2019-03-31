@@ -12,14 +12,13 @@ class Comments extends Component {
     this.setState({ showComments: !this.state.showComments });
   };
 
-  onDeleteClick = (commentUuid, postUuid) => {
-    this.props.deleteComment(commentUuid, postUuid);
+  onDeleteClick = (commentUuid, entryUuid, userId) => {
+    this.props.deleteComment(commentUuid, entryUuid, userId);
   };
 
   render() {
     const { showComments } = this.state;
     const comments = this.props.comments;
-
     return (
       <div className="comments">
         <h3 className="commentHeader">
@@ -37,10 +36,12 @@ class Comments extends Component {
                         <span className="date"> {comment.commentDate}</span>
                       </div>
 
-                      {comment.userId === this.props.user.userId && (
+                      {comment.userId === this.props.currentUser.userId && (
                         <button
                           className="deleteCommentButton"
-                          onClick={() => this.onDeleteClick(comment.uuid, this.props.postUuid)}
+                          onClick={() =>
+                            this.onDeleteClick(comment.uuid, this.props.entryUuid, this.props.currentUser.userId)
+                          }
                         >
                           Delete
                         </button>
