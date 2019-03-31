@@ -22,8 +22,8 @@ class Comments extends Component {
         {showComments
           ? comments.map(comment => {
               return (
-                <div className="commentWrap">
-                  <i class="fas fa-user avatar" />
+                <div key={comment.uuid} className="commentWrap">
+                  <i className="fas fa-user avatar" />
                   <div className="content">
                     <h5 className="author">
                       {comment.author}
