@@ -9,7 +9,7 @@ class Post extends Component {
   state = {
     isEditModeOn: false,
     isUser: false,
-    test: []
+    test: {}
   };
   changeState = () => {
     this.setState({ isEditModeOn: !this.state.isEditModeOn });
