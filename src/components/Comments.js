@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import CommentForm from './CommentForm';
+import EditComment from './EditComment';
 import { deleteComment } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import '../css/comments.css';
 
 class Comments extends Component {
   state = {
-    showComments: false
+    showComments: false,
+    isEditCommentModeOn: false
   };
   onShowClick = () => {
     this.setState({ showComments: !this.state.showComments });
+  };
+
+  onEditCommentClick = () => {
+    this.setState({ isEditCommentModeOn: true });
   };
 
   onDeleteClick = (commentUuid, entryUuid, userId) => {
@@ -37,17 +43,26 @@ class Comments extends Component {
                       </div>
 
                       {comment.userId === this.props.currentUser.userId && (
-                        <button
-                          className="deleteCommentButton"
-                          onClick={() =>
-                            this.onDeleteClick(comment.uuid, this.props.entryUuid, this.props.currentUser.userId)
-                          }
-                        >
-                          Delete
-                        </button>
+                        <div>
+                          <button
+                            className="deleteCommentButton"
+                            onClick={() =>
+                              this.onDeleteClick(comment.uuid, this.props.entryUuid, this.props.currentUser.userId)
+                            }
+                          >
+                            Delete
+                          </button>
+                          <button className="deleteCommentButton" onClick={this.onEditCommentClick}>
+                            Edit
+                          </button>
+                        </div>
                       )}
                     </h5>
-                    <div className="commentBody">{comment.text}</div>
+                    {this.isEditCommentModeOn === true ? (
+                      <EditComment />
+                    ) : (
+                      <div className="commentBody">{comment.text}</div>
+                    )}
                   </div>
                 </div>
               );
