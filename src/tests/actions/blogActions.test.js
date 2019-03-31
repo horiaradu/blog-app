@@ -229,7 +229,7 @@ describe('blogActions', () => {
       const store = mockStoreCreator({ entries: [] });
       const updatedEntry = { title: 'new blog updated', uuid: '123', entryType: 'post', comments: [] };
       const entryUuid = '123';
-      const userId = 'abc';
+      const userId = '999';
       const updateEntryMock = () => Promise;
       api.updateEntry.mockImplementation(updateEntryMock);
       store.dispatch(updateEntry(entryUuid, updatedEntry, userId));

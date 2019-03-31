@@ -7,17 +7,6 @@ exports[`Comment component should render AddNewComment correctly 1`] = `
     onSubmit={[Function]}
   >
     <label>
-      Author:
-    </label>
-    <input
-      className="inputField"
-      name="author"
-      onChange={[Function]}
-      placeholder="Enter Name"
-      type="text"
-      value=""
-    />
-    <label>
       Comment:
     </label>
     <textarea

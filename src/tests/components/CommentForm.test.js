@@ -16,7 +16,11 @@ beforeEach(() => {
 
 describe('Comment component', () => {
   beforeEach(() => {
-    wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} postUuid="123" />);
+    const currentUser = {
+      firstName: 'Tony',
+      userId: '999'
+    };
+    wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} entryUuid="123" currentUser={currentUser} />);
   });
   afterEach(() => {
     jest.restoreAllMocks();
@@ -123,6 +127,8 @@ describe('Comment component', () => {
   });
   describe('when input is changed', () => {
     it('should update state.author when author input is changed', () => {
+      const currentUser = {};
+      wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} entryUuid="123" currentUser={currentUser} />);
       const state = {
         author: '',
         commentDate: new Date(),

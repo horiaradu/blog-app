@@ -13,16 +13,7 @@ exports[`Post Component should render Post component correctly 1`] = `
           title
         </h2>
       </span>
-      <span>
-        <span>
-          <EditEntry
-            onEditClick={[Function]}
-          />
-          <Connect(DeleteEntry)
-            onEditClick={[Function]}
-          />
-        </span>
-      </span>
+      <span />
     </div>
     <div
       className="postContent"
@@ -48,6 +39,13 @@ exports[`Post Component should render Post component correctly 1`] = `
       </ul>
       <Comments
         comments={Array []}
+        currentUser={
+          Object {
+            "firstName": "Tony",
+            "userId": "999",
+          }
+        }
+        entryUuid="123456"
       />
     </div>
   </div>
