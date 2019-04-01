@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CommentForm from './CommentForm';
 
 const EditComment = props => {
@@ -10,6 +10,7 @@ const EditComment = props => {
         entryUuid={props.entryUuid}
         currentComment={props.currentComment}
         onUpdateClick={props.onUpdateClick}
+        currentCommentId={props.currentCommentId}
       />
     </div>
   );

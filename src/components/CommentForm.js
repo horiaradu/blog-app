@@ -65,6 +65,30 @@ export class CommentForm extends Component {
     }
   };
 
+  onUpdateCommentClick = () => {
+    const { author, text, commentDate } = this.state;
+
+    const updatedComment = {
+      author: author
+        .slice(0, 1)
+        .toUpperCase()
+        .concat(author.slice(1)),
+      text: text
+        .slice(0, 1)
+        .toUpperCase()
+        .concat(text.slice(1)),
+      commentDate,
+      userId: this.props.currentUser.userId ? this.props.currentUser.userId : ''
+    };
+    this.props.onUpdateClick(this.props.currentCommentId, updatedComment, this.props.entryUuid);
+    if (author === '') {
+      this.setState({ emptyAuthorError: true });
+    }
+    if (text === '') {
+      this.setState({ emptyTextError: true });
+    }
+  };
+
   render() {
     const { author, text, emptyAuthorError, emptyTextError } = this.state;
     return (
@@ -110,15 +134,15 @@ export class CommentForm extends Component {
               Enter text
             </p>
           )}
-          {this.props.currentComment ? (
-            <div>
-              <button onClick={this.props.onCancelClick}>Cancel</button>
-              <button onClick={this.props.onUpdateClick}>Save</button>
-            </div>
-          ) : (
-            <input type="submit" className="commentButton" value="Add Comment" />
-          )}
+
+          {!this.props.currentComment && <input type="submit" className="commentButton" value="Add Comment" />}
         </form>
+        {this.props.currentComment && (
+          <div>
+            <button onClick={this.props.onCancelClick}>Cancel</button>
+            <button onClick={this.onUpdateCommentClick}>Save</button>
+          </div>
+        )}
       </div>
     );
   }

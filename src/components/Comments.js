@@ -26,8 +26,9 @@ class Comments extends Component {
   onCancelClick = () => {
     this.setState({ isEditCommentModeOn: false, currentCommentId: '' });
   };
-  onUpdateClick = () => {
-    this.props.updateComment();
+  onUpdateClick = (commentUuid, data, entryUuid) => {
+    this.props.updateComment(commentUuid, data, entryUuid);
+    this.setState({ isEditCommentModeOn: false, currentCommentId: '' });
   };
 
   render() {
@@ -40,6 +41,7 @@ class Comments extends Component {
         </h3>
         {showComments
           ? comments.map(comment => {
+              console.log(comment);
               return (
                 <div key={comment.uuid} className="commentWrap">
                   <i className="fas fa-user avatar" />
@@ -80,6 +82,7 @@ class Comments extends Component {
                           currentComment={comment}
                           onCancelClick={this.onCancelClick}
                           onUpdateClick={this.onUpdateClick}
+                          currentCommentId={this.state.currentCommentId}
                         />
                       </div>
                     ) : (

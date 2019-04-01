@@ -50,9 +50,11 @@ export const deleteComment = (commentUuid, entryUuid2) => async dispatch => {
   });
 };
 
-export const updateComment = () => dispatch => {
-  console.log('from deleteCommentAction');
+export const updateComment = (commentUuid, updatedComment, entryUuid3) => async dispatch => {
+  const listOfUpdatedComments = await api.updateComment(commentUuid, updatedComment, entryUuid3);
   dispatch({
-    type: 'UPDATE_COMMENT'
+    type: 'UPDATE_COMMENT',
+    listOfUpdatedComments,
+    entryUuid3
   });
 };
