@@ -41,7 +41,6 @@ class Comments extends Component {
         </h3>
         {showComments
           ? comments.map(comment => {
-              console.log(comment);
               return (
                 <div key={comment.uuid} className="commentWrap">
                   <i className="fas fa-user avatar" />
@@ -93,7 +92,9 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <CommentForm entryUuid={this.props.entryUuid} currentUser={this.props.currentUser} /> : null}
+        {showComments && this.props.currentUser.userId ? (
+          <CommentForm entryUuid={this.props.entryUuid} currentUser={this.props.currentUser} />
+        ) : null}
       </div>
     );
   }
