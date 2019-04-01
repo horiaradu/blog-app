@@ -8,7 +8,7 @@ export class CommentForm extends Component {
     super(props);
     this.state = {
       author: props.currentUser.firstName ? `${props.currentUser.firstName} ${props.currentUser.lastName}` : '',
-      text: '',
+      text: props.currentComment ? props.currentComment.text : '',
       commentDate: new Date().toLocaleString(),
       emptyAuthorError: false,
       emptyTextError: false
@@ -110,7 +110,14 @@ export class CommentForm extends Component {
               Enter text
             </p>
           )}
-          <input type="submit" className="commentButton" value="Add Comment" />
+          {this.props.currentComment ? (
+            <div>
+              <button onClick={this.props.onCancelClick}>Cancel</button>
+              <button onClick={this.props.onUpdateClick}>Save</button>
+            </div>
+          ) : (
+            <input type="submit" className="commentButton" value="Add Comment" />
+          )}
         </form>
       </div>
     );

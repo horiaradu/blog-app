@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
+import CommentForm from './CommentForm';
 
-class EditComment extends Component {
-  render() {
-    return (
-      <div>
-        <textarea>A comment</textarea>
-      </div>
-    );
-  }
-}
+const EditComment = props => {
+  return (
+    <div>
+      <CommentForm
+        onCancelClick={props.onCancelClick}
+        currentUser={props.currentUser}
+        entryUuid={props.entryUuid}
+        currentComment={props.currentComment}
+        onUpdateClick={props.onUpdateClick}
+      />
+    </div>
+  );
+};
+
 export default EditComment;

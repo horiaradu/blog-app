@@ -49,3 +49,10 @@ export const deleteComment = (commentUuid, entryUuid2) => async dispatch => {
     entryUuid2
   });
 };
+
+export const updateComment = () => dispatch => {
+  console.log('from deleteCommentAction');
+  dispatch({
+    type: 'UPDATE_COMMENT'
+  });
+};
