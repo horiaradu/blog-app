@@ -13,10 +13,7 @@ class News extends Component {
   };
 
   isAuthor = () => {
-    if (this.props.currentUser.userId === this.props.news.entry.userId) {
-      return true;
-    }
-    return false;
+    return this.props.currentUser.userId === this.props.news.entry.userId;
   };
 
   render() {

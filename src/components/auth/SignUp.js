@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/actions/authAuctions';
-import { Redirect } from 'react-router-dom';
+
 import { Link } from 'react-router-dom';
 import '../../css/auth.css';
 
@@ -22,8 +22,8 @@ class SignUp extends Component {
   };
 
   render() {
-    const { authError, auth } = this.props;
-    if (auth.uid) return <Redirect to="/" />;
+    const { authError } = this.props;
+
     return (
       <div className="loginContainer">
         <form className="loginFormWrap" onSubmit={this.onFormSubmit}>
