@@ -56,12 +56,7 @@ export class CommentForm extends Component {
     }
     if (author !== '' && text !== '') {
       this.props.addNewComment(newComment, this.props.entryUuid);
-      this.setState({
-        author: this.props.currentUser.firstName
-          ? `${this.props.currentUser.firstName} ${this.props.currentUser.lastName}`
-          : '',
-        text: ''
-      });
+      this.setState({ author: '', text: '' });
     }
   };
 
