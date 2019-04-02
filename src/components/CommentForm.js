@@ -31,10 +31,7 @@ export class CommentForm extends Component {
     });
   };
 
-  onFormSubmit = e => {
-    e.preventDefault();
-    const { author, text, commentDate } = this.state;
-
+  createComment = (author, text, commentDate, userId) => {
     const newComment = {
       author: author
         .slice(0, 1)
@@ -45,15 +42,23 @@ export class CommentForm extends Component {
         .toUpperCase()
         .concat(text.slice(1)),
       commentDate,
-      userId: this.props.currentUser.userId ? this.props.currentUser.userId : ''
+      userId: userId ? userId : ''
     };
-
     if (author === '') {
       this.setState({ emptyAuthorError: true });
     }
     if (text === '') {
       this.setState({ emptyTextError: true });
     }
+    return newComment;
+  };
+
+  onFormSubmit = e => {
+    e.preventDefault();
+    const { author, text, commentDate } = this.state;
+    const { userId } = this.props.currentUser;
+    const newComment = this.createComment(author, text, commentDate, userId);
+
     if (author !== '' && text !== '') {
       this.props.addNewComment(newComment, this.props.entryUuid);
       this.setState({
@@ -67,25 +72,10 @@ export class CommentForm extends Component {
 
   onUpdateCommentClick = () => {
     const { author, text, commentDate } = this.state;
-
-    const updatedComment = {
-      author: author
-        .slice(0, 1)
-        .toUpperCase()
-        .concat(author.slice(1)),
-      text: text
-        .slice(0, 1)
-        .toUpperCase()
-        .concat(text.slice(1)),
-      commentDate,
-      userId: this.props.currentUser.userId ? this.props.currentUser.userId : ''
-    };
-    this.props.onUpdateClick(this.props.currentComment.uuid, updatedComment, this.props.entryUuid);
-    if (author === '') {
-      this.setState({ emptyAuthorError: true });
-    }
-    if (text === '') {
-      this.setState({ emptyTextError: true });
+    const { userId } = this.props.currentUser;
+    const updatedComment = this.createComment(author, text, commentDate, userId);
+    if (author !== '' && text !== '') {
+      this.props.onUpdateClick(this.props.currentComment.uuid, updatedComment, this.props.entryUuid);
     }
   };
 
