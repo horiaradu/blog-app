@@ -80,13 +80,17 @@ export class CommentForm extends Component {
       commentDate,
       userId: this.props.currentUser.userId ? this.props.currentUser.userId : ''
     };
-    this.props.onUpdateClick(this.props.currentCommentId, updatedComment, this.props.entryUuid);
+    this.props.onUpdateClick(this.props.currentComment.uuid, updatedComment, this.props.entryUuid);
     if (author === '') {
       this.setState({ emptyAuthorError: true });
     }
     if (text === '') {
       this.setState({ emptyTextError: true });
     }
+  };
+
+  isEditModeOn = () => {
+    return this.props.currentComment;
   };
 
   render() {
@@ -137,10 +141,10 @@ export class CommentForm extends Component {
 
           {!this.props.currentComment && <input type="submit" className="commentButton" value="Add Comment" />}
         </form>
-        {this.props.currentComment && (
+        {this.isEditModeOn() && (
           <div>
             <button onClick={this.props.onCancelClick}>Cancel</button>
-            <button onClick={this.onUpdateCommentClick}>Save</button>
+            <button onClick={this.onUpdateCommentClick}>Update</button>
           </div>
         )}
       </div>

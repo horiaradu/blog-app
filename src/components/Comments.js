@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CommentForm from './CommentForm';
-import EditComment from './EditComment';
 import { deleteComment, updateComment } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import '../css/comments.css';
@@ -9,7 +8,7 @@ class Comments extends Component {
   state = {
     showComments: false,
     isEditCommentModeOn: false,
-    currentCommentId: ''
+    commentIdInEditMode: ''
   };
   onShowClick = () => {
     this.setState({ showComments: !this.state.showComments });
@@ -20,15 +19,15 @@ class Comments extends Component {
 
   onEditCommentClick = (e, commentUuid) => {
     if (e.target.id === commentUuid) {
-      this.setState({ isEditCommentModeOn: true, currentCommentId: e.target.id, hideEditAndDeleteButtons: true });
+      this.setState({ isEditCommentModeOn: true, commentIdInEditMode: e.target.id });
     }
   };
   onCancelClick = () => {
-    this.setState({ isEditCommentModeOn: false, currentCommentId: '' });
+    this.setState({ isEditCommentModeOn: false, commentIdInEditMode: '' });
   };
   onUpdateClick = (commentUuid, data, entryUuid) => {
     this.props.updateComment(commentUuid, data, entryUuid);
-    this.setState({ isEditCommentModeOn: false, currentCommentId: '' });
+    this.setState({ isEditCommentModeOn: false, commentIdInEditMode: '' });
   };
 
   render() {
@@ -51,7 +50,7 @@ class Comments extends Component {
                         <span className="date"> {comment.commentDate}</span>
                       </div>
                       {comment.userId === this.props.currentUser.userId &&
-                      this.state.currentCommentId !== comment.uuid ? (
+                      this.state.commentIdInEditMode !== comment.uuid ? (
                         <div>
                           <button
                             className="deleteCommentButton"
@@ -73,15 +72,14 @@ class Comments extends Component {
                     </h5>
                     {this.state.isEditCommentModeOn === true &&
                     comment.userId === this.props.currentUser.userId &&
-                    comment.uuid === this.state.currentCommentId ? (
+                    comment.uuid === this.state.commentIdInEditMode ? (
                       <div>
-                        <EditComment
+                        <CommentForm
+                          onCancelClick={this.onCancelClick}
                           currentUser={this.props.currentUser}
                           entryUuid={this.props.entryUuid}
                           currentComment={comment}
-                          onCancelClick={this.onCancelClick}
                           onUpdateClick={this.onUpdateClick}
-                          currentCommentId={this.state.currentCommentId}
                         />
                       </div>
                     ) : (
