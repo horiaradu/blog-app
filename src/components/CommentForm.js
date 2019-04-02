@@ -8,7 +8,7 @@ export class CommentForm extends Component {
     super(props);
     this.state = {
       author: props.currentUser.firstName ? `${props.currentUser.firstName} ${props.currentUser.lastName}` : '',
-      text: props.currentComment ? props.currentComment.text : '',
+      text: props.commentInEditMode ? props.commentInEditMode.text : '',
       commentDate: new Date().toLocaleString(),
       emptyAuthorError: false,
       emptyTextError: false
@@ -27,7 +27,14 @@ export class CommentForm extends Component {
 
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value }, () => {
-      this.changeErrorState();
+      (() => {
+        this.changeErrorState();
+      })();
+      if (this.props.commentInEditMode) {
+        (() => {
+          this.props.updateCommentWithCurrentState(this.state.author, this.state.text);
+        })();
+      }
     });
   };
 
@@ -64,31 +71,6 @@ export class CommentForm extends Component {
       });
     }
   };
-
-  onUpdateCommentClick = () => {
-    const { author, text, commentDate } = this.state;
-
-    const updatedComment = {
-      author: author
-        .slice(0, 1)
-        .toUpperCase()
-        .concat(author.slice(1)),
-      text: text
-        .slice(0, 1)
-        .toUpperCase()
-        .concat(text.slice(1)),
-      commentDate,
-      userId: this.props.currentUser.userId ? this.props.currentUser.userId : ''
-    };
-    this.props.onUpdateClick(this.props.currentCommentId, updatedComment, this.props.entryUuid);
-    if (author === '') {
-      this.setState({ emptyAuthorError: true });
-    }
-    if (text === '') {
-      this.setState({ emptyTextError: true });
-    }
-  };
-
   render() {
     const { author, text, emptyAuthorError, emptyTextError } = this.state;
     return (
@@ -135,14 +117,8 @@ export class CommentForm extends Component {
             </p>
           )}
 
-          {!this.props.currentComment && <input type="submit" className="commentButton" value="Add Comment" />}
+          {!this.props.commentInEditMode && <input type="submit" className="commentButton" value="Add Comment" />}
         </form>
-        {this.props.currentComment && (
-          <div>
-            <button onClick={this.props.onCancelClick}>Cancel</button>
-            <button onClick={this.onUpdateCommentClick}>Save</button>
-          </div>
-        )}
       </div>
     );
   }
