@@ -13,6 +13,7 @@ class Comments extends Component {
   render() {
     const { showComments } = this.state;
     const comments = this.props.comments;
+
     return (
       <div className="comments">
         <h3 className="commentHeader">
@@ -21,8 +22,8 @@ class Comments extends Component {
         {showComments
           ? comments.map(comment => {
               return (
-                <div className="commentWrap">
-                  <i class="fas fa-user avatar" />
+                <div key={comment.uuid} className="commentWrap">
+                  <i className="fas fa-user avatar" />
                   <div className="content">
                     <h5 className="author">
                       {comment.author}
@@ -36,7 +37,7 @@ class Comments extends Component {
               );
             })
           : null}
-        {showComments ? <CommentForm postUuid={this.props.postUuid} /> : null}
+        {showComments ? <CommentForm entryUuid={this.props.entryUuid} currentUser={this.props.currentUser} /> : null}
       </div>
     );
   }

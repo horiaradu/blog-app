@@ -3,11 +3,14 @@ import { addNewEntry, updateEntry } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
+import '../css/mainPage.css';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
 
 class BlogForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       title: props.entry ? props.entry.title : '',
       body: props.entry ? props.entry.body : '',
@@ -27,6 +30,7 @@ class BlogForm extends Component {
   };
   onButtonUpdateEntry = () => {
     const { title, body, entryType, tags, level } = this.state;
+    const userId = this.props.userId;
     const entryUuid = this.props.entryUuid;
     if (entryType === '') {
       this.setState({
@@ -53,9 +57,10 @@ class BlogForm extends Component {
         entryType,
         tags,
         level,
-        entryUuid
+        uuid: entryUuid,
+        userId
       };
-      this.props.updateEntry(entryUuid, updatedPost);
+      this.props.updateEntry(entryUuid, updatedPost, userId);
       this.props.onUpdateClick();
     }
   };
@@ -113,10 +118,12 @@ class BlogForm extends Component {
           .concat(body.slice(1)),
         entryType,
         tags,
-        level
+        level,
+        userId: this.props.auth.uid
       };
 
       this.props.addNewEntry(newEntry);
+      this.props.history.push('/');
 
       this.setState({
         title: '',
@@ -173,9 +180,8 @@ class BlogForm extends Component {
       entryTypeError,
       tagReused
     } = this.state;
-
     return (
-      <div>
+      <div className="wrapper">
         <div className="panelTitle">
           <h1>{this.props.entry ? 'Edit Entry' : 'Create Entry'}</h1>
           <br />
@@ -334,7 +340,13 @@ class BlogForm extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { addNewEntry, updateEntry }
-)(BlogForm);
+)(withRouter(BlogForm));

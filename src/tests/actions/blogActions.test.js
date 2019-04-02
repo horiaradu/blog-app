@@ -229,10 +229,11 @@ describe('blogActions', () => {
       const store = mockStoreCreator({ entries: [] });
       const updatedEntry = { title: 'new blog updated', uuid: '123', entryType: 'post', comments: [] };
       const entryUuid = '123';
+      const userId = '999';
       const updateEntryMock = () => Promise;
       api.updateEntry.mockImplementation(updateEntryMock);
-      store.dispatch(updateEntry(entryUuid, updatedEntry));
-      expect(api.updateEntry).lastCalledWith(entryUuid, updatedEntry);
+      store.dispatch(updateEntry(entryUuid, updatedEntry, userId));
+      expect(api.updateEntry).lastCalledWith(entryUuid, updatedEntry, userId);
     });
   });
 });

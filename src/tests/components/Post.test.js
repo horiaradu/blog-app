@@ -7,29 +7,53 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 describe('Post Component', () => {
-  test('should render Post component correctly', () => {
-    const post = {
+  it('should render Post component correctly', () => {
+    const blog = {
       comments: [],
       entry: {
         title: 'title',
         body: 'body text',
-        tags: ['tag1', 'tag2']
+        tags: ['tag1', 'tag2'],
+        uuid: '123456'
       }
     };
-    const wrapper = shallow(<Post post={post} />);
+    const currentUser = {
+      firstName: 'Tony',
+      userId: '999'
+    };
+    const users = [
+      {
+        firstName: 'Tony',
+        userId: '999'
+      }
+    ];
+
+    const wrapper = shallow(<Post key={blog.entry.uuid} post={blog} currentUser={currentUser} users={users} />);
     expect(toJSON(wrapper)).toMatchSnapshot();
-    expect(post.entry.tags[0]).toBe('tag1');
+    expect(blog.entry.tags[0]).toBe('tag1');
   });
-  test('should not render tags if no tags provided', () => {
-    const post = {
+  it('should not render tags if no tags provided', () => {
+    const blog = {
       comments: [],
       entry: {
         title: 'title',
         body: 'body text',
-        tags: []
+        tags: [],
+        uuid: '123456'
       }
     };
-    const wrapper = shallow(<Post post={post} />);
+    const currentUser = {
+      firstName: 'Tony',
+      userId: '999'
+    };
+    const users = [
+      {
+        firstName: 'Tony',
+        userId: '999'
+      }
+    ];
+
+    const wrapper = shallow(<Post key={blog.entry.uuid} post={blog} currentUser={currentUser} users={users} />);
     expect(wrapper.find('li').length).toBe(0);
   });
 });

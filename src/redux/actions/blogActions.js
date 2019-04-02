@@ -35,7 +35,7 @@ export const deleteEntry = entryUuid => dispatch => {
   dispatch({ type: DELETE_ENTRY, payload: entryUuid });
 };
 
-export const updateEntry = (entryUuidToUpdate, updatedEntry) => dispatch => {
-  api.updateEntry(entryUuidToUpdate, updatedEntry);
+export const updateEntry = (entryUuidToUpdate, updatedEntry, userId) => dispatch => {
+  api.updateEntry(entryUuidToUpdate, updatedEntry, userId);
   dispatch({ type: UPDATE_ENTRY, entryUuidToUpdate, updatedEntry });
 };

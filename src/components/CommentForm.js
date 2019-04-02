@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 export class CommentForm extends Component {
-  state = {
-    author: '',
-    text: '',
-    commentDate: new Date().toLocaleString(),
-    emptyAuthorError: false,
-    emptyTextError: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      author: props.currentUser.firstName ? `${props.currentUser.firstName} ${props.currentUser.lastName}` : '',
+      text: '',
+      commentDate: new Date().toLocaleString(),
+      emptyAuthorError: false,
+      emptyTextError: false
+    };
+  }
 
   changeErrorState = () => {
     const { author, text } = this.state;
@@ -51,7 +54,7 @@ export class CommentForm extends Component {
       this.setState({ emptyTextError: true });
     }
     if (author !== '' && text !== '') {
-      this.props.addNewComment(newComment, this.props.postUuid);
+      this.props.addNewComment(newComment, this.props.entryUuid);
       this.setState({ author: '', text: '' });
     }
   };
@@ -61,24 +64,29 @@ export class CommentForm extends Component {
     return (
       <div>
         <form id="addNewCommentForm" onSubmit={this.onFormSubmit}>
-          <label>Author:</label>
-          <input
-            className={classNames('inputField', { inputError: emptyAuthorError })}
-            placeholder="Enter Name"
-            type="text"
-            name="author"
-            value={author}
-            onChange={this.onInputChange}
-          />
-          {emptyAuthorError && (
-            <p
-              className={classNames({
-                labelError: emptyAuthorError
-              })}
-            >
-              Please enter name
-            </p>
+          {this.props.currentUser.firstName ? null : (
+            <div>
+              <label>Author:</label>
+              <input
+                className={classNames('inputField', { inputError: emptyAuthorError })}
+                placeholder="Enter Name"
+                type="text"
+                name="author"
+                value={author}
+                onChange={this.onInputChange}
+              />
+              {emptyAuthorError && (
+                <p
+                  className={classNames({
+                    labelError: emptyAuthorError
+                  })}
+                >
+                  Please enter name
+                </p>
+              )}
+            </div>
           )}
+
           <label>Comment:</label>
           <textarea
             className={classNames('textareaField', { inputError: emptyTextError })}
