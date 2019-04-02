@@ -181,8 +181,6 @@ class BlogForm extends Component {
       entryTypeError,
       tagReused
     } = this.state;
-    if (!this.props.auth.uid) return <Redirect to="/login" />;
-
     return (
       <div className="wrapper">
         <div className="panelTitle">

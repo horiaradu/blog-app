@@ -5,7 +5,7 @@ import BlogForm from './components/BlogForm';
 import Navbar from './components/layout/Navbar';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import hoc from './components/auth/RouteProtection';
+import { EnsureUserIsLoggedIn, EnsureNoUser } from './components/auth/RouteProtection';
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -18,9 +18,9 @@ class App extends Component {
             <Navbar />
             <Switch>
               <Route exact path="/" component={Posts} />
-              <Route exact path="/createEntry" component={hoc(BlogForm)} />
-              <Route path="/login" component={SignIn} />
-              <Route path="/signup" component={SignUp} />
+              <Route exact path="/createEntry" component={EnsureUserIsLoggedIn(BlogForm)} />
+              <Route path="/login" component={EnsureNoUser(SignIn)} />
+              <Route path="/signup" component={EnsureNoUser(SignUp)} />
             </Switch>
           </div>
         </Router>
