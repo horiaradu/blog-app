@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { addNewEntry, updateEntry } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import BarLevel from './BarLevel';
 import '../css/blogCreator.css';
 import '../css/mainPage.css';

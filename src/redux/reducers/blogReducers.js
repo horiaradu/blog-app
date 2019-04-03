@@ -73,9 +73,9 @@ export default function(state = initialState, action) {
         entries: newState
       };
     case 'DELETE_COMMENT':
-      const { entryUuid2, listOfFilteredComments } = action;
+      const { entryId, listOfFilteredComments } = action;
       const newState2 = state.entries.map(x => {
-        if (x.entry.uuid === entryUuid2) {
+        if (x.entry.uuid === entryId) {
           return {
             entry: x.entry,
             comments: listOfFilteredComments
