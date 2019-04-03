@@ -23,33 +23,27 @@ class SignIn extends Component {
     const { authError, auth } = this.props;
     if (auth.uid) return <Redirect to="/" />;
     return (
-      <div className="loginContainer">
-        <form className="loginFormWrap" onSubmit={this.onFormSubmit}>
-          <label className="loginLabel" htmlFor="email">
-            Email
-          </label>
-          <input
-            placeholder="E-mail address"
-            className="loginInput"
-            id="email"
-            type="email"
-            onChange={this.onInputChange}
-          />
-          <label className="loginLabel" htmlFor="password">
-            Password
-          </label>
-          <input
-            placeholder="Password"
-            className="loginInput"
-            id="password"
-            type="password"
-            onChange={this.onInputChange}
-          />
-          <button className="loginButton">Login</button>
-          {authError && <p>{authError}</p>}
-        </form>
-        <div>
-          New to our page? Click <Link to="/signup">here</Link> to Join Us
+      <div id="container">
+        <div className="formWrap">
+          <form onSubmit={this.onFormSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input placeholder="E-mail address" id="email" type="email" onChange={this.onInputChange} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input placeholder="Password" id="password" type="password" onChange={this.onInputChange} />
+            </div>
+            <button className="button">Login</button>
+            {authError && <p>{authError}</p>}
+            <p className="authFooter">
+              New to our page? Click{' '}
+              <Link className="authFooterLink" to="/signup">
+                here
+              </Link>{' '}
+              to Join Us
+            </p>
+          </form>
         </div>
       </div>
     );
