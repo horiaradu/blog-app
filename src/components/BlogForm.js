@@ -180,7 +180,6 @@ class BlogForm extends Component {
       entryTypeError,
       tagReused
     } = this.state;
-
     return (
       <div className="wrapper">
         <div className="panelTitle">
