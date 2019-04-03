@@ -49,3 +49,12 @@ export const deleteComment = (commentUuid, entryId) => async dispatch => {
     entryId
   });
 };
+
+export const updateComment = (commentUuid, updatedComment, postId) => async dispatch => {
+  const listOfUpdatedComments = await api.updateComment(commentUuid, updatedComment, postId);
+  dispatch({
+    type: 'UPDATE_COMMENT',
+    listOfUpdatedComments,
+    postId
+  });
+};
