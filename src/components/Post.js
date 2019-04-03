@@ -57,7 +57,9 @@ class Post extends Component {
               </span>
             </div>
             <div className="postContent">
-              {this.getUserName() && <h4 key={uuid}>Created by - {`${userName.firstName} ${userName.lastName}`}</h4>}
+              {this.getUserName() && (
+                <h4 key={entryUuid}>Created by - {`${userName.firstName} ${userName.lastName}`}</h4>
+              )}
 
               <p>{body}</p>
               <ul className="ulStyle">
