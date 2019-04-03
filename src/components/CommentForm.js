@@ -129,7 +129,7 @@ export class CommentForm extends Component {
             </p>
           )}
 
-          {!this.props.currentComment && <input type="submit" className="commentButton" value="Add Comment" />}
+          {!this.isEditModeOn() && <input type="submit" className="commentButton" value="Add Comment" />}
         </form>
         {this.isEditModeOn() && (
           <div>
