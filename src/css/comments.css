@@ -43,7 +43,7 @@
   display: inline-block;
   line-height: 1.2;
   padding: 0 6px;
-  width: 95%;
+  width: 92%;
 }
 .commentBody {
   padding-top: 4px;
@@ -64,4 +64,10 @@
   color: white;
   font-size: 14px;
   border: none;
+}
+
+.deleteCommentButton {
+  display: inline-block;
+  float: right;
+  color: red;
 }

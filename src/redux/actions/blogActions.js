@@ -39,3 +39,22 @@ export const updateEntry = (entryUuidToUpdate, updatedEntry, userId) => dispatch
   api.updateEntry(entryUuidToUpdate, updatedEntry, userId);
   dispatch({ type: UPDATE_ENTRY, entryUuidToUpdate, updatedEntry });
 };
+
+export const deleteComment = (commentUuid, entryId) => async dispatch => {
+  const listOfFilteredComments = await api.deleteComment(commentUuid, entryId);
+
+  dispatch({
+    type: 'DELETE_COMMENT',
+    listOfFilteredComments,
+    entryId
+  });
+};
+
+export const updateComment = (commentUuid, updatedComment, postId) => async dispatch => {
+  const listOfUpdatedComments = await api.updateComment(commentUuid, updatedComment, postId);
+  dispatch({
+    type: 'UPDATE_COMMENT',
+    listOfUpdatedComments,
+    postId
+  });
+};

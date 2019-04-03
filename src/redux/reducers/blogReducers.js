@@ -39,6 +39,7 @@ export default function(state = initialState, action) {
           return x;
         }
       });
+
       return {
         ...state,
         entries: newEntries
@@ -70,6 +71,35 @@ export default function(state = initialState, action) {
       return {
         ...state,
         entries: newState
+      };
+    case 'DELETE_COMMENT':
+      const { entryId, listOfFilteredComments } = action;
+      const newState2 = state.entries.map(x => {
+        if (x.entry.uuid === entryId) {
+          return {
+            entry: x.entry,
+            comments: listOfFilteredComments
+          };
+        } else return x;
+      });
+
+      return {
+        ...state,
+        entries: newState2
+      };
+    case 'UPDATE_COMMENT':
+      const { postId, listOfUpdatedComments } = action;
+      const newState3 = state.entries.map(x => {
+        if (x.entry.uuid === postId) {
+          return {
+            entry: x.entry,
+            comments: listOfUpdatedComments
+          };
+        } else return x;
+      });
+      return {
+        ...state,
+        entries: newState3
       };
     default:
       return state;

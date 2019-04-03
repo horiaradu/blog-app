@@ -99,6 +99,66 @@ const api = {
         };
       }
     });
+  },
+  async deleteComment(commentUuid, entryUuid) {
+    const snapshot = await firebase
+      .firestore()
+      .collection('entries')
+      .get();
+    let commentsArray = [];
+    snapshot.docs.map(x => {
+      return x.data().comments.map(comment => {
+        return (commentsArray = commentsArray.concat(comment));
+      });
+    });
+
+    const filteredComments = commentsArray.filter(comment => comment.uuid !== commentUuid);
+
+    snapshot.docs.map(entry => {
+      if (entry.data().entry.uuid === entryUuid) {
+        firebase
+          .firestore()
+          .collection('entries')
+          .doc(entry.id)
+          .update({
+            comments: filteredComments
+          });
+      }
+    });
+    return filteredComments;
+  },
+  async updateComment(commentUuid, updatedComment, entryUuid) {
+    const snapshot = await firebase
+      .firestore()
+      .collection('entries')
+      .get();
+
+    let commentsArray = [];
+    snapshot.docs.map(x => {
+      return x.data().comments.map(comment => {
+        return (commentsArray = commentsArray.concat(comment));
+      });
+    });
+
+    const updatedCommentsArray = commentsArray.map(comment => {
+      if (comment.uuid === commentUuid) {
+        return { ...updatedComment, uuid: comment.uuid };
+      } else {
+        return comment;
+      }
+    });
+    snapshot.docs.map(entry => {
+      if (entry.data().entry.uuid === entryUuid) {
+        firebase
+          .firestore()
+          .collection('entries')
+          .doc(entry.id)
+          .update({
+            comments: updatedCommentsArray
+          });
+      }
+    });
+    return updatedCommentsArray;
   }
 };
 

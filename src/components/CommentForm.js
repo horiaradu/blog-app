@@ -8,7 +8,7 @@ export class CommentForm extends Component {
     super(props);
     this.state = {
       author: props.currentUser.firstName ? `${props.currentUser.firstName} ${props.currentUser.lastName}` : '',
-      text: '',
+      text: props.currentComment ? props.currentComment.text : '',
       commentDate: new Date().toLocaleString(),
       emptyAuthorError: false,
       emptyTextError: false
@@ -31,10 +31,7 @@ export class CommentForm extends Component {
     });
   };
 
-  onFormSubmit = e => {
-    e.preventDefault();
-    const { author, text, commentDate } = this.state;
-
+  createComment = (author, text, commentDate, userId) => {
     const newComment = {
       author: author
         .slice(0, 1)
@@ -44,19 +41,46 @@ export class CommentForm extends Component {
         .slice(0, 1)
         .toUpperCase()
         .concat(text.slice(1)),
-      commentDate
+      commentDate,
+      userId: userId ? userId : ''
     };
-
     if (author === '') {
       this.setState({ emptyAuthorError: true });
     }
     if (text === '') {
       this.setState({ emptyTextError: true });
     }
+    return newComment;
+  };
+
+  onFormSubmit = e => {
+    e.preventDefault();
+    const { author, text, commentDate } = this.state;
+    const { userId } = this.props.currentUser;
+    const newComment = this.createComment(author, text, commentDate, userId);
+
     if (author !== '' && text !== '') {
       this.props.addNewComment(newComment, this.props.entryUuid);
-      this.setState({ author: '', text: '' });
+      this.setState({
+        author: this.props.currentUser.firstName
+          ? `${this.props.currentUser.firstName} ${this.props.currentUser.lastName}`
+          : '',
+        text: ''
+      });
     }
+  };
+
+  onUpdateCommentClick = () => {
+    const { author, text, commentDate } = this.state;
+    const { userId } = this.props.currentUser;
+    const updatedComment = this.createComment(author, text, commentDate, userId);
+    if (author !== '' && text !== '') {
+      this.props.onUpdateClick(this.props.currentComment.uuid, updatedComment, this.props.entryUuid);
+    }
+  };
+
+  isEditModeOn = () => {
+    return this.props.currentComment;
   };
 
   render() {
@@ -104,8 +128,15 @@ export class CommentForm extends Component {
               Enter text
             </p>
           )}
-          <input type="submit" className="commentButton" value="Add Comment" />
+
+          {!this.isEditModeOn() && <input type="submit" className="commentButton" value="Add Comment" />}
         </form>
+        {this.isEditModeOn() && (
+          <div>
+            <button onClick={this.props.onCancelClick}>Cancel</button>
+            <button onClick={this.onUpdateCommentClick}>Update</button>
+          </div>
+        )}
       </div>
     );
   }

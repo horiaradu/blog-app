@@ -30,7 +30,7 @@ describe('Comment component', () => {
   });
   describe('when the form is submitted', () => {
     it('should call the mock addNewComment function', () => {
-      const state = { author: 'foo', text: 'bar', commentDate: new Date() };
+      const state = { author: 'foo', text: 'bar', commentDate: new Date(), userId: '999' };
       wrapper.setState(state);
       const event = {
         preventDefault() {}
@@ -40,13 +40,20 @@ describe('Comment component', () => {
         {
           author: 'Foo',
           commentDate: state.commentDate,
-          text: 'Bar'
+          text: 'Bar',
+          userId: '999'
         },
         '123'
       );
     });
-    it('should reset state to default values', () => {
-      const state = { author: 'john', text: 'new comment', commentDate: new Date() };
+    it('should reset state to default values when user is logged in', () => {
+      const state = { author: 'Tony', text: 'new comment', commentDate: new Date() };
+      const currentUser = {
+        firstName: 'Tony',
+        lastName: 'Stark',
+        userId: '999'
+      };
+      wrapper = shallow(<CommentForm addNewComment={mockAddNewCommentfn} entryUuid="123" currentUser={currentUser} />);
       wrapper.setState(state);
       const event = {
         preventDefault() {}
@@ -54,7 +61,7 @@ describe('Comment component', () => {
       wrapper.find('#addNewCommentForm').simulate('submit', event);
 
       expect(wrapper.state()).toEqual({
-        author: '',
+        author: `${currentUser.firstName} ${currentUser.lastName}`,
         commentDate: state.commentDate,
         text: '',
         emptyAuthorError: false,

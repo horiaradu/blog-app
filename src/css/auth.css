@@ -1,47 +1,63 @@
-.loginContainer {
-  margin-top: 15vh;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: #eee;
 }
 
-.loginFormWrap {
-  background-color: white;
+#container {
   max-width: 400px;
-  height: 230px;
   margin: auto;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 6px;
+  padding: 30px;
 }
 
-.loginLabel {
-  padding-left: 24px;
-  font-size: 1rem;
+.formWrap {
+  background-color: white;
+  padding: 16px 16px;
 }
 
-.loginInput {
-  padding: 4px 4px;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  margin: 6px 24px;
-  height: 40px;
-  font-size: 14px;
+.formWrap h1 {
+  text-align: center;
 }
 
-.loginButton {
-  box-sizing: border-box;
-  height: 40px;
-  padding: 12px 16px;
-  border-radius: 4px;
-  background-color: #f2711c;
-  color: white;
-  font-size: 14px;
+.formWrap .form-group {
+  padding: 6px 0;
+}
+
+.formWrap .form-group label {
+  display: block;
+  color: #777;
+  padding-bottom: 4px;
+}
+.formWrap .form-group input {
+  width: 100%;
+  padding: 6px;
+  outline: none;
+  border-radius: 3px;
   border: none;
-  margin: 6px 24px;
+  border: solid 1px #ccc;
+}
+
+.formWrap button {
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+  background-color: #f2711c;
+  padding: 10px 0;
+  color: white;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.loginButton:focus {
-  outline: none;
+.authFooter {
+  display: inline-block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.authFooterLink {
   cursor: pointer;
 }
