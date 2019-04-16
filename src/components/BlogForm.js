@@ -197,9 +197,11 @@ class BlogForm extends Component {
                   value="post"
                   checked={this.state.entryType === 'post'}
                   onChange={this.onRadioChange}
+                  style={{ cursor: 'pointer' }}
                 />{' '}
-                <label className="radioIcon" htmlFor="post" />
-                <i className="bpost fas fa-blog">Blog</i>
+                <label className="radioIcon" htmlFor="post">
+                  <i className="bpost fas fa-blog">Blog</i>
+                </label>
               </div>
 
               <div className="radioInLine">
@@ -210,9 +212,12 @@ class BlogForm extends Component {
                   value="news"
                   checked={this.state.entryType === 'news'}
                   onChange={this.onRadioChange}
+                  style={{ cursor: 'pointer' }}
                 />{' '}
-                <label htmlFor="news" />
-                <i className="bpost far fa-newspaper"> News</i>
+                <label htmlFor="news">
+                  {' '}
+                  <i className="bpost far fa-newspaper"> News</i>
+                </label>
               </div>
             </div>
             <div>
