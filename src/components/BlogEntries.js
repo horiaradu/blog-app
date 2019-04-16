@@ -28,17 +28,15 @@ class BlogEntries extends Component {
           changeNewsCheck={this.changeNewsCheck}
         />
         <div>
-          {(blogs && this.state.postCheck === true) || this.state.newsCheck === true ? (
-            blogs.map(blog => {
-              if (blog.entry.entryType === 'post' && this.state.postCheck === true) {
-                return <Post key={blog.entry.uuid} post={blog} currentUser={currentUser} users={users} />;
-              } else if (blog.entry.entryType === 'news' && this.state.newsCheck === true) {
-                return <News key={blog.entry.uuid} news={blog} currentUser={currentUser} users={users} />;
-              } else return null;
-            })
-          ) : blogs && this.state.postCheck === false && this.state.newsCheck === false ? (
-            <h4>You've deselected both news and posts</h4>
-          ) : null}
+          {(blogs && this.state.postCheck === true) || this.state.newsCheck === true
+            ? blogs.map(blog => {
+                if (blog.entry.entryType === 'post' && this.state.postCheck === true) {
+                  return <Post key={blog.entry.uuid} post={blog} currentUser={currentUser} users={users} />;
+                } else if (blog.entry.entryType === 'news' && this.state.newsCheck === true) {
+                  return <News key={blog.entry.uuid} news={blog} currentUser={currentUser} users={users} />;
+                } else return null;
+              })
+            : blogs && this.state.postCheck === false && this.state.newsCheck === false && <h4>Nothing to show</h4>}
         </div>
       </div>
     );

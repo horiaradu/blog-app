@@ -88,12 +88,10 @@ class Comments extends Component {
                     )}
                   </div>
                 </div>
-              );
-            })
-          : null}
-        {showComments && this.props.currentUser.userId ? (
-          <CommentForm entryUuid={this.props.entryUuid} currentUser={this.props.currentUser} />
-        ) : null}
+              </div>
+            );
+          })}
+        {showComments && currentUser.userId && <CommentForm entryUuid={entryUuid} currentUser={currentUser} />}
       </div>
     );
   }

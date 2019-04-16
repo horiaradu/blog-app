@@ -88,7 +88,7 @@ export class CommentForm extends Component {
     return (
       <div>
         <form id="addNewCommentForm" onSubmit={this.onFormSubmit}>
-          {this.props.currentUser.firstName ? null : (
+          {!this.props.currentUser.firstName && (
             <div>
               <label>Author:</label>
               <input

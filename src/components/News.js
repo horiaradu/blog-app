@@ -54,15 +54,14 @@ class News extends Component {
               })}
               <p>{body}</p>
               <ul className="ulStyle">
-                {tags
-                  ? tags.map(tag => {
-                      return (
-                        <li key={tag} className="tagStyle">
-                          {tag}
-                        </li>
-                      );
-                    })
-                  : null}
+                {tags &&
+                  tags.map(tag => {
+                    return (
+                      <li key={tag} className="tagStyle">
+                        {tag}
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
           </div>

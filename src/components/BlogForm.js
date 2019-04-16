@@ -273,7 +273,7 @@ class BlogForm extends Component {
               )}
             </div>
 
-            <div>{entryType === 'news' ? <BarLevel updateLevel={this.updateLevel} /> : null}</div>
+            <div>{entryType === 'news' && <BarLevel updateLevel={this.updateLevel} />}</div>
 
             <div>
               <label htmlFor="tags">Tags:</label>
@@ -316,7 +316,7 @@ class BlogForm extends Component {
                 ))}
               </ul>
             </div>
-            {this.props.entry ? null : (
+            {!this.props.entry && (
               <div className="buttonWrap">
                 <input className="button" type="submit" value="Save" />
               </div>
