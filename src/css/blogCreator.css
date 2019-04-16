@@ -45,6 +45,7 @@ body {
 .bpost {
   font-size: 1.8rem;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .radioInLine {
