@@ -31,7 +31,7 @@ class BarLevel extends React.Component {
         <div className="labels">
           {arr.map((input, index) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 <label className="label" htmlFor={`level${index + 1}`}>
                   {' '}
                   <i className={`iconBarLevel ${input === 1 ? 'fas fa-circle' : 'far fa-circle iconBarLevel'}`} />
