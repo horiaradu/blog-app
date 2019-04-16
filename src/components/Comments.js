@@ -31,62 +31,79 @@ class Comments extends Component {
   };
 
   render() {
-    const { showComments } = this.state;
-    const comments = this.props.comments;
+    const { showComments, commentIdInEditMode, isEditCommentModeOn } = this.state;
+    const { comments, currentUser, entryUuid, entryUserId } = this.props;
+    const showEditDeleteButtons = comment => {
+      if (comment.userId === currentUser.userId && commentIdInEditMode !== comment.uuid) {
+        return true;
+      }
+      return false;
+    };
+    const showCommentFormForCurrentCommentInEditMode = comment => {
+      if (
+        isEditCommentModeOn === true &&
+        comment.userId === currentUser.userId &&
+        comment.uuid === commentIdInEditMode
+      ) {
+        return true;
+      }
+      return false;
+    };
 
     return (
       <div className="comments">
         <h3 className="commentHeader">
           Comments <i style={{ cursor: 'pointer' }} className="fas fa-sort-down" onClick={this.onShowClick} />
         </h3>
-        {showComments
-          ? comments.map(comment => {
-              return (
-                <div key={comment.uuid} className="commentWrap">
-                  <i className="fas fa-user avatar" />
-                  <div className="content">
-                    <h5 className="author">
-                      {comment.author}
-                      <div className="dateWrap">
-                        <span className="date"> {comment.commentDate}</span>
-                      </div>
-                      {comment.userId === this.props.currentUser.userId &&
-                      this.state.commentIdInEditMode !== comment.uuid ? (
-                        <div>
-                          <button
-                            className="deleteCommentButton"
-                            onClick={() =>
-                              this.onDeleteClick(comment.uuid, this.props.entryUuid, this.props.currentUser.userId)
-                            }
-                          >
-                            Delete
-                          </button>
-                          <button
-                            id={comment.uuid}
-                            className="deleteCommentButton"
-                            onClick={e => this.onEditCommentClick(e, comment.uuid)}
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      ) : null}
-                    </h5>
-                    {this.state.isEditCommentModeOn === true &&
-                    comment.userId === this.props.currentUser.userId &&
-                    comment.uuid === this.state.commentIdInEditMode ? (
+        {showComments &&
+          comments.map(comment => {
+            return (
+              <div key={comment.uuid} className="commentWrap">
+                <i className="fas fa-user avatar" />
+                <div className="content">
+                  <h5 className="author">
+                    {comment.author}
+                    <div className="dateWrap">
+                      <span className="date"> {comment.commentDate}</span>
+                    </div>
+                    {showEditDeleteButtons(comment) && (
                       <div>
-                        <CommentForm
-                          onCancelClick={this.onCancelClick}
-                          currentUser={this.props.currentUser}
-                          entryUuid={this.props.entryUuid}
-                          currentComment={comment}
-                          onUpdateClick={this.onUpdateClick}
-                        />
+                        <button
+                          className="deleteCommentButton"
+                          onClick={() => this.onDeleteClick(comment.uuid, entryUuid, currentUser.userId)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          id={comment.uuid}
+                          className="deleteCommentButton"
+                          onClick={e => this.onEditCommentClick(e, comment.uuid)}
+                        >
+                          Edit
+                        </button>
                       </div>
-                    ) : (
-                      <div className="commentBody">{comment.text}</div>
                     )}
-                  </div>
+                    {currentUser.userId === entryUserId && (
+                      <i
+                        className="fas fa-thumbtack"
+                        onClick={() => this.onPinCommentClick(comment, entryUuid)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    )}
+                  </h5>
+                  {showCommentFormForCurrentCommentInEditMode(comment) ? (
+                    <div>
+                      <CommentForm
+                        onCancelClick={this.onCancelClick}
+                        currentUser={this.props.currentUser}
+                        entryUuid={this.props.entryUuid}
+                        currentComment={comment}
+                        onUpdateClick={this.onUpdateClick}
+                      />
+                    </div>
+                  ) : (
+                    <div className="commentBody">{comment.text}</div>
+                  )}
                 </div>
               </div>
             );
