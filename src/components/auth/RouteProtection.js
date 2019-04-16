@@ -4,24 +4,20 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 const EnsureUserIsLoggedInFn = ComponentToBeProtected => {
-  class HOC extends React.Component {
-    render() {
-      const { auth } = this.props;
-      if (!auth.uid) return <Redirect to="/login" />;
-      return <ComponentToBeProtected />;
-    }
-  }
+  const HOC = props => {
+    const { auth } = props;
+    if (!auth.uid) return <Redirect to="/login" />;
+    return <ComponentToBeProtected />;
+  };
   return HOC;
 };
 
 const EnsureNoUserFn = ComponentToBeProtected => {
-  class HOC extends React.Component {
-    render() {
-      const { auth } = this.props;
-      if (auth.uid) return <Redirect to="/" />;
-      return <ComponentToBeProtected />;
-    }
-  }
+  const HOC = props => {
+    const { auth } = props;
+    if (auth.uid) return <Redirect to="/" />;
+    return <ComponentToBeProtected />;
+  };
   return HOC;
 };
 
