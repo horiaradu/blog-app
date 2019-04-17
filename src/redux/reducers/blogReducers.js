@@ -76,13 +76,11 @@ export default function(state = initialState, action) {
       const { entryId, listOfFilteredComments } = action;
       const newState2 = state.entries.map(x => {
         if (x.entry.uuid === entryId) {
-          console.log('should be');
           return {
             entry: x.entry,
             comments: listOfFilteredComments
           };
         } else {
-          console.log('should not be');
           return x;
         }
       });

@@ -51,9 +51,8 @@ export const deleteComment = (commentUuid, entryId) => async dispatch => {
 };
 
 export const updateComment = (commentUuid, updatedComment, postId) => async dispatch => {
-  console.log(updatedComment);
   const listOfUpdatedComments = await api.updateComment(commentUuid, updatedComment, postId);
-  console.log(listOfUpdatedComments);
+
   dispatch({
     type: 'UPDATE_COMMENT',
     listOfUpdatedComments,

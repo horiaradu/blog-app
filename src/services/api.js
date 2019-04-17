@@ -106,10 +106,13 @@ const api = {
       .collection('entries')
       .get();
     let commentsArray = [];
+
     snapshot.docs.map(x => {
-      return x.data().comments.map(comment => {
-        return (commentsArray = commentsArray.concat(comment));
-      });
+      if (x.data().entry.uuid === entryUuid) {
+        return x.data().comments.map(comment => {
+          return (commentsArray = commentsArray.concat(comment));
+        });
+      } else return '';
     });
 
     const filteredComments = commentsArray.filter(comment => comment.uuid !== commentUuid);
@@ -136,9 +139,12 @@ const api = {
 
     let commentsArray = [];
     snapshot.docs.map(x => {
-      return x.data().comments.map(comment => {
-        return (commentsArray = commentsArray.concat(comment));
-      });
+      console.log(x.data());
+      if (x.data().entry.uuid === entryUuid) {
+        return x.data().comments.map(comment => {
+          return (commentsArray = commentsArray.concat(comment));
+        });
+      } else return '';
     });
 
     const updatedCommentsArray = commentsArray.map(comment => {
@@ -150,14 +156,14 @@ const api = {
     });
     snapshot.docs.map(entry => {
       if (entry.data().entry.uuid === entryUuid) {
-        firebase
+        return firebase
           .firestore()
           .collection('entries')
           .doc(entry.id)
           .update({
             comments: updatedCommentsArray
           });
-      }
+      } else return '';
     });
     return updatedCommentsArray;
   },
