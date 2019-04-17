@@ -58,3 +58,13 @@ export const updateComment = (commentUuid, updatedComment, postId) => async disp
     postId
   });
 };
+
+export const pinComment = (sortedArr, entry_id) => dispatch => {
+  api.pinComment(sortedArr, entry_id);
+
+  dispatch({
+    type: 'PIN_COMMENT',
+    sortedArr,
+    entry_id
+  });
+};

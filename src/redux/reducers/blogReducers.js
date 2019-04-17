@@ -101,6 +101,22 @@ export default function(state = initialState, action) {
         ...state,
         entries: newState3
       };
+    case 'PIN_COMMENT':
+      const { sortedArr, entry_id } = action;
+
+      const stateWithPinnedComment = state.entries.map(x => {
+        if (x.entry.uuid === entry_id) {
+          return {
+            entry: x.entry,
+            comments: sortedArr
+          };
+        } else return x;
+      });
+      return {
+        ...state,
+        entries: stateWithPinnedComment
+      };
+
     default:
       return state;
   }

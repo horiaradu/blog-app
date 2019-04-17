@@ -124,6 +124,7 @@ const api = {
             comments: filteredComments
           });
       }
+      return '';
     });
     return filteredComments;
   },
@@ -157,8 +158,28 @@ const api = {
             comments: updatedCommentsArray
           });
       }
+      return '';
     });
     return updatedCommentsArray;
+  },
+
+  async pinComment(pinComments, entryUuid) {
+    const snapshot = await firebase
+      .firestore()
+      .collection('entries')
+      .get();
+    snapshot.docs.map(entry => {
+      if (entry.data().entry.uuid === entryUuid) {
+        firebase
+          .firestore()
+          .collection('entries')
+          .doc(entry.id)
+          .update({
+            comments: pinComments
+          });
+      }
+      return '';
+    });
   }
 };
 
