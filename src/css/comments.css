@@ -161,3 +161,16 @@
   visibility: visible;
   opacity: 1;
 }
+
+.btn-group {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn-group i {
+  display: block;
+  padding: 0 6px;
+  color: #888;
+  cursor: pointer;
+  font-size: 12px;
+}

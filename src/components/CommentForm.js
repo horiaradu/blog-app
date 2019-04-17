@@ -74,8 +74,8 @@ export class CommentForm extends Component {
   };
 
   onUpdateCommentClick = () => {
-    const { author, text } = this.state;
-    const { isPinned, commentDate } = this.props.currentComment;
+    const { author, text, commentDate } = this.state;
+    const { isPinned } = this.props.currentComment;
     const { userId } = this.props.currentUser;
     const updatedComment = this.createComment(author, text, commentDate, userId, isPinned);
     if (author !== '' && text !== '') {

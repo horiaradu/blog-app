@@ -9,7 +9,7 @@ class Comments extends Component {
     super(props);
     this.state = {
       showComments: false,
-
+      isEditCommentModeOn: false,
       commentIdInEditMode: ''
     };
   }
@@ -24,19 +24,17 @@ class Comments extends Component {
 
   onEditCommentClick = (e, commentUuid) => {
     if (e.target.id === commentUuid) {
-      this.setState({ commentIdInEditMode: e.target.id });
+      this.setState({ isEditCommentModeOn: true, commentIdInEditMode: e.target.id });
     }
   };
 
   onCancelClick = () => {
-    this.setState({ commentIdInEditMode: '' });
+    this.setState({ isEditCommentModeOn: false, commentIdInEditMode: '' });
   };
-
   onUpdateClick = (commentUuid, data, entryUuid) => {
     this.props.updateComment(commentUuid, data, entryUuid);
-    this.setState({ commentIdInEditMode: '' });
+    this.setState({ isEditCommentModeOn: false, commentIdInEditMode: '' });
   };
-
   getUserName = () => {
     const userName = this.props.users.find(user => {
       return user.userId === this.props.entryUserId;
@@ -46,23 +44,90 @@ class Comments extends Component {
 
   onPinCommentClick = (comment, entryUuid, currentUser, entryUserId) => {
     const { comments } = this.props;
-    if (currentUser.userId === entryUserId) {
-      const arr = comments.map(c => {
-        if (c.uuid === comment.uuid) {
-          return { ...c, isPinned: !comment.isPinned };
-        } else return c;
-      });
 
-      const sortedArr = arr.sort(function(x, y) {
-        return y.isPinned - x.isPinned || new Date(x.commentDate).getTime() - new Date(y.commentDate).getTime();
-      });
-
-      this.props.pinComment(sortedArr, entryUuid);
+    if (currentUser.userId !== entryUserId) {
+      return;
     }
+
+    const arr = comments.map(c => {
+      if (c.uuid === comment.uuid) {
+        return { ...c, isPinned: !comment.isPinned };
+      } else return c;
+    });
+
+    const pinnedComments = arr.filter(c => {
+      return c.isPinned;
+    });
+    const unpinnedComments = arr.filter(c => {
+      return !c.isPinned;
+    });
+
+    const sortedUnpinnedComments = unpinnedComments.sort(function(x, y) {
+      return new Date(x.commentDate).getTime() - new Date(y.commentDate).getTime();
+    });
+
+    const arrOfPinnedAndSortedUnpinnedComments = [...pinnedComments, ...sortedUnpinnedComments];
+
+    this.props.pinComment(arrOfPinnedAndSortedUnpinnedComments, entryUuid);
+  };
+
+  moveElementInArray = (array, value, positionChange) => {
+    const oldIndex = array.indexOf(value);
+    if (oldIndex > -1) {
+      let newIndex = oldIndex - positionChange;
+
+      if (newIndex < 0) {
+        newIndex = 0;
+      } else if (newIndex >= array.length) {
+        newIndex = array.length;
+      }
+
+      let arrayClone = array.slice();
+      arrayClone.splice(oldIndex, 1);
+      arrayClone.splice(newIndex, 0, value);
+
+      return arrayClone;
+    }
+    return array;
+  };
+
+  movePinnedCommentUp = (comment, entryUuid) => {
+    const { comments } = this.props;
+    const pinnedComments = comments.filter(c => {
+      return c.isPinned;
+    });
+    const unPinnedComments = comments.filter(c => {
+      return !c.isPinned;
+    });
+
+    const sortedPinnedComments = this.moveElementInArray(pinnedComments, comment, 1);
+    const newSortedArray = [...sortedPinnedComments, ...unPinnedComments];
+    this.props.pinComment(newSortedArray, entryUuid);
+  };
+
+  movePinnedCommentDown = (comment, entryUuid) => {
+    const { comments } = this.props;
+    const pinnedComments = comments.filter(c => {
+      return c.isPinned;
+    });
+    const unPinnedComments = comments.filter(c => {
+      return !c.isPinned;
+    });
+
+    const sortedPinnedComments = this.moveElementInArray(pinnedComments, comment, -1);
+    const newSortedArray = [...sortedPinnedComments, ...unPinnedComments];
+    this.props.pinComment(newSortedArray, entryUuid);
+  };
+
+  hidePinDownButton = (comments, index, array) => {
+    if (index === comments.length - 1 || (array[index].isPinned === true && array[index + 1].isPinned === false)) {
+      return true;
+    }
+    return false;
   };
 
   render() {
-    const { showComments, commentIdInEditMode } = this.state;
+    const { showComments, isEditCommentModeOn, commentIdInEditMode } = this.state;
     const { comments, currentUser, entryUuid, entryUserId } = this.props;
     const userName = this.getUserName();
     const showEditDeleteButtons = comment => {
@@ -72,26 +137,29 @@ class Comments extends Component {
       return false;
     };
     const showCommentFormForCurrentCommentInEditMode = comment => {
-      if (comment.userId === currentUser.userId && comment.uuid === commentIdInEditMode) {
+      if (
+        isEditCommentModeOn === true &&
+        comment.userId === currentUser.userId &&
+        comment.uuid === commentIdInEditMode
+      ) {
         return true;
       }
       return false;
     };
-
     return (
       <div className="comments">
         <h3 className="commentHeader">
           Comments <i style={{ cursor: 'pointer' }} className="fas fa-sort-down" onClick={this.onShowClick} />
         </h3>
         {showComments &&
-          comments.map(comment => {
+          comments.map((comment, index, array) => {
             return (
               <div key={comment.uuid} className="commentWrap">
                 <i className="fas fa-user avatar" />
                 <div className="content">
                   <h5 className={comment.isPinned ? 'pinnedAuthor' : 'author'}>{comment.author} </h5>
                   {comment.isPinned && this.getUserName() && (
-                    <span className="pinnedComment">
+                    <span className="pinnedComment pinnedText">
                       <i
                         className="fas fa-thumbtack pinnedIcon"
                         onClick={() => this.onPinCommentClick(comment, entryUuid, currentUser, entryUserId)}
@@ -100,6 +168,20 @@ class Comments extends Component {
                       </i>
 
                       {`Pinned by ${userName.firstName} ${userName.lastName}`}
+                      <span className="btn-group">
+                        {index !== 0 && (
+                          <i
+                            onClick={() => this.movePinnedCommentUp(comment, entryUuid)}
+                            className="fas fa-chevron-up pinUp"
+                          />
+                        )}
+                        {!this.hidePinDownButton(comments, index, array) && (
+                          <i
+                            onClick={() => this.movePinnedCommentDown(comment, entryUuid)}
+                            className="fas fa-chevron-down pinDown"
+                          />
+                        )}
+                      </span>
                     </span>
                   )}
                   <span>
@@ -120,8 +202,8 @@ class Comments extends Component {
                   <div>
                     <CommentForm
                       onCancelClick={this.onCancelClick}
-                      currentUser={this.props.currentUser}
-                      entryUuid={this.props.entryUuid}
+                      currentUser={currentUser}
+                      entryUuid={entryUuid}
                       currentComment={comment}
                       onUpdateClick={this.onUpdateClick}
                     />

@@ -158,7 +158,6 @@ const api = {
             comments: updatedCommentsArray
           });
       }
-      return '';
     });
     return updatedCommentsArray;
   },
