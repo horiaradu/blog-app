@@ -76,6 +76,8 @@ class Post extends Component {
                 comments={this.props.post.comments}
                 entryUuid={this.props.post.entry.uuid}
                 currentUser={currentUser}
+                users={this.props.users}
+                entryUserId={this.props.post.entry.userId}
               />
             </div>
           </div>

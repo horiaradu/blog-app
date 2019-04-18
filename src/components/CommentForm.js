@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { addNewComment } from '../redux/actions/blogActions';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import '../css/commentForm.css';
 
 export class CommentForm extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export class CommentForm extends Component {
       text: props.currentComment ? props.currentComment.text : '',
       commentDate: new Date().toLocaleString(),
       emptyAuthorError: false,
-      emptyTextError: false
+      emptyTextError: false,
+      isPinned: false
     };
   }
 
@@ -31,7 +33,7 @@ export class CommentForm extends Component {
     });
   };
 
-  createComment = (author, text, commentDate, userId) => {
+  createComment = (author, text, commentDate, userId, isPinned) => {
     const newComment = {
       author: author
         .slice(0, 1)
@@ -42,7 +44,8 @@ export class CommentForm extends Component {
         .toUpperCase()
         .concat(text.slice(1)),
       commentDate,
-      userId: userId ? userId : ''
+      userId: userId ? userId : '',
+      isPinned
     };
     if (author === '') {
       this.setState({ emptyAuthorError: true });
@@ -55,9 +58,9 @@ export class CommentForm extends Component {
 
   onFormSubmit = e => {
     e.preventDefault();
-    const { author, text, commentDate } = this.state;
+    const { author, text, commentDate, isPinned } = this.state;
     const { userId } = this.props.currentUser;
-    const newComment = this.createComment(author, text, commentDate, userId);
+    const newComment = this.createComment(author, text, commentDate, userId, isPinned);
 
     if (author !== '' && text !== '') {
       this.props.addNewComment(newComment, this.props.entryUuid);
@@ -65,15 +68,17 @@ export class CommentForm extends Component {
         author: this.props.currentUser.firstName
           ? `${this.props.currentUser.firstName} ${this.props.currentUser.lastName}`
           : '',
-        text: ''
+        text: '',
+        commentDate: new Date().toLocaleString()
       });
     }
   };
 
   onUpdateCommentClick = () => {
-    const { author, text, commentDate } = this.state;
+    const { author, text } = this.state;
+    const { isPinned, commentDate } = this.props.currentComment;
     const { userId } = this.props.currentUser;
-    const updatedComment = this.createComment(author, text, commentDate, userId);
+    const updatedComment = this.createComment(author, text, commentDate, userId, isPinned);
     if (author !== '' && text !== '') {
       this.props.onUpdateClick(this.props.currentComment.uuid, updatedComment, this.props.entryUuid);
     }
@@ -85,6 +90,7 @@ export class CommentForm extends Component {
 
   render() {
     const { author, text, emptyAuthorError, emptyTextError } = this.state;
+
     return (
       <div>
         <form id="addNewCommentForm" onSubmit={this.onFormSubmit}>
@@ -133,8 +139,12 @@ export class CommentForm extends Component {
         </form>
         {this.isEditModeOn() && (
           <div>
-            <button onClick={this.props.onCancelClick}>Cancel</button>
-            <button onClick={this.onUpdateCommentClick}>Update</button>
+            <button className="btn-simple-style" onClick={this.props.onCancelClick}>
+              Cancel
+            </button>
+            <button className="btn-simple-style" onClick={this.onUpdateCommentClick}>
+              Update
+            </button>
           </div>
         )}
       </div>
