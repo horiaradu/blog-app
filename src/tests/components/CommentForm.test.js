@@ -30,7 +30,7 @@ describe('Comment component', () => {
   });
   describe('when the form is submitted', () => {
     it('should call the mock addNewComment function', () => {
-      const state = { author: 'foo', text: 'bar', commentDate: new Date(), userId: '999' };
+      const state = { author: 'foo', text: 'bar', commentDate: new Date(), userId: '999', isPinned: false };
       wrapper.setState(state);
       const event = {
         preventDefault() {}
@@ -41,13 +41,14 @@ describe('Comment component', () => {
           author: 'Foo',
           commentDate: state.commentDate,
           text: 'Bar',
-          userId: '999'
+          userId: '999',
+          isPinned: false
         },
         '123'
       );
     });
     it('should reset state to default values when user is logged in', () => {
-      const state = { author: 'Tony', text: 'new comment', commentDate: new Date() };
+      const state = { author: 'Tony', text: 'new comment', commentDate: new Date().toLocaleString(), isPinned: false };
       const currentUser = {
         firstName: 'Tony',
         lastName: 'Stark',
@@ -62,10 +63,12 @@ describe('Comment component', () => {
 
       expect(wrapper.state()).toEqual({
         author: `${currentUser.firstName} ${currentUser.lastName}`,
-        commentDate: state.commentDate,
+        commentDate: new Date().toLocaleString(),
         text: '',
+
         emptyAuthorError: false,
-        emptyTextError: false
+        emptyTextError: false,
+        isPinned: false
       });
     });
 

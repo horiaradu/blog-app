@@ -46,6 +46,14 @@ exports[`Post Component should render Post component correctly 1`] = `
           }
         }
         entryUuid="123456"
+        users={
+          Array [
+            Object {
+              "firstName": "Tony",
+              "userId": "999",
+            },
+          ]
+        }
       />
     </div>
   </div>
